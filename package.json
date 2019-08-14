@@ -1,0 +1,9 @@
+{
+  "name": "WhereToCode",
+  "version": "0.0.0",
+  "description": "Labs PT",
+  "main": "index.js",
+  "repository": "https://github.com/wheretocode/WhereToCode.git",
+  "author": "MrT3313 <rturgeon13@gmail.com>",
+  "license": "MIT"
+}
