@@ -2,8 +2,18 @@
   "name": "WhereToCode",
   "version": "0.0.0",
   "description": "Labs PT",
-  "main": "index.js",
+  "main": "backend/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
   "repository": "https://github.com/wheretocode/WhereToCode.git",
   "author": "MrT3313 <rturgeon13@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
 }
