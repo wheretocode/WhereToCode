@@ -4,8 +4,8 @@
   "description": "Labs PT",
   "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "start": "node backend/index.js",
+    "server": "nodemon backend/index.js"
   },
   "repository": "https://github.com/wheretocode/WhereToCode.git",
   "author": "MrT3313 <rturgeon13@gmail.com>",
