@@ -3,11 +3,11 @@ import axios from 'axios';
 
 function App() {
 
-  const [data, setData] = useState({message: ""})
+  const [data, setData] = useState("")
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await axios.get('https://wheretocode-master.herokuapp.com/');
+      const result = await axios.get('https://wheretocode-staging-1.herokuapp.com/');
       setData(result.data);
     }
     loadData();
@@ -18,7 +18,7 @@ function App() {
     
     <div className="App">
       Hello World
-      {data.message}
+      <p>{data.message}</p>
     </div>
   );
 }
