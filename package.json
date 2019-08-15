@@ -12,6 +12,7 @@
   "author": "MrT3313 <rturgeon13@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1"
   },
