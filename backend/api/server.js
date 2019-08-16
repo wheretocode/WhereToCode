@@ -1,13 +1,20 @@
 // IMPORTS
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
+const helmet = require("helmet");
 
 // ROUTER
 
 // SERVER
 const server = express();
-server.use(express.json());
-server.use(cors());
+
+server.use(
+  express.json(),
+  cors(),
+  helmet(),
+  morgan('dev')
+);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {
