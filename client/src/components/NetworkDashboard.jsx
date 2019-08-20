@@ -36,9 +36,20 @@ const NetworkDashboard = () => {
                     network.map(data => {
                         //Check for Available Data Out of Possible Options
                         if(data[1] !== null && data[1] !== undefined) {
+                            
+                            //Check If Time Units Need To Be Added
+                            let displayData;
+
+                            if(data[0] === 'downlink' || data[0] === 'downlinkMax') {
+                                displayData = `${data[1]} Mb/s`;
+                            } else if(data[0] === 'rtt') {
+                                displayData = `${data[1]} ms`
+                            } else {
+                                displayData = data[1];
+                            }
 
                             return <p key={Math.random()}>
-                                        {`${networkKey[data[0]]}: ${data[1]}`}
+                                        {`${networkKey[data[0]]}: ${displayData}`}
                                     </p>
 
                         }
