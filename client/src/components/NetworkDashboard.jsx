@@ -7,15 +7,19 @@ const NetworkDashboard = () => {
                              || navigator.webkitConnection;
 
     //Creates an Array of Arrays of the Network Data for Mapping
-    const network = Object.entries({
-        type: networkInterface.type,
-        effectiveType: networkInterface.effectiveType,
-        downlink: networkInterface.downlink,
-        downlinkMax: networkInterface.downlinkMax,
-        rtt: networkInterface.rtt,
-        saveData: networkInterface.saveData,
-        onchange: networkInterface.onchange
-    });
+    let network = [];
+
+    if(networkInterface !== undefined) {
+        network = Object.entries({
+            type: networkInterface.type,
+            effectiveType: networkInterface.effectiveType,
+            downlink: networkInterface.downlink,
+            downlinkMax: networkInterface.downlinkMax,
+            rtt: networkInterface.rtt,
+            saveData: networkInterface.saveData,
+            onchange: networkInterface.onchange
+        });
+    }
 
     //Network Information Key to Display for Users
     const networkKey = {
@@ -31,7 +35,7 @@ const NetworkDashboard = () => {
         <div>
             <h2>Network Dashboard</h2>
 
-            <div>
+            <div data-testid='info-box' >
                 {
                     network.map(data => {
                         //Check for Available Data Out of Possible Options
