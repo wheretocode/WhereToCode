@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const mongoURI = process.env.mongoURI;
 
-const connectDB = async () => {
+const connectMongoDB = async () => {
   try {
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
@@ -15,4 +15,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+module.exports = connectMongoDB;

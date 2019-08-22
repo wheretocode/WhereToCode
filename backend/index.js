@@ -3,14 +3,14 @@ require("dotenv").config();
 
 // SERVER
 const server = require("./api/server.js");
-const connectDB = require("./config/connectDB");
+const connectMongoDB = require("./config/connectMongoDB");
 
 // PORT
 const PORT = process.env.PORT || 9001;
 
 // Connect to MongoDB
 // Must whitelist IP address for those connecting to the database
-connectDB();
+connectMongoDB();
 
 // LISTENING
 server.listen(PORT, () => {
