@@ -54,7 +54,7 @@ const NetworkDashboard = () => {
                             }
 
                             return <p key={Math.random()}>
-                                        {`${networkKey[ type ]}: ${displayData}`}
+                                        {`${networkKey[data[0]]}: ${displayData}`}
                                     </p>
 
                         }
