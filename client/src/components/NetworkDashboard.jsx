@@ -39,6 +39,7 @@ const NetworkDashboard = () => {
                 {
                     network.map(data => {
                         //Check for Available Data Out of Possible Options
+                        //data[0] = key, data[1] = value
                         if(data[1] !== null && data[1] !== undefined) {
                             
                             //Check If Time Units Need To Be Added
@@ -53,7 +54,7 @@ const NetworkDashboard = () => {
                             }
 
                             return <p key={Math.random()}>
-                                        {`${networkKey[data[0]]}: ${displayData}`}
+                                        {`${networkKey[ type ]}: ${displayData}`}
                                     </p>
 
                         }
