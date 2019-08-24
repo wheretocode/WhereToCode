@@ -8,7 +8,7 @@ import { cleanup, render } from '@testing-library/react';
 beforeEach(cleanup);
 afterEach(cleanup);
 
-jest.mock('axios')
+
 jest.mock('firebase/app')
 jest.mock('firebase/auth')
 
