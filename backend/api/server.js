@@ -4,25 +4,25 @@ const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
-// ROUTER
+// Importing of Routes
+const UsersRouter = require("./routes/UsersRoute");
 
 // SERVER
 const server = express();
 
-server.use(
-  express.json(),
-  cors(),
-  helmet(),
-  morgan('dev')
-);
+server.use(express.json());
+server.use(cors());
+server.use(helmet());
+server.use(morgan("dev"));
+
+// ROUTER
+server.use("/user", UsersRouter);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {
   console.log("Yes, it is working");
   res.json({ message: "WhereToCode Server Is Working" });
 });
-
-// INDIVIDUAL ROUTES
 
 // EXPORTS
 module.exports = server;
