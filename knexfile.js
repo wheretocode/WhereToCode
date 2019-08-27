@@ -3,6 +3,8 @@ require("dotenv").config();
 
 // Update with your config settings.
 
+//ENVIRONMENT=development
+
 module.exports = {
   development: {
     client: "postgresql",
@@ -14,8 +16,8 @@ module.exports = {
     migrations: {
       tableName: "knex_migrations",
       directory: "./backend/migrations"
-    }
-    // seeds: { directory: "" }
+    },
+    seeds: { directory: "./backend/seeds" }
   },
   production: {
     client: "pg",
@@ -24,7 +26,7 @@ module.exports = {
     migrations: {
       directory: "./backend/migrations",
       tableName: "knex_migrations"
-    }
-    // seeds: { directory: "" }
+    },
+    seeds: { directory: "./backend/seeds" }
   }
 };
