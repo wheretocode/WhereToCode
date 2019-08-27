@@ -46,10 +46,12 @@ class Map extends Component {
     /*global google*/ // To disable any eslint 'google not defined' errors
     this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
 
+    // Sets autocomplete fields to be returned
     this.autocomplete.setFields(['address_components', 'formatted_address', 'geometry', 'icon', 'name']);
     
+    // When a new place is selected the map will be forced to update
     this.autocomplete.addListener('place_changed', this.handleMapChange);
-  }
+  }    
 
   handleLocationError(browserHasGeolocation) {
     // Set default location to Sydney, Australia
@@ -62,21 +64,27 @@ class Map extends Component {
   }
 
   handleMapChange() {
+    // Get map object
     let map = new google.maps.Map(document.getElementById('map'),{
       zoom: 13
     });
 
+    // Sets marker
     let marker = new google.maps.Marker({
       map: map,
       anchorPoint: new google.maps.Point(0, -29)
     });
 
+    // Marker is invisible on initial load
     marker.setVisible(false);
 
+    // Gets new place when auto complete search is clicked
     let place = this.autocomplete.getPlace();
 
+    // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
-
+   
+    // Sets marker to lat/lng position
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
   }
