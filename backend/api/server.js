@@ -3,11 +3,14 @@ const express = require("express");
 const cors = require("cors");
 
 // ROUTER
+const routes = require("./routes/networkRoutes");
 
 // SERVER
 const server = express();
 server.use(express.json());
 server.use(cors());
+
+server.use('/api', routes);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {

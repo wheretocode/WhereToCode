@@ -14,7 +14,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "speedtest-net": "^1.5.1"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
