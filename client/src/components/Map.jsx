@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import Script from 'react-load-script';
 
 class Search extends Component {
-  // Define Constructor
   constructor(props) {
     super(props);
 
@@ -22,23 +21,29 @@ class Search extends Component {
 
   }
 
+
   handleScriptLoad() {
     // Declare Options For Autocomplete
-    var options = {
+    let options = {
       types: ['(cities)'],
     };
+
+    // Loads map
+    let map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -33.8688, lng: 151.2195},
+      zoom: 13
+    });
 
     // Initialize Google Autocomplete
     /*global google*/ // To disable any eslint 'google not defined' errors
     this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), options);
 
-    // Avoid paying for data that you don't need by restricting the set of
-    // place fields that are returned to just the address components and formatted
-    // address.
+    // this.autocomplete.bindTo('bounds', map)
+
     this.autocomplete.setFields(['address_components', 'formatted_address']);
 
     // Fire Event when a suggested name is selected
-    this.autocomplete.addListener('place_changed', this.handlePlaceSelect);
+    this.autocomplete.addListener('place_changed', this.handlePlaceSelect);    
   }
 
   handleInputChange = e => {
@@ -52,7 +57,7 @@ class Search extends Component {
     let addressObject = this.autocomplete.getPlace();
     
     let address = addressObject.address_components;
-    
+
     this.setState(
         {
           city: address[0].long_name,
@@ -69,11 +74,8 @@ class Search extends Component {
           onLoad={this.handleScriptLoad}
         />
         <input id="autocomplete" placeholder="" onChange={ this.handleInputChange } name={ this.state.input } value={this.state.search}
-          style={{
-            margin: '0 auto',
-            maxWidth: 800,
-          }}
         />
+        <div id="map" style={{ height: 1000 }}></div>
       </div>
     );
   }

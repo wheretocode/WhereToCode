@@ -14,7 +14,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-load-script": "^0.0.6"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
