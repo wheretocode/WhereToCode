@@ -4,7 +4,7 @@ import Map from './components/Map.jsx';
 function App() {
   return (
     <div className="App">
-      Hello World
+      <h1>Welcome!</h1>
       <Map />
     </div>
   );
