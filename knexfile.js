@@ -22,7 +22,7 @@ module.exports = {
     connection: process.env.DATABASE_URL,
     // ssl: true,
     migrations: {
-      directory: "",
+      directory: "./backend/migrations",
       tableName: "knex_migrations"
     }
     // seeds: { directory: "" }
