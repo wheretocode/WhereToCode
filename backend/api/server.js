@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 // Importing of Routes
-const UsersRouter = require("./routes/UsersRoute");
+const AuthRouter = require("./routes/AuthRoute");
 
 // SERVER
 const server = express();
@@ -16,7 +16,7 @@ server.use(helmet());
 server.use(morgan("dev"));
 
 // ROUTER
-server.use("/user", UsersRouter);
+server.use("/auth", AuthRouter);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {
