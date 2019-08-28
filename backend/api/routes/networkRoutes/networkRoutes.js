@@ -8,6 +8,8 @@ router.get('/', (req, res) => {
 
     forked.on('message', (msg) => {
         res.status(200).json(msg);
+
+        forked.disconnect();
     });
 
     forked.send({ start: 'speed-test' });
