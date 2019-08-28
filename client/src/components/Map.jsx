@@ -81,12 +81,37 @@ class Map extends Component {
     // Gets new place when auto complete search is clicked
     let place = this.autocomplete.getPlace();
 
+    // request object sets search query, search radius, and coordinates 
+    let request = {
+      location: place.geometry.location,
+      radius: '500',
+      query: "cafe"
+    }
+
+    // requests use of PlaceService 
+    let service = new google.maps.places.PlacesService(map);
+
+    // PlaceService has the `textSearch` method
+    service.textSearch(request, callback)
+
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
    
     // Sets marker to lat/lng position
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
+
+    // cb function that returns place results
+    function callback (results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++){
+          let place = results[i];
+          console.log(place.name)
+        } 
+      }
+    }
+
+
   }
 
   render() {
@@ -96,9 +121,9 @@ class Map extends Component {
           url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHoSSopykjcVtpJm-Xzn4KeViNp1rgjGQ&libraries=places"
           onLoad={this.handleScriptLoad}
         />
-        <input id="autocomplete" style={{ width: '25%' }} placeholder=""/>
+        <input id="autocomplete" style={{ width: '25%' }} placeholder="Enter zipcode"/>
 
-        <div id="map" style={{ height: 1000 }}></div>
+        <div id="map" style={{ height: 500 }}></div>
       </div>
     );
   }
