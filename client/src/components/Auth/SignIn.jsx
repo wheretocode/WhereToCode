@@ -6,12 +6,14 @@ import { SignUpLink } from './SignUp.jsx';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../Routes/routes';
 
+import { Form, FormField, Button, Box } from 'grommet';
+
 const SignInPage = () => (
-    <div>
+    <Box align="center">
         <h1>SignIn</h1>
         <SignInForm />
         <SignUpLink />
-    </div>
+    </Box>
 );
 
 const INITIAL_STATE = {
@@ -53,27 +55,27 @@ class SignInFormBase extends Component {
         const isInvalid = password === '' || email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
+            <Box width="medium">
+            <Form onSubmit={this.onSubmit}>
+                <FormField
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email Address"
                 />
-                <input
+                <FormField
                     name="password"
                     value={password}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Password"
                 />
-                <button disabled={isInvalid} type="submit">
-                    Sign In
-        </button>
+                <Button disabled={isInvalid} type="submit" primary label="Sign In" />
 
                 {error && <p>{error.message}</p>}
-            </form>
+            </Form>
+            </Box>
         );
     }
 }

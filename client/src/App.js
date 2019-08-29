@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import './App.css';
+
 import { Box, Button as GrommetButton, Grommet } from 'grommet';
 
 import Navigation from './components/Navigation/index.jsx';
