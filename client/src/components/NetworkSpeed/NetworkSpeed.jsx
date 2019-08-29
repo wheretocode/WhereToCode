@@ -16,8 +16,8 @@ class NetworkSpeed extends React.Component {
                         this.setState({ 
                             download: (res.data.download / 125).toFixed(2),
                             upload: (res.data.upload / 125).toFixed(2),
-                            originalDownload: res.data.originalDownload.toFixed(2),
-                            originalUpload: res.data.originalDownload.toFixed(2),
+                            originalDownload: res.data.originalDownload.toFixed(0),
+                            originalUpload: res.data.originalDownload.toFixed(0),
                         })
                     })
              .catch(err => console.log(err));
