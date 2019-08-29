@@ -4,8 +4,11 @@ const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
+
 // Importing of Routes
 const AuthRouter = require("./routes/AuthRoute");
+const routes = require("./routes");
+
 
 // SERVER
 const server = express();
@@ -17,6 +20,7 @@ server.use(morgan("dev"));
 
 // ROUTER
 server.use("/auth", AuthRouter);
+server.use('/api', routes);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {
