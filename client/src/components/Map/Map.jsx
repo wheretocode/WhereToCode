@@ -4,19 +4,20 @@ import React, { Component } from 'react';
 // Import React Script Library to load Google object
 import Script from 'react-load-script';
 
+import MapCards from './MapCards';
+
 class Map extends Component {
   constructor(props) {
     super(props);
 
     // Placeholder state
     this.state = {
-   
+      locations: []
     };
 
     // Bind Functions
     this.handleScriptLoad = this.handleScriptLoad.bind(this);
     this.handleMapChange = this.handleMapChange.bind(this);
-
   }
 
 
@@ -91,9 +92,6 @@ class Map extends Component {
     // requests use of PlaceService 
     let service = new google.maps.places.PlacesService(map);
 
-    // PlaceService has the `textSearch` method
-    service.textSearch(request, callback)
-
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
    
@@ -101,29 +99,39 @@ class Map extends Component {
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
 
+    // Stores names of locations
+    let placeArray = [];
+
     // cb function that returns place results
-    function callback (results, status) {
+    let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++){
-          let place = results[i];
-          console.log(place.name)
+          // Pushes locations name to array
+          placeArray.push(results[i].name);
+          // Sets state for locations names
+          this.setState({ locations: [...placeArray] })
         } 
       }
+      
     }
 
+    // PlaceService has the `textSearch` method
+    service.textSearch(request, callback)
 
   }
 
   render() {
     return (
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Script
           url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHoSSopykjcVtpJm-Xzn4KeViNp1rgjGQ&libraries=places"
           onLoad={this.handleScriptLoad}
         />
-        <input id="autocomplete" style={{ width: '25%' }} placeholder="Enter zipcode"/>
+        <input id="autocomplete" style={{ width: '25%' }} placeholder="Enter location..."/>
+        
+        <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
 
-        <div id="map" style={{ height: 500 }}></div>
+        <MapCards locations={ this.state.locations } />
       </div>
     );
   }
