@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
-
 import { Box, Button as GrommetButton, Grommet } from 'grommet';
+import AppBar from './components/Styling/AppBar';
 
 import Navigation from './components/Navigation/index.jsx';
 import Landing from './views/Landing';
@@ -24,27 +24,10 @@ const theme = {
   },
 };
 
-const AppBar = (props) => (
-  <Box
-  tag='header'
-  direction='row'
-  align='center'
-  justify='between'
-  background='gold'
-  pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-  elevation='medium'
-  style={{ zIndex: '1' }}
-  {...props}
-  />
-  );
-
-
 const App = () => (
   <Grommet theme={theme}>
   <Router>
-  <AppBar>
     <Navigation />
-    </AppBar>
     <Route exact path={ROUTES.LANDING} component={Landing} />
     <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
     <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
