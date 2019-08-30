@@ -13,7 +13,7 @@ import Home from './views/Home';
 
 import * as ROUTES from './Routes/routes';
 import { withAuthentication } from './components/Session';
-import LocationCard from './components/LocationCard';
+import LocationCard from './components/Search/LocationCard';
 
 const theme = {
   global: {
