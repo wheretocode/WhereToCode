@@ -12,3 +12,7 @@ process.on('message', (msg) => {
         }
     });
 });
+
+process.on('disconnect', () => {
+    console.log('disconnect');
+});
