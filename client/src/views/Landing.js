@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Image, Heading, Button, RoutedButton, Paragraph, Carousel, Stack, Text, Grid, } from 'grommet';
 import { Notification } from 'grommet-icons';
 import AppBar from '../components/Styling/AppBar';
-import { CardTitle, CardContent } from 'grommet-controls/components/Card';
+import { CardTitle, CardContent } from 'grommet-controls';
 import { Facebook, Twitter, Google } from 'grommet-icons';
 import { Card } from 'grommet-controls';
 import Layout from '../components/Styling/Layout';

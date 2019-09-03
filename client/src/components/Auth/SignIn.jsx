@@ -6,13 +6,15 @@ import { SignUpLink } from './SignUp.jsx';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../Routes/routes';
 
-import { Form, FormField, Button, Box } from 'grommet';
+import { Form, FormField, Button, Box, Heading } from 'grommet';
 
 const SignInPage = () => (
-    <Box align="center">
-        <h1>SignIn</h1>
+    <Box justify="center" align="center" background="#555555" height="100vh">
+        <Box>
+        <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign In</Heading>
         <SignInForm />
         <SignUpLink />
+        </Box>
     </Box>
 );
 

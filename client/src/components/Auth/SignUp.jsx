@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../Routes/routes';
 
-import { Form, FormField, Button, Box } from 'grommet';
+import { Form, FormField, Button, Box, Text } from 'grommet';
 
 const SignUpPage = () => (
     <Box align="center">
@@ -103,9 +103,9 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-    <p>
+    <Text alignSelf="center" margin="small">
         Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-    </p>
+    </Text>
 );
 const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 export default SignUpPage;
