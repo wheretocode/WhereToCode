@@ -94,7 +94,7 @@ class Map extends Component {
 
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
-   
+    console.log(place.place_id)
     // Sets marker to lat/lng position
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);

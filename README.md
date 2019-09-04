@@ -1,2 +1,0 @@
-# WhereToCode
-LabsPT
