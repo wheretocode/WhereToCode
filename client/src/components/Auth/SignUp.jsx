@@ -4,11 +4,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../Routes/routes';
 
-import { Form, FormField, Button, Box, Text } from 'grommet';
+import { Form, FormField, Button, Box, Text, Heading } from 'grommet';
 
 const SignUpPage = () => (
     <Box align="center" background="#555555" height="100vh" pad="large">
-        <h1>SignUp</h1>
+        <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign Up</Heading>
         <SignUpForm />
     </Box>
 );
