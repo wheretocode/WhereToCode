@@ -13,7 +13,6 @@ import Home from './views/Home';
 
 import * as ROUTES from './Routes/routes';
 import { withAuthentication } from './components/Session';
-import LocationCard from './components/Search/LocationCard';
 
 const theme = {
   global: {
@@ -50,7 +49,6 @@ const App = () => (
     <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
     <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
     <Route exact path={ROUTES.HOME} component={Home} />
-    <Route exact path={ROUTES.COMPONENT_TEST} component={LocationCard} />
   </Router>
   </Grommet>
 

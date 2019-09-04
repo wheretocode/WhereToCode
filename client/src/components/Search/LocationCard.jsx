@@ -11,10 +11,10 @@ const Placeholder = styled.img`
 `
 
 const LocationCard = () => (
-    <Box>
+    // <Box direction="row" wrap="true" flex="false">
     <Box 
         background={{color: "#DFE7ED"}}
-        width = "30%"
+        width = "medium"
         margin = "medium"
         border = {{color: "#ACB4BA"}}
         pad = "small"
@@ -30,97 +30,6 @@ const LocationCard = () => (
             <Text>More...</Text>
         </Box>
     </Box>
-    <Box 
-    background={{color: "#DFE7ED"}}
-    width = "30%"
-    margin = "medium"
-    border = {{color: "#ACB4BA"}}
-    pad = "small"
-    direction = "row"
->
-        <Placeholder src={placeholder} />
-    
-    <Box>
-        <h3>Name: Joe's Coffee Shop</h3>
-        <Text>24th ave, Chicago, IL</Text>
-        <Text>Noise:</Text>
-        <Text>Wifi</Text>
-        <Text>More...</Text>
-    </Box>
-</Box>
-<Box 
-        background={{color: "#DFE7ED"}}
-        width = "30%"
-        margin = "medium"
-        border = {{color: "#ACB4BA"}}
-        pad = "small"
-        direction = "row"
-    >
-            <Placeholder src={placeholder} />
-        
-        <Box>
-            <h3>Name: Joe's Coffee Shop</h3>
-            <Text>24th ave, Chicago, IL</Text>
-            <Text>Noise:</Text>
-            <Text>Wifi</Text>
-            <Text>More...</Text>
-        </Box>
-    </Box>
-    <Box 
-    background={{color: "#DFE7ED"}}
-    width = "30%"
-    margin = "medium"
-    border = {{color: "#ACB4BA"}}
-    pad = "small"
-    direction = "row"
->
-        <Placeholder src={placeholder} />
-    
-    <Box>
-        <h3>Name: Joe's Coffee Shop</h3>
-        <Text>24th ave, Chicago, IL</Text>
-        <Text>Noise:</Text>
-        <Text>Wifi</Text>
-        <Text>More...</Text>
-    </Box>
-</Box>
-<Box 
-        background={{color: "#DFE7ED"}}
-        width = "30%"
-        margin = "medium"
-        border = {{color: "#ACB4BA"}}
-        pad = "small"
-        direction = "row"
-    >
-            <Placeholder src={placeholder} />
-        
-        <Box>
-            <h3>Name: Joe's Coffee Shop</h3>
-            <Text>24th ave, Chicago, IL</Text>
-            <Text>Noise:</Text>
-            <Text>Wifi</Text>
-            <Text>More...</Text>
-        </Box>
-    </Box>
-    <Box 
-    background={{color: "#DFE7ED"}}
-    width = "30%"
-    margin = "medium"
-    border = {{color: "#ACB4BA"}}
-    pad = "small"
-    direction = "row"
->
-        <Placeholder src={placeholder} />
-    
-    <Box>
-        <h3>Name: Joe's Coffee Shop</h3>
-        <Text>24th ave, Chicago, IL</Text>
-        <Text>Noise:</Text>
-        <Text>Wifi</Text>
-        <Text>More...</Text>
-    </Box>
-</Box>
-</Box>
 )
 
 export default LocationCard;
