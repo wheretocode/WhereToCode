@@ -7,7 +7,7 @@ import * as ROUTES from '../../Routes/routes';
 import { Form, FormField, Button, Box, Text } from 'grommet';
 
 const SignUpPage = () => (
-    <Box align="center">
+    <Box align="center" background="#555555" height="100vh" pad="large">
         <h1>SignUp</h1>
         <SignUpForm />
     </Box>
@@ -64,6 +64,7 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
+            <Box width="medium">
             <Form onSubmit={this.onSubmit}>
                 <FormField
                     name="username"
@@ -98,6 +99,7 @@ class SignUpFormBase extends Component {
 
                 {error && <p>{error.message}</p>}
             </Form>
+            </Box>
         );
     }
 }

@@ -9,7 +9,7 @@ import * as ROUTES from '../../Routes/routes';
 import { Form, FormField, Button, Box, Heading } from 'grommet';
 
 const SignInPage = () => (
-    <Box justify="center" align="center" background="#555555" height="100vh">
+    <Box align="center" background="#555555" height="100vh" pad="large">
         <Box>
         <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign In</Heading>
         <SignInForm />
