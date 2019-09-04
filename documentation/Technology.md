@@ -84,7 +84,7 @@ bad credentials will be stopped.
 ### ​Landing Page  
 
 **What services, APIs, or platforms will you use to implement this feature?**  
--React
+- React
 
 **What are the costs and benefits of using this solution?**  
 
