@@ -11,10 +11,17 @@ class Map extends Component {
     super(props);
 
     // Placeholder state
-    this.state = {
-      locations: []
+    this.initialState = {
+      locations: [
+        {
+          name: '',
+          place_Id: '' 
+        }
+      ] 
     };
 
+    this.state = this.initialState
+    
     // Bind Functions
     this.handleScriptLoad = this.handleScriptLoad.bind(this);
     this.handleMapChange = this.handleMapChange.bind(this);
@@ -48,7 +55,7 @@ class Map extends Component {
     this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
 
     // Sets autocomplete fields to be returned
-    this.autocomplete.setFields(['address_components', 'formatted_address', 'geometry', 'icon', 'name']);
+    this.autocomplete.setFields(['address_components', 'formatted_address', 'geometry', 'icon', 'name', 'place_id']);
     
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener('place_changed', this.handleMapChange);
@@ -85,6 +92,7 @@ class Map extends Component {
     // request object sets search query, search radius, and coordinates 
     let request = {
       location: place.geometry.location,
+      placeId: place.place_id,
       radius: '500',
       query: "cafe"
     }
@@ -94,30 +102,33 @@ class Map extends Component {
 
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
-    console.log(place.place_id)
     // Sets marker to lat/lng position
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-
-    // Stores names of locations
-    let placeArray = [];
+    
+    // Resets state when a new location is clicked
+    if (this.state.locations.name !== ''){
+      this.setState(this.initialState)
+    }
 
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++){
-          // Pushes locations name to array
-          placeArray.push(results[i].name);
-          // Sets state for locations names
-          this.setState({ locations: [...placeArray] })
+          
+          // Sets state for locations names and IDs
+          this.setState({ locations: [ ...this.state.locations,
+            {
+              name: results[i].name,
+              place_Id: results[i].place_id
+            }
+          ]})
         } 
       }
       
     }
-
     // PlaceService has the `textSearch` method
     service.textSearch(request, callback)
-
   }
 
   render() {
@@ -130,7 +141,7 @@ class Map extends Component {
         <input id="autocomplete" style={{ width: '25%' }} placeholder="Enter location..."/>
         
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
-
+        
         <MapCards locations={ this.state.locations } />
       </div>
     );
