@@ -1,4 +1,4 @@
-const db = require("../config/knexConfig");
+const db = require("../../config/knexConfig");
 
 const getAll_locations = () => {
   return db("locations");
