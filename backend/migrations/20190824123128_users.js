@@ -6,9 +6,8 @@ exports.up = async function(knex) {
       .string("userName") // RonnySAlvarado
       .notNullable()
       .unique();
-    tbl.string("userType").notNullable(); // Owner, Student, Programmer, Someone actually normal
     tbl.string("email"); // Rsalvarado777@gmail.com
-    tbl.integer("reviewCount"); // 300
+    tbl.integer("reviewCount").default(0); // 300
     tbl.timestamps(true, true); // when account was created
   });
 };

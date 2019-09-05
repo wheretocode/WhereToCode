@@ -5,19 +5,17 @@ exports.up = async function(knex) {
     tbl.string("comments").notNullable(); // review comments
     tbl
       .integer("user_id") // foreign key - user id
-      .unsigned()
       .references("id")
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
+    tbl
+      .integer("location_id") // foreign key - location id
+      .references("id") // .references('location.id')
+      .inTable("locations")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
   });
-  tbl
-    .string("location_id") // foreign key - location id
-    .unsigned()
-    .references("id")
-    .inTable("location")
-    .onDelete("CASCADE")
-    .onUpdate("CASCADE");
 };
 
 exports.down = async function(knex) {

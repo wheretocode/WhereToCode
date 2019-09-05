@@ -1,5 +1,5 @@
 exports.up = async function(knex) {
-  await knex.schema.createTable("location", tbl => {
+  await knex.schema.createTable("locations", tbl => {
     tbl.increments(); // primary key - location id
     tbl.string("locationName"); // name of location - not unique because cafe chains exist
     tbl
@@ -10,5 +10,5 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists("location");
+  await knex.schema.dropTableIfExists("locations");
 };
