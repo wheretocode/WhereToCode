@@ -6,10 +6,14 @@ const router = require("express").Router();
 
 // - GET - //
 router.get("/", async (req, res) => {
-  console.log("locationsRouter get/");
-  let result = await LOCATIONS_MODEL.getAll_locations();
-
-  res.status(200).json(result);
+  try {
+    let result = await LOCATIONS_MODEL.getAll_locations();
+    console.log(result);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 });
 // - POST - //
 // - PUT - //
