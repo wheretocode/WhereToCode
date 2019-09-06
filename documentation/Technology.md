@@ -68,8 +68,8 @@ An existing user wishes to login.
 
 **Name:** ​Google Map Location Finder
 **User type:** ​All  
-**Description:** 
-**Use Case:** 
+**Description:** Google Places/Map API locates the users geolocation automatically, user can then search for another location via the autocomplete search bar. Place results are then displayed to the user via 'cards' after a search request has been made.
+**Use Case:** A user wants to search an area and receive nearby place results.
 
 ---
 
@@ -91,11 +91,17 @@ Benefit is relying on Firebase to provide security measures, and having a simpli
 
 ---
 ### ​Google Maps Location Finder
-**What services, APIs, or platforms will you use to implement this feature?**  
-
+**What services, APIs, or platforms will you use to implement this feature?**
+- APIs
+  - Google Map API
+  - Google Places API
 
 **What are the costs and benefits of using this solution?**  
-
+- Cost
+  - May limit us in our use case in unforseen ways 
+- Benefits
+  - Massive amount of data at our disposal
+  - Extensive documentation 
 ---
 ### ​Network Speed Display
 **What services, APIs, or platforms will you use to implement this feature?**  
