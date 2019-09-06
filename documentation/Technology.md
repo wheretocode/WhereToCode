@@ -88,7 +88,7 @@ An existing user wishes to login.
 - Firebase for Authentication    
 
 **What are the costs and benefits of using this solution?**  
-The benefits are relying on Firebase to provide security measures, and having a simplified JWT structure that allows us to easily access authenticated user profiles.  There are also multiple ways to easily integrate other registration methods such as by phone number or 3rd party accounts such as Github, Facebook, and Google. The Costs are potential 3rd party vendor lock-ins if we need to migrate from firebase.
+The benefits are relying on Firebase to provide security, and having a simplified JWT structure that allows us to easily access authenticated user profiles.  There are also multiple ways to easily integrate other registration methods using 3rd party accounts such as Github, Facebook, and Google. The Costs are potential migration issues if we needed to change our authentication provider.
 
 ---
 ### ​Google Maps Location Finder
