@@ -1,11 +1,11 @@
 const db = require("../../config/knexConfig");
 
 module.exports = {
-  getAll,
+  getAll_reviews,
   add
 };
 
-function getAll() {
+function getAll_reviews() {
   return db("reviews");
 }
 

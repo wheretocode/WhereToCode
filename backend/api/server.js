@@ -5,8 +5,10 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 // Importing of Routes
-const AuthRouter = require("./routes/AuthRoute");
-const LocationsRouter = require("./routes/locationsRoute.js");
+const authRoute = require("./routes/authRoute");
+const locationsRoute = require("./routes/locationsRoute.js");
+const usersRoute = require("./routes/usersRoute.js");
+const reviewsRoute = require("./routes/reviewsRoute.js");
 const routes = require("./routes");
 
 // SERVER
@@ -18,8 +20,10 @@ server.use(helmet());
 server.use(morgan("dev"));
 
 // ROUTER
-server.use("/auth", AuthRouter);
-server.use("/locations", LocationsRouter);
+server.use("/auth", authRoute);
+server.use("/locations", locationsRoute);
+server.use("/users", usersRoute);
+server.use("/reviews", reviewsRoute);
 server.use("/api", routes);
 
 // HOMEPAGE ROUTING
