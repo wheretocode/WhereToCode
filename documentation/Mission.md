@@ -1,7 +1,7 @@
 # MISSION 
 
 **What problem does this application solve?**  
-Allow users to find details about public places to work as a remote worker, create reviews for locations they've visited, and connect to a community of remote workers to share information and resources.  
+Allow remote workers to find details about public places to work as a , create reviews for locations they've visited, and connect to a community of remote workers to share information and resources.  
 
 **Who are your competitors and how do they solve this problem?**  
 
