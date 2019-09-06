@@ -62,8 +62,7 @@ An existing user wishes to login.
 **Name:** ​Login Page  
 **User type:** ​All  
 **Description:** Performs login authentication, redirects based on result  
-**Use Case:** A user wants to login using proper credentials; malicious actors and others using
-bad credentials will be stopped.  
+**Use Case:** A user wants to login using proper credentials; to have access to account specific features.  
 
 ---
 
@@ -80,14 +79,6 @@ bad credentials will be stopped.
 **Use Case:** 
 
 # Implementation of Features
----
-### ​Landing Page  
-
-**What services, APIs, or platforms will you use to implement this feature?**  
-- React
-
-**What are the costs and benefits of using this solution?**  
-
 
 
 ---
@@ -96,6 +87,7 @@ bad credentials will be stopped.
 - Firebase for Authentication    
 
 **What are the costs and benefits of using this solution?**  
+Benefit is relying on Firebase to provide security measures, and having a simplified JWT structure that allows us to easily access authenticated user profiles.  There are also multiple ways to easily integrate other registration methods such as by phone number or using 3rd party accounts such as Github, Facebook, Google.  Cost is considering any 3rd party vendor lock-ins, and how it affects users if we needed to migrate to another auth provider.  
 
 ---
 ### ​Google Maps Location Finder
