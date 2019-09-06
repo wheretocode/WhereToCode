@@ -1,8 +1,11 @@
+//ENV Configuration
+require("dotenv").config();
+
 // SERVER
 const server = require("./api/server.js");
 
 // PORT
-const PORT = process.env.PORT || 9001;
+const PORT = process.env.PORT || 8080;
 
 // LISTENING
 server.listen(PORT, () => {

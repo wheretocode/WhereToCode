@@ -1,19 +1,18 @@
+const { fork } = require('child_process');
 const express = require('express');
 const router = express.Router();
-//Speed Test API
-const speedTest = require('speedtest-net')({ maxTime: 3000 });
 
 // url/api/network
 router.get('/', (req, res) => {
-    speedTest.on('data', data => {
-        //if data has download and upload speeds, send data
-        if(data.speeds.download && data.speeds.upload) {
-            res.status(200).json(data.speeds);
-        } else {
-            res.status(500).json({ error: "Check Internet Connection" });
-        }
-        
+    const forked = fork('./backend/child_processes/networkApiChild.js');
+
+    forked.on('message', (msg) => {
+        res.status(200).json(msg);
+
+        forked.disconnect();
     });
+
+    forked.send({ start: 'speed-test' });
 });
 
 module.exports = router;
