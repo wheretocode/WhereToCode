@@ -45,9 +45,9 @@
 
 **Name:** ​Landing Page  
 **User type:** ​All  
-**Description:** Marketing site for existing and prospective users, contains login and registration
+**Description:** ​Marketing site for existing and prospective users, contains login and registration
 buttons to access application
-**Use Case:** A prospective user is seeking software to find locations for remote work so they come to our landing
+**Use Case:** ​A prospective user is seeking software to find locations for remote work so they come to our landing
 page to learn more about our specific value proposition and potentially register for our product.
 An existing user wishes to login.  
 
@@ -62,15 +62,15 @@ An existing user wishes to login.
 
 **Name:** ​Login Page  
 **User type:** ​All  
-**Description:** Performs login authentication, redirects based on result  
-**Use Case:** A user wants to login using proper credentials; to have access to account specific features.  
+**Description:** ​Performs login authentication, redirects based on result  
+**Use Case:** ​A user wants to login using proper credentials; to have access to account specific features.  
 
 ---
 
 **Name:** ​Google Map Location Finder
 **User type:** ​All  
-**Description:** Google Places/Map API locates the users geolocation automatically, user can then search for another location via the autocomplete search bar. Place results are then displayed to the user via 'cards' after a search request has been made.
-**Use Case:** A user wants to search an area and receive nearby place results.
+**Description:** ​Google Places/Map API locates the users geolocation automatically, user can then search for another location via the autocomplete search bar. Place results are then displayed to the user via 'cards' after a search request has been made.
+**Use Case:** ​A user wants to search an area and receive nearby place results.
 
 ---
 
