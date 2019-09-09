@@ -106,6 +106,12 @@ The benefits are relying on Firebase to provide security, and having a simplifie
 ---
 ### ​Network Speed Display
 **What services, APIs, or platforms will you use to implement this feature?**  
+- APIs
+    - speedtest-net
 
-
-**What are the costs and benefits of using this solution?**  
+**What are the costs and benefits of using this solution?** 
+- Cost
+    - slow return speed for network test results, offest via `child_process` in Node
+- Benefits
+    - Easily implemented for access to network information
+    - Customizable return object of results
