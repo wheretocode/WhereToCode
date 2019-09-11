@@ -4,11 +4,13 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 import * as ROUTES from '../../Routes/routes';
 
+import { Form, FormField, Button, Box, Text, Heading } from 'grommet';
+
 const SignUpPage = () => (
-    <div>
-        <h1>SignUp</h1>
+    <Box align="center" background="#555555" height="100vh" pad="large">
+        <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign Up</Heading>
         <SignUpForm />
-    </div>
+    </Box>
 );
 
 const INITIAL_STATE = {
@@ -62,49 +64,50 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
+            <Box width="medium">
+            <Form onSubmit={this.onSubmit}>
+                <FormField
                     name="username"
                     value={username}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Full Name"
                 />
-                <input
+                <FormField
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email Address"
                 />
-                <input
+                <FormField
                     name="passwordOne"
                     value={passwordOne}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Password"
                 />
-                <input
+                <FormField
                     name="passwordTwo"
                     value={passwordTwo}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Confirm Password"
                 />
-                <button disabled={isInvalid} type="submit">
-                    Sign Up
-        </button>
+                <Button disabled={isInvalid} type="submit" primary label="Sign Up" />
+                   
 
                 {error && <p>{error.message}</p>}
-            </form>
+            </Form>
+            </Box>
         );
     }
 }
 
 const SignUpLink = () => (
-    <p>
+    <Text alignSelf="center" margin="small">
         Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-    </p>
+    </Text>
 );
 const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 export default SignUpPage;
