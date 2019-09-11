@@ -32,11 +32,7 @@ const Navigation = () => (
 const NavigationAuth = () => (
   <ul>
     <RoutedButton label="Home" path={ROUTES.HOME} />
-
-
-    <li>
-      <SignOutButton />
-    </li>
+    <RoutedButton label="Sign Out" path={ROUTES.LANDING} />
   </ul>
 );
 
