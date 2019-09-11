@@ -1,28 +1,20 @@
-const express = require("express");
-const router = express.Router();
+// IMPORTS
+const USERS_MODEL = require("../models/UsersModel");
 
-const Users = require("../models/AuthModel");
+// EXPRESS ROUTER
+const router = require("express").Router();
 
-//    /GET request just as a quick way to get list of users for testing
-router.get("/", async (req, res) => {
-  try {
-    const allUsers = await Users.getAll();
-    res.status(200).json(allUsers);
-  } catch (err) {
-    res.status(500).json({ msg: err });
-  }
-});
-
+// @route  POST auth/
+// @desc   Gets all of the locations in the database
+// @access Public
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   if (!req.body) {
-    res.status(500).json({ msg: "Nothing in req.body" });
+    return res.status(500).json({ msg: "Nothing in req.body" });
   }
   let user = req.body;
   try {
-    // console.log(process.env.environment);
-    const addedUser = await Users.add(user);
-    res.status(201).json({ message: "User added", addedUser });
+    const addedUser = await USERS_MODEL.add(user);
+    return res.status(201).json({ message: "User added", addedUser });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Error adding user." });
@@ -30,3 +22,5 @@ router.post("/register", async (req, res) => {
 });
 
 module.exports = router;
+
+// Placeholder - will remove

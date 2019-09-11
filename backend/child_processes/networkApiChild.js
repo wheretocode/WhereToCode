@@ -7,7 +7,7 @@ process.on('message', (msg) => {
         if(data.speeds.download && data.speeds.upload) {
 
             process.send(data.speeds);
-
+       
         } else {
 
             process.send({ error: "Check Internet Connection" });
