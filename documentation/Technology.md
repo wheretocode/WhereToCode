@@ -4,16 +4,23 @@
 
 ### Solution: React & React Router  
 **What problems does this solution solve for this specific project?**
-
+- the app works fast because it is already saved.
+- React Router manages the url and declares what will be rendered
+- It is the best of both worlds, integrating both server-side and client-side rendering.
+- Can reuse components
+- Code is stable since it flows in one direction
 
 
 
 
 **What are the costs of using this solution?**
-
+- the app has to load fully before it is useful
+- Lots of libraries must be used 
+- Folder structure can get complicated 
 
 
 **What will you be using for styling and presentation?**  
+- Grommet will be used
 
 
 ## Back End
