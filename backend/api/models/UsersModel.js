@@ -1,14 +1,19 @@
 const db = require("../../config/knexConfig");
 
 module.exports = {
-  getAll,
-  add
+  getAll_users,
+  add,
+  getUserById
 };
 
-function getAll() {
+function getAll_users() {
   return db("users");
 }
 
 function add(user) {
   return db("users").insert(user);
+}
+
+function getUserById(id) {
+  return db("users").where(id);
 }
