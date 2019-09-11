@@ -8,6 +8,8 @@ import { Card } from 'grommet-controls';
 import Layout from '../components/Styling/Layout';
 import img1 from '../assets/img1.jpg'
 import * as ROUTES from '../Routes/routes';
+import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
+
 
 
 // const Landing = () => (
@@ -22,6 +24,15 @@ import * as ROUTES from '../Routes/routes';
 
 
 // export default Landing;
+// import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
+
+// const Landing = () => (
+//     <div>
+//         <h1>Landing</h1>
+//         <NetworkSpeed />
+//     </div>
+// );
+
 
 const Landing = () => (
     <Layout>
@@ -47,6 +58,7 @@ const Landing = () => (
           path='/history'
           color='brand'
         />
+            <NetworkSpeed />
 
         </Box> 
       <Box gridArea='side' background='dark-2' align='center' justify='center'>
@@ -98,6 +110,7 @@ const Landing = () => (
               </Paragraph>
             </CardContent>
           </Card>
+
 
           {/* //card3 */}
           <Card basis=''>

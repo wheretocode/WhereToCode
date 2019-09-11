@@ -5,6 +5,8 @@ import { Box, Heading, Markdown, Paragraph } from "grommet";
 import RoutedAnchor from "../components/RoutedAnchor";
 import Layout from '../components/Styling/Layout'
 
+import Map from '../components/Map/Map.jsx'
+
 const Home = () => (
     <Layout>
     <Box align="center" pad={{ top: "large", horizontal: "small" }} fill>
@@ -21,10 +23,11 @@ const Home = () => (
       Ut enim ad minim veniam, quis nostrud exercitation ullamco <RoutedAnchor path="/www" label="here" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
       </Paragraph>
     </Box>
+  <Map />
     <Gremlin />
   </Box>
   </Layout>
-);
+
 
 const condition = authUser => !!authUser;
 
