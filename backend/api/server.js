@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 // Importing of Routes
-const authRoute = require("./routes/authRoute_bug.js/index.js");
+const authRoute = require("./routes/authRoute.js");
 const locationsRoute = require("./routes/locationsRoute.js");
 const usersRoute = require("./routes/usersRoute.js");
 const reviewsRoute = require("./routes/reviewsRoute.js");
