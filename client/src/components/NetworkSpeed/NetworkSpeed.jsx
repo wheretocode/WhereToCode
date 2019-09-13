@@ -32,6 +32,12 @@ class NetworkSpeed extends React.Component {
                 <p>Original Download Speed: {this.state.originalDownload} Bps</p>
                 <p>Upload Speed: {this.state.upload} Mbps</p>
                 <p>Original Upload Speed: {this.state.originalUpload} Bps</p>
+                <p>ISP: {this.state.client.isp}</p>
+                <p>Current IP: {this.state.client.ip}</p>
+                <p>Server Host: {this.state.server.host}</p>
+                <p>Server Location: {this.state.server.location}</p>
+                <p>Distance(Mi): {this.state.server.distanceMi}</p>
+                <p>Ping: {this.state.server.ping}</p>
             </div>
         );
     }
