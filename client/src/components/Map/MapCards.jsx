@@ -5,10 +5,9 @@ const MapCards = (props) => {
     return (
         <div>
             {props.locations.map(location => {
-                return <SingleMapCard location={location.name} id={location.place_Id}/>
+                return <SingleMapCard location={location.name} id={location.place_id}/>
                 
             })}
-            {console.log(props)}
         </div>
     )
 }
