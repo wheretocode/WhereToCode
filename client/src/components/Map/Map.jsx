@@ -68,15 +68,6 @@ class Map extends Component {
       zoom: 13
     });
 
-    // Sets marker
-    let marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
-
-    // Marker is invisible on initial load
-    marker.setVisible(false);
-
     // Gets new place when auto complete search is clicked
     let place = this.autocomplete.getPlace();
 
@@ -85,7 +76,7 @@ class Map extends Component {
       location: place.geometry.location,
       placeId: place.place_id,
       radius: '500',
-      query: "cafe"
+      query: "Cafe"
     }
 
     // requests use of PlaceService 
@@ -94,8 +85,6 @@ class Map extends Component {
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
     // Sets marker to lat/lng position
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
     
     // Resets state when a new location is clicked
     if (this.state.locations.name !== ''){
@@ -106,6 +95,15 @@ class Map extends Component {
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
           results.map((item) => {
+            // Adds map markers to nearby locations
+            let marker = new google.maps.Marker({
+              map: map,
+              position: item.geometry.location,
+              title: item.name
+            });
+            marker.setPosition(item.geometry.location);
+            marker.setVisible(true);
+            
             this.setState({ 
               locations: [...this.state.locations, { 
                 name: item.name, 
