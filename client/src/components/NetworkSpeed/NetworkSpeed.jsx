@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Box, Table, TableBody, TableHeader, TableCell, TableRow, DropButton } from 'grommet';
+import NetworkTableGeneral from './NetworkTableGeneral';
+import NetworkTableSpeeds from './NetworkTableSpeeds';
+
+import { Box } from 'grommet';
 
 class NetworkSpeed extends React.Component {
     constructor(props) {
@@ -29,114 +32,15 @@ class NetworkSpeed extends React.Component {
     }
 
     render() {
-        const borderStyle = {
-                            "color": "gold",
-                            "size": "small",
-                            "style": "solid",
-                            "side": "bottom"
-                            }
-
-        const borderStyleCell = {
-            ...borderStyle,
-            "side": "right"
-        }
-
         return(
             <Box direction='row'
                  justify='evenly'
                  pad='medium'
                  background='dark-2'
-                 >
+            >
 
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-
-                            <TableCell scope="col" border={borderStyle}>
-                                <strong>Network General Info</strong>
-                            </TableCell>
-
-                            <TableCell scope="col" border={borderStyle}></TableCell>
-
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                ISP
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.client.isp}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Current IP
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.client.ip}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Server Host
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.server.host}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Server Location
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.server.location}</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Server Distance
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.server.distanceMi} mi</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-
-                            <TableCell scope="col" border={borderStyle}>
-                                <strong>Network Speed Info</strong>
-                            </TableCell>
-
-                            <TableCell scope="col" border={borderStyle}></TableCell>
-                            <TableCell scope="col" border={borderStyle}></TableCell>
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Download Speeds
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.download} Mbps</TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.originalDownload} Bps</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Upload Speeds
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.upload} Mbps</TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.originalUpload} Bps</TableCell>
-                        </TableRow>
-
-                        <TableRow>
-                            <TableCell scope="row" border={borderStyleCell}>
-                                Ping Speed
-                            </TableCell>
-                            <TableCell border={borderStyleCell}>{this.state.server.ping} ms</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                <NetworkTableGeneral data={this.state} />
+                <NetworkTableSpeeds data={this.state} />
 
             </Box>
         );
