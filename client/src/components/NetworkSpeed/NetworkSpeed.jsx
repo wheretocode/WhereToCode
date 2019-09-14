@@ -5,11 +5,12 @@ class NetworkSpeed extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = { client: {}, server: {} }
     }
 
     componentDidMount() {
-        axios.get('https://wheretocode-master.herokuapp.com/api/network')
+        //https://wheretocode-master.herokuapp.com/api/network
+        axios.get('http://localhost:8080/api/network')
              .then(res => {
                         console.log(res.data)
 
@@ -32,7 +33,7 @@ class NetworkSpeed extends React.Component {
                 <p>Original Download Speed: {this.state.originalDownload} Bps</p>
                 <p>Upload Speed: {this.state.upload} Mbps</p>
                 <p>Original Upload Speed: {this.state.originalUpload} Bps</p>
-                <p>ISP: {this.state.client.isp}</p>
+                <p>ISP: {this.state.client.isp ? this.state.client.isp : null}</p>
                 <p>Current IP: {this.state.client.ip}</p>
                 <p>Server Host: {this.state.server.host}</p>
                 <p>Server Location: {this.state.server.location}</p>
