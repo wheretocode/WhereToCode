@@ -34,7 +34,10 @@ const SignUpFormBase = props => {
           email: email
         };
         axios
-          .get("http://wheretocode-master.herokuapp.com/auth/register", newUser)
+          .post(
+            "http://wheretocode-master.herokuapp.com/auth/register",
+            newUser
+          )
           .then(res => {
             console.log(res.data);
             setUsername("");
