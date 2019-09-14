@@ -4,6 +4,8 @@ import axios from 'axios';
 import NetworkTableGeneral from './NetworkTableGeneral';
 import NetworkTableSpeeds from './NetworkTableSpeeds';
 
+import TriangleLoader from '../Loaders/TriangleLoader';
+
 import { Box } from 'grommet';
 
 class NetworkSpeed extends React.Component {
@@ -39,8 +41,15 @@ class NetworkSpeed extends React.Component {
                  background='dark-2'
             >
 
-                <NetworkTableGeneral data={this.state} />
-                <NetworkTableSpeeds data={this.state} />
+
+                {
+                    Object.keys(this.state.client).length > 0 ? <React.Fragment>
+                                                                    <NetworkTableGeneral data={this.state} />
+                                                                    <NetworkTableSpeeds data={this.state} />
+                                                                </React.Fragment>
+                                                              
+                                                              : <TriangleLoader/>
+                }
 
             </Box>
         );
