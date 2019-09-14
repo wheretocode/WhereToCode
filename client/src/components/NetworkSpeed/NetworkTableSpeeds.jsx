@@ -15,7 +15,7 @@ const NetworkTableSpeeds = props => {
     }
 
     return(
-        <Table>
+        <Table margin='large'>
             <TableHeader>
                 <TableRow>
 
