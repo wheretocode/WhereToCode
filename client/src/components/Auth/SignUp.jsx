@@ -29,13 +29,9 @@ const SignUpFormBase = props => {
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(user => {
                 const newUser = {
-
                     firebase_user_id: user.uid,
                     userName: username,
                     email: email,
-
-
-
                 };
                 axios
                     .post("https://wheretocode-master.herokuapp.com/auth/register", newUser)
