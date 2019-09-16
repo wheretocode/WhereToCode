@@ -18,6 +18,7 @@ const SignUpPage = () => (
 );
 
 const SignUpFormBase = props => {
+    //Hooks to update state 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
@@ -25,6 +26,8 @@ const SignUpFormBase = props => {
     const [error, setError] = useState(null);
 
     const onSubmit = event => {
+
+        //send email & pw values form to firebase for authentication
         props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(user => {
@@ -33,6 +36,7 @@ const SignUpFormBase = props => {
                     userName: username,
                     email: email
                 };
+                //send FB authenticated user UID, username and email to wheretocode Database
                 axios
                     .post(
                         "https://wheretocode-master.herokuapp.com/auth/register",
