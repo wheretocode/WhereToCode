@@ -2,7 +2,8 @@ const db = require("../../config/knexConfig");
 
 module.exports = {
   getAll_reviews,
-  add
+  add,
+  getReviewById
 };
 
 function getAll_reviews() {
