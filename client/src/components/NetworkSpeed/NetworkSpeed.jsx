@@ -21,8 +21,8 @@ class NetworkSpeed extends React.Component {
 
     runNetworkTest = () => {
         this.resetState();
-        //https://wheretocode-master.herokuapp.com/api/network
-        axios.get('http://localhost:8080/api/network')
+        //http://localhost:8080/api/network
+        axios.get('https://wheretocode-master.herokuapp.com/api/network')
              .then(res => {
                             console.log(res.data)
 
@@ -59,7 +59,7 @@ class NetworkSpeed extends React.Component {
                                                                     </Box>
 
                                                                     <Button label='Run Test' 
-                                                                            color='brand' 
+                                                                            color='gold' 
                                                                             alignSelf='center' 
                                                                             pad='large' 
                                                                             onClick={this.runNetworkTest}
