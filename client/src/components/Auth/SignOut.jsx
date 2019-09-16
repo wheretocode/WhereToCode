@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withFirebase } from '../../Firebase';
-import * as ROUTES from '../../Routes/routes';
-
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { withFirebase } from "../../Firebase";
+import * as ROUTES from "../../Routes/routes";
 
 class SignOutButton1 extends Component {
   constructor(props) {
@@ -10,11 +9,9 @@ class SignOutButton1 extends Component {
   }
 
   submit = e => {
-    this.props.firebase
-      .doSignOut()
-      .then(() => {
-        this.props.history.push(ROUTES.LANDING);
-      })
+    this.props.firebase.doSignOut().then(() => {
+      this.props.history.push(ROUTES.LANDING);
+    });
   };
 
   render() {
@@ -22,10 +19,9 @@ class SignOutButton1 extends Component {
       <>
         <button type="button" onClick={this.submit}>
           Sign Out
-    </button>
-
+        </button>
       </>
-    )
+    );
   }
 }
 

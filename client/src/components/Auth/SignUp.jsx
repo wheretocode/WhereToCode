@@ -31,10 +31,13 @@ const SignUpFormBase = props => {
                 const newUser = {
                     firebase_user_id: user.uid,
                     userName: username,
-                    email: email,
+                    email: email
                 };
                 axios
-                    .post("https://wheretocode-master.herokuapp.com/auth/register", newUser)
+                    .post(
+                        "http://wheretocode-master.herokuapp.com/auth/register",
+                        newUser
+                    )
                     .then(res => {
                         console.log(res.data);
                         setUsername("");
