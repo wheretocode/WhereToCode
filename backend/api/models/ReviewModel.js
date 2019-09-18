@@ -3,7 +3,7 @@ const db = require("../../config/knexConfig");
 module.exports = {
   getAll_reviews,
   add,
-  getReviewById
+  remove
 };
 
 function getAll_reviews() {
@@ -11,5 +11,9 @@ function getAll_reviews() {
 }
 
 function add(review) {
-  return db("reviews").insert(review);
+  return db("reviews").insert(review).return(review);
+}
+
+function remove(id) {
+  return db("reviews").where({id}).del();
 }
