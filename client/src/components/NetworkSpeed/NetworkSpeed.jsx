@@ -22,9 +22,9 @@ class NetworkSpeed extends React.Component {
     runNetworkTest = () => {
         this.resetState();
         //http://localhost:8080/api/network
-        axios.get('https://wheretocode-master.herokuapp.com/api/network')
+        axios.get('http://localhost:8080/api/network')
              .then(res => {
-                            console.log(res.data)
+                            console.log(res)
 
                             this.setState({ 
                                 download: res.data.speeds.download,
