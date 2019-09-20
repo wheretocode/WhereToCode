@@ -34,6 +34,17 @@ const test_reviews = [
   }
 ];
 
+const singleReview = {
+  rating: 1,
+  comments: "meh",
+  internet_rating: 2,
+  upload_speed: 3,
+  download_speed: 4,
+  secure_wifi: false,
+  user_id: 2,
+  location_id: 1
+}
+
 describe('REVIEWS MODEL', () => {
     describe('getAll_reviews()', () => {
         it('should return a list of all reviews', async () => {
@@ -43,5 +54,29 @@ describe('REVIEWS MODEL', () => {
             expect(reviews[0].internet_rating).toBe(2);
             expect(reviews[1].comments).toBe('no comment')
         })
+    })
+    describe('add(review)', () => {
+      it('should add a new review', async () => {
+        const newReview = await REVIEWS_MODEL.add(singleReview)
+        const reviews = await REVIEWS_MODEL.getAll_reviews();
+
+        expect(reviews.length).toBe(3);
+        expect(reviews[2].comments).toBe("meh");
+      })
+      it('should return the newly added review', async () => {
+        const newReview = await REVIEWS_MODEL.add(singleReview)
+
+        expect(newReview).toEqual(singleReview);
+      })
+    })
+    describe('remove(id)', () => {
+      it('should delete the review with the listed ID', async () => {
+        const deleted = await REVIEWS_MODEL.remove(2);
+        const reviews = await REVIEWS_MODEL.getAll_reviews();
+
+        expect(reviews.length).toBe(1);
+        expect(reviews[1]).toBe(undefined);
+        expect(reviews[0].comments).toBe('average at best')
+      })
     })
 })
