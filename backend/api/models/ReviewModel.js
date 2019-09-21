@@ -5,7 +5,6 @@ module.exports = {
   getReviewById,
   getReviewsByUser,
   getReviewsByLocation,
-  add
   add,
   remove,
   update
