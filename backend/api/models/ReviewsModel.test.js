@@ -79,4 +79,9 @@ describe('REVIEWS MODEL', () => {
         expect(reviews[0].comments).toBe('average at best')
       })
     })
+    describe('update(id, update)', () => {
+      it('should update the review with the listed ID to include the new information being passed in', async () => {
+        
+      })
+    })
 })
