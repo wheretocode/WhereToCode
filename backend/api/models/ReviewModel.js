@@ -6,6 +6,9 @@ module.exports = {
   getReviewsByUser,
   getReviewsByLocation,
   add
+  add,
+  remove,
+  update
 };
 
 function getAll_reviews() {
@@ -33,5 +36,13 @@ function getReviewsByLocation(id) {
 }
 
 function add(review) {
-  return db("reviews").insert(review);
+  return db("reviews").insert(review).return(review);
+}
+
+function remove(id) {
+  return db("reviews").where({id}).del();
+}
+
+function update(id, update) {
+  return db("reviews").where({id}).update(update).return(update);
 }
