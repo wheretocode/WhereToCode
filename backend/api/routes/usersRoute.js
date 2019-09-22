@@ -29,4 +29,22 @@ router.get("/:userid", async (req, res) => {
   }
 });
 
+// @route PUT users/:userid
+// @desc updated individual user on BE & Firebase
+// @access Protected 
+router.put('/:userid', async(req,res) => {
+  console.log('usersRouter put/')
+  const { id } = req.params;
+  try {
+    // ATTEMPT UPDATE
+    const updatedUser = await USERS_MODEL.updateUser(id)
+      console.log('updatedUser', updatedUser)
+
+      // res.status(200).json(updatedUser);
+  } catch {
+    res.status(500).json({ msg: err });
+  }
+  
+})
+
 module.exports = router;
