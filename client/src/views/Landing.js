@@ -10,7 +10,8 @@ import img1 from '../assets/img1.jpg'
 import * as ROUTES from '../Routes/routes';
 import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
 
-
+// TEST IMPORT 
+import UpdateUser from '../components/Auth/UpdateUser.jsx'
 
 // const Landing = () => (
 //     <AppBar>
@@ -35,6 +36,9 @@ import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
 
 
 const Landing = () => (
+    <>
+
+    <UpdateUser />
     <Layout>
     <Grid
       areas={[
@@ -123,6 +127,8 @@ const Landing = () => (
         </Box>
       </Box>
     </Layout>
+    
+    </>
   );
   
   export default Landing;
