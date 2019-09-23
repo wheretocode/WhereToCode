@@ -47,10 +47,20 @@ const initialize = async () => {
     await db('reviews').insert(test_reviews)
 }
 
+beforeEach(() => {
+    return initialize();
+})
+
 describe('REVIEWS ROUTE', () => {
-    describe('/messages', () => {
+    describe('/reviews', () => {
         describe('GET', () => {
-            
+            it('should return all of the reviews in the database as a json with a status 200', async () => {
+                const res = await request(server).get('/reviews')
+
+                expect(res.body.length).toBe(2);
+                expect(res.type).toBe('application/json');
+                expect(res.status).toBe(200);
+            })
         })
     })
 })
