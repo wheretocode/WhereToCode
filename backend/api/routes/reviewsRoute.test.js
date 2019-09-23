@@ -46,3 +46,11 @@ const initialize = async () => {
     await db('reviews').truncate()
     await db('reviews').insert(test_reviews)
 }
+
+describe('REVIEWS ROUTE', () => {
+    describe('/messages', () => {
+        describe('GET', () => {
+            
+        })
+    })
+})
