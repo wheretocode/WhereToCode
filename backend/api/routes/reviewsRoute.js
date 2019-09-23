@@ -79,7 +79,7 @@ router.post("/", requireBody, async (req, res) => {
 // @route PUT reviews/
 // @desc Edits a review
 // @access currently Public, needs to be protected
-router.put("/:id", requireBody, validateID, async (req, res) => {
+router.put("/:id", requireBody, validateId, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
     return res.status(200).json({message: "Review updated", updated})
