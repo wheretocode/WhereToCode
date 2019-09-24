@@ -18,6 +18,7 @@ import './App.css';
 import Landing from './views/Landing';
 import Home from './views/Home';
 import AccountPage from './views/Account';
+import Review from './views/Review';
 
 //@ utils
 import * as ROUTES from './Routes/routes';
@@ -106,7 +107,7 @@ const hivestack =
   },
   heading: {
     font: false
-    },
+  },
   radioButton: {
     border: {
       color: {
@@ -125,7 +126,6 @@ const hivestack =
 const App = () => (
   <Grommet theme={hivestack}>
   <Router>
-    <Navigation />
     <Route exact path={ROUTES.LANDING} component={Landing} />
     <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
     <Route
@@ -135,6 +135,7 @@ const App = () => (
     <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
     <Route exact path={ROUTES.HOME} component={Home} />
     <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+    <Route exact path={ROUTES.REVIEW} component={Review} />
   </Router>
   </Grommet>
 
