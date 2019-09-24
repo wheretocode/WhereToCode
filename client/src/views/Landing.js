@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box, Heading, Paragraph, Grid } from "grommet";
-import { CardContent } from "grommet-controls";
-import { Card } from "grommet-controls";
+
 import styled from "styled-components";
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
-import Navigation from "../components/Navigation/index";
 
 const Landing = () => {
   const [currentActivity, setCurrentActivity] = useState("code");
@@ -12,16 +8,20 @@ const Landing = () => {
 
   const activity = ["code", "study", "stream"];
 
-  setTimeout(updateText, 2000);
-
   function updateText() {
+    console.log("...in Landing");
     setCurrentActivity(activity[number]);
-    number === activity.length - 1 ? setNumber(0) : setNumber(number + 1);
+    return number === activity.length - 1
+      ? setNumber(0)
+      : setNumber(number + 1);
   }
+
+  useEffect(() => {
+    setTimeout(updateText, 2000);
+  }, [number]);
 
   return (
     <LandingPageContainer>
-      {/* <Navigation /> */}
       <SearchComponent>
         <h2>
           Find a place to <span>{currentActivity}</span> near you
@@ -38,15 +38,13 @@ const Landing = () => {
 export default Landing;
 
 const SearchComponent = styled.div`
-  padding-top: 22%;
-  // border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
   h2 {
     margin: 0 0 2rem 0;
     color: white;
-    fontfamily: "Roboto";
+    font-family: "Roboto", sans-serif;
     font-size: 3rem;
   }
   span {
@@ -76,8 +74,11 @@ const SearchComponent = styled.div`
 `;
 
 const LandingPageContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
   background: url("/heroimage.svg") no-repeat;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 `;

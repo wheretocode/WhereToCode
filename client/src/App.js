@@ -4,14 +4,16 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 //@ components
 
-import Navigation from "./components/Navigation/index.jsx";
+import Navigation from "./components/Navigation/index";
 import SignUpPage from "./components/Auth/SignUp.jsx";
 import SignInPage from "./components/Auth/SignIn.jsx";
 import PasswordForgetPage from "./components/Auth/PasswordForget.jsx";
 import { withAuthentication } from "./components/Session";
+import Footer from "./components/Footer/Footer.jsx";
 
 import { Grommet } from "grommet";
 import "./App.css";
+import styled from "styled-components";
 
 //@ views
 import Landing from "./views/Landing";
@@ -34,15 +36,22 @@ const theme = {
 const App = () => (
   <Grommet theme={theme}>
     <Router>
-      <Navigation />
-      <Route exact path={ROUTES.LANDING} component={Landing} />
-      <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route exact path={ROUTES.HOME} component={Home} />
-      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+      <AppContainer>
+        <Navigation />
+        <Route exact path={ROUTES.LANDING} component={Landing} />
+        <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+        <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+        <Route exact path={ROUTES.HOME} component={Home} />
+        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+        <Footer />
+      </AppContainer>
     </Router>
   </Grommet>
 );
 
 export default withAuthentication(App);
+
+const AppContainer = styled.div`
+  width: 100vw;
+`;

@@ -5,25 +5,22 @@ import * as ROUTES from "../../Routes/routes";
 
 import { AuthUserContext } from "../Session";
 
-import { Box, Button, RoutedButton, Heading, Grommet } from "grommet";
-import AppBar from "../Styling/AppBar";
+import { Box, Button, RoutedButton, Heading } from "grommet";
 
-import NetworkSpeed from "../../components/NetworkSpeed/NetworkSpeed";
+import styled from "styled-components";
 
 const Navigation = () => (
-  <div>
-    <AppBar>
-      <Box direction="row" gap="small">
-        <Heading level="3" margin="none">
-          <Button label="HiveStack" path="/" plain="true" />
-        </Heading>
-      </Box>
-      {/* <NetworkSpeed /> */}
-      <AuthUserContext.Consumer>
-        {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
-      </AuthUserContext.Consumer>
-    </AppBar>
-  </div>
+  <Navbar>
+    <Box direction="row" gap="small">
+      <Heading level="3" margin="none">
+        <i class="fas fa-wifi" style={{ color: "gold", margin: "0 10px" }}></i>
+        <Button label="HiveStack" color="white" path="/" plain="true" />
+      </Heading>
+    </Box>
+    <AuthUserContext.Consumer>
+      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+    </AuthUserContext.Consumer>
+  </Navbar>
 );
 
 const NavigationAuth = () => (
@@ -39,10 +36,19 @@ const NavigationAuth = () => (
 const NavigationNonAuth = () => (
   <Box direction="row" justify="right" gap="small">
     <ul>
-      <RoutedButton label="Sign In" path={ROUTES.SIGN_IN} />
-      <RoutedButton label="Sign Up" path={ROUTES.SIGN_UP} />
+      <RoutedButton color="white" label="Login" path={ROUTES.SIGN_IN} />
+      <RoutedButton color="gold" label="Sign Up" path={ROUTES.SIGN_UP} />
     </ul>
   </Box>
 );
 
 export default Navigation;
+
+const Navbar = styled.div`
+  position: absolute;
+  // border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 20px;
+`;
