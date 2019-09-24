@@ -16,9 +16,9 @@ function add(user) {
 }
 
 function getUserById(id) {
-  return db("users").where(id);
+  return db("users").where({ id }).first();
 }
 
-function updateUser(id, changes) {
-  return db("users").where(id).update(changes);
+function updateUser(firebase_user_id, changes) {
+  return db("users").where({ firebase_user_id }).update(changes);
 }

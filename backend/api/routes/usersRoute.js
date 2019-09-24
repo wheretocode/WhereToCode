@@ -19,32 +19,41 @@ router.get("/", async (req, res) => {
 // @route  GET users/:userid
 // @desc   Gets a specific user from the database
 // @access Public
-router.get("/:userid", async (req, res) => {
-  const { id } = req.params;
+router.get("/:id", async (req, res) => {
+  console.log('usersRouter get id/')
+  // const { id } = req.params;
   try {
-    const specifiedUser = await USERS_MODEL.getUserById(id);
-    res.status(200).json(specifiedUser);
+    const User = await USERS_MODEL.getUserById(req.params.id);
+    if (User) {
+      res.status(200).json(User);
+    } else {
+      res.status(400).send({ message: "get id error" });
+    }
   } catch (err) {
-    res.status(500).json({ msg: err });
+    res.status(500).json({ msg: "error", err });
   }
 });
 
-// @route PUT users/:userid
-// @desc updated individual user on BE & Firebase
-// @access Protected 
-router.put('/:userid', async(req,res) => {
+
+// @route  GET users/:id
+// @desc   Gets a specific user from the database
+// @access Public
+router.put('/:id', async (req, res) => {
   console.log('usersRouter put/')
-  const { id } = req.params;
+
   try {
     // ATTEMPT UPDATE
-    const updatedUser = await USERS_MODEL.updateUser(id)
-      console.log('updatedUser', updatedUser)
+    const updatedUser = await USERS_MODEL.updateUser(req.params.id, req.body);
+    console.log('updatedUser', updatedUser);
 
-      // res.status(200).json(updatedUser);
-  } catch {
-    res.status(500).json({ msg: err });
+    return res.status(200).json({ message: "updated user", updatedUser })
+  } catch (err) {
+    return res.status(500).json({ msg: err });
   }
-  
+
 })
+
+
+
 
 module.exports = router;
