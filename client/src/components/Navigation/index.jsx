@@ -13,31 +13,30 @@ import AppBar from '../Styling/AppBar';
 
 
 const Navigation = () => (
-  <div>
     <AppBar>
-    <Box direction='row'  gap='small'>
+    <Box direction='row'>
       <Heading level='3' margin='none'>
-      <Button label='HiveStack' path='/' plain='true' />
+      <Button label='HiveStack' path='/' plain='true' margin='none'/>
 </Heading>
       </Box>
+      <Box direction='row' justify='left' gap='small'>
+        </Box>
+    
     <AuthUserContext.Consumer>
       {authUser =>
         authUser ? <NavigationAuth /> : <NavigationNonAuth />
       }
     </AuthUserContext.Consumer>
     </AppBar>
-  </div>
 );
 
 const NavigationAuth = () => (
+  <Box direction='row' justify='right' gap='small'>
   <ul>
-    <RoutedButton label="Home" path={ROUTES.HOME} />
-
-
-    <li>
-      <SignOutButton />
-    </li>
+      <RoutedButton label="Home" path={ROUTES.HOME} />
+      < SignOutButton />
   </ul>
+  </Box>
 );
 
 const NavigationNonAuth = () => (
