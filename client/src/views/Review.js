@@ -58,6 +58,11 @@ const Review = () => (
           <Star color="white" />
           <Button label="Write a Review" disabled={false} plain={true} color="white" onClick={() => (Layer ? undefined : 206)} />
         </Box>
+        {Layer === SignUpPage && (
+              <Layer modal={false} animate={true} responsive={true} position="center" plain={true}>
+          <Button label="Sign In" primary={true} color="accent-4" hoverIndicator={true} />
+        </Layer>
+    )}
       </Box>
       <Box justify="center" background={{"color":"light-2"}} height="xxsmall" alignSelf="center">
         <Box align="center" justify="center" pad="xsmall" direction="row-responsive" width="medium" height="xxsmall" alignSelf="end">
