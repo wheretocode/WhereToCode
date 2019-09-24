@@ -123,7 +123,7 @@ const hivestack =
 }
 
 const App = () => (
-  <Grommet theme={theme}>
+  <Grommet theme={hivestack}>
   <Router>
     <Navigation />
     <Route exact path={ROUTES.LANDING} component={Landing} />
