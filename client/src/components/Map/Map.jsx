@@ -106,8 +106,7 @@ class Map extends Component {
             
             this.setState({ 
               locations: [...this.state.locations, { 
-                name: item.name, 
-                place_id: item.place_id 
+                name: item.name 
               }]
             })
           })
