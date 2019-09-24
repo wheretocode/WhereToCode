@@ -9,6 +9,7 @@ import Layout from '../components/Styling/Layout';
 import img1 from '../assets/img1.jpg'
 import * as ROUTES from '../Routes/routes';
 import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
+import Navigation from '../components/Navigation/index.jsx';
 
 
 
@@ -36,6 +37,7 @@ import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
 
 const Landing = () => (
     <Layout>
+      <Navigation />
     <Grid
       areas={[
         { name: 'main', start: [0, 0], end: [1, 1] },
