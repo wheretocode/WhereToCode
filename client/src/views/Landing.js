@@ -44,7 +44,7 @@ const SearchComponent = styled.div`
   h2 {
     margin: 0 0 2rem 0;
     color: white;
-    font-family: "Roboto", sans-serif;
+    font-family: "'Zilla Slab', serif";
     font-size: 3rem;
   }
   span {
@@ -74,7 +74,7 @@ const SearchComponent = styled.div`
 `;
 
 const LandingPageContainer = styled.div`
-  background: url("/heroimage.svg") no-repeat;
+  background: url("/heroimage.svg");
   background-size: cover;
   display: flex;
   justify-content: center;

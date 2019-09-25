@@ -5,7 +5,9 @@ import * as ROUTES from "../../Routes/routes";
 
 import { AuthUserContext } from "../Session";
 
-import { Box, Button, RoutedButton, Heading } from "grommet";
+import { Box, Button, RoutedButton, Heading, Anchor } from "grommet";
+
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -36,8 +38,27 @@ const NavigationAuth = () => (
 const NavigationNonAuth = () => (
   <Box direction="row" justify="right" gap="small">
     <ul>
-      <RoutedButton color="white" label="Login" path={ROUTES.SIGN_IN} />
-      <RoutedButton color="gold" label="Sign Up" path={ROUTES.SIGN_UP} />
+      <Link
+        style={{ textDecoration: "none", color: "white", marginRight: "10px" }}
+        to={ROUTES.SIGN_IN}
+      >
+        Login
+      </Link>
+      <Link
+        style={{
+          textDecoration: "none",
+          color: "black",
+          border: "1px solid gold",
+          backgroundColor: "gold",
+          borderRadius: "5px",
+          fontSize: "1.5rem",
+          padding: "5px 20px",
+          fontFamily: "'Zilla Slab', serif"
+        }}
+        to={ROUTES.SIGN_UP}
+      >
+        Sign Up
+      </Link>
     </ul>
   </Box>
 );
