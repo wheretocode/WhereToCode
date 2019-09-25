@@ -82,7 +82,7 @@ class Map extends Component {
     // request object sets search query, search radius, and coordinates
     let request = {
       location: place.geometry.location,
-      placeId: place.place_id,
+      id: place.place_id,
       radius: "500",
       query: "Cafe"
     };
@@ -116,7 +116,8 @@ class Map extends Component {
             locations: [
               ...this.state.locations,
               {
-                name: item.name
+                name: item.name,
+                id: item.place_id
               }
             ]
           });
