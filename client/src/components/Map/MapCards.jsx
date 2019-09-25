@@ -13,18 +13,8 @@ class MapCards extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // this.props.locations.map(location => {
-    //   this.setState({
-    //     locationDetails: [
-    //       ...this.state.locationDetails,
-    //       {
-    //         id: location
-    //       }
-    //     ]
-    //   });
-    // });
-    if (this.state.locationDetails.length === 0) {
+  componentDidUpdate(prevProps) {
+    if (this.props.locations !== prevProps.locations) {
       this.props.locations.map(location => {
         this.setState({
           locationDetails: [
@@ -35,8 +25,6 @@ class MapCards extends Component {
           ]
         });
       });
-    } else if (this.state.locationDetails.length === 20) {
-      return;
     }
   }
 
@@ -80,7 +68,6 @@ class MapCards extends Component {
             </div>
           );
         })} */}
-        {console.log(this.state.locationDetails)}
       </div>
     );
   }
