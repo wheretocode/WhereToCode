@@ -31,15 +31,19 @@ const SignUpFormBase = props => {
         props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(user => {
+                console.log(user);
+                console.log(user.user.uid);
                 const newUser = {
-                    firebase_user_id: user.uid,
+                    firebase_user_id: user.user.uid,
                     userName: username,
                     email: email
                 };
+                console.log(newUser);
                 //send FB authenticated user UID, username and email to wheretocode Database
                 axios
                     .post(
-                        "https://wheretocode-master.herokuapp.com/auth/register",
+                        // "https://wheretocode-master.herokuapp.com/auth/register",
+                        "http://localhost:8080/auth/register",
                         newUser
                     )
                     .then(res => {
