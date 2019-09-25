@@ -36,22 +36,16 @@ const theme = {
 const App = () => (
   <Grommet theme={theme}>
     <Router>
-      <AppContainer>
-        <Navigation />
-        <Route exact path={ROUTES.LANDING} component={Landing} />
-        <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-        <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-        <Route exact path={ROUTES.HOME} component={Home} />
-        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        <Footer />
-      </AppContainer>
+      <Navigation />
+      <Route exact path={ROUTES.LANDING} component={Landing} />
+      <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+      <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+      <Footer />
     </Router>
   </Grommet>
 );
 
 export default withAuthentication(App);
-
-const AppContainer = styled.div`
-  width: 100vw;
-`;

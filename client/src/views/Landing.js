@@ -42,26 +42,27 @@ const SearchComponent = styled.div`
   flex-direction: column;
   align-items: center;
   h2 {
-    margin: 0 0 2rem 0;
+    margin: 0 0 32px 0;
     color: white;
     font-family: "'Zilla Slab', serif";
-    font-size: 3rem;
+    font-size: 48px;
   }
   span {
     color: gold;
   }
   .explore-btn {
     input {
-      height: 2.5rem;
+      height: 44px;
       border-radius: 10px 0 0 10px;
-      border: 1px solid black;
       border-right: none;
+      border: 1px solid white;
     }
     button {
-      font-size: 1rem;
+      margin-top: 5px;
+      font-size: 16px;
       font-weight: bold;
-      height: 2.64rem;
-      width: 4rem;
+      height: 48px;
+      width: 64px;
       border-radius: 0 10px 10px 0;
       background: gold;
       border: 1px solid gold;

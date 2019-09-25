@@ -15,5 +15,4 @@ const FooterContainer = styled.div`
   border: 1px solid gold;
   background: gold;
   text-align: center;
-  width: 100%;
 `;
