@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AuthUserContext from './context';
+
 import { withFirebase } from '../../Firebase/index';
 
 const withAuthentication = Component => {
@@ -14,6 +15,7 @@ const withAuthentication = Component => {
         }
 
         componentDidMount() {
+
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
                     authUser
@@ -29,6 +31,7 @@ const withAuthentication = Component => {
 
         render() {
             return (
+
                 <AuthUserContext.Provider value={this.state.authUser}>
                     <Component {...this.props} />
                 </AuthUserContext.Provider>
@@ -40,3 +43,4 @@ const withAuthentication = Component => {
 };
 
 export default withAuthentication;
+

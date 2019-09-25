@@ -38,7 +38,7 @@ import UpdateUser from '../components/Auth/UpdateUser.jsx'
 const Landing = () => (
     <>
 
-    <UpdateUser />
+    
     <Layout>
     <Grid
       areas={[

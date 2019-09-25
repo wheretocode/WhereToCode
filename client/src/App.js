@@ -26,7 +26,7 @@ import * as ROUTES from './Routes/routes';
 const theme = {
   global: {
     font: {
-      family:'Roboto',
+      family: 'Roboto',
       size: '14px',
       height: '20px',
     },
@@ -35,20 +35,23 @@ const theme = {
 
 const App = () => (
   <Grommet theme={theme}>
-  <Router>
-    <Navigation />
-    <Route exact path={ROUTES.LANDING} component={Landing} />
-    <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-    <Route
-      path={ROUTES.PASSWORD_FORGET}
-      component={PasswordForgetPage}
-    />
-    <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-    <Route exact path={ROUTES.HOME} component={Home} />
-    <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-  </Router>
+    <Router>
+      <Navigation />
+      <Route exact path={ROUTES.LANDING} component={Landing} />
+      <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+      <Route
+        path={ROUTES.PASSWORD_FORGET}
+        component={PasswordForgetPage}
+      />
+      <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+    </Router>
   </Grommet>
 
 );
 
 export default withAuthentication(App);
+//gives the app the state of the current user (if there is an authenticated/current user)
+//along with the withFirebase HOC (which is a component that consumes FB
+//context & can pass that down to other components it waraps)

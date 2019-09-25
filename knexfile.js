@@ -19,6 +19,19 @@ module.exports = {
     },
     seeds: { directory: "./backend/seeds" }
   },
+  testing: {
+    client: 'postgresql',
+    connection: {
+      filename: './data/test.db3',
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './backend/migrations',
+    },
+    seeds: {
+      directory: './backend/seeds',
+    },
+  },
   production: {
     client: "pg",
     connection: process.env.DATABASE_URL,

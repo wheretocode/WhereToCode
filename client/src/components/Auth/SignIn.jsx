@@ -12,10 +12,10 @@ import { Form, FormField, Button, Box, Heading } from 'grommet';
 const SignInPage = () => (
     <Box align="center" background="#555555" height="100vh" pad="large">
         <Box>
-        <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign In</Heading>
-        <SignInForm />
-        <PasswordForgetLink />
-        <SignUpLink />
+            <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign In</Heading>
+            <SignInForm />
+            <PasswordForgetLink />
+            <SignUpLink />
         </Box>
     </Box>
 );
@@ -60,29 +60,30 @@ class SignInFormBase extends Component {
 
         return (
             <Box width="medium">
-            <Form onSubmit={this.onSubmit}>
-                <FormField
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <FormField
-                    name="password"
-                    value={password}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <Button disabled={isInvalid} type="submit" primary label="Sign In" />
+                <Form onSubmit={this.onSubmit}>
+                    <FormField
+                        name="email"
+                        value={email}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Email Address"
+                    />
+                    <FormField
+                        name="password"
+                        value={password}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Password"
+                    />
+                    <Button disabled={isInvalid} type="submit" primary label="Sign In" />
 
-                {error && <p>{error.message}</p>}
-            </Form>
+                    {error && <p>{error.message}</p>}
+                </Form>
             </Box>
         );
     }
 }
+
 
 const SignInForm = compose(
     withRouter,
