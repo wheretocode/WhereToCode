@@ -1,7 +1,7 @@
 const request = require("supertest");
 const server = require("../server");
 const db = require("../../config/knexConfig");
-const Reviews = require("../models/ReviewModel");
+const REVIEW_MODEL = require("../models/ReviewModel");
 
 const test_reviews = [
   {
@@ -52,7 +52,6 @@ beforeEach(() => {
 })
 
 describe('REVIEWS ROUTE', () => {
-    describe('/reviews', () => {
         describe('GET', () => {
             it('should return all of the reviews in the database as a json with a status 200', async () => {
                 const res = await request(server).get('/reviews')
@@ -62,5 +61,28 @@ describe('REVIEWS ROUTE', () => {
                 expect(res.status).toBe(200);
             })
         })
-    })
+        describe('POST', () => {
+            it('should return an error when there is no request body', async () => {
+                const res = await request(server).post('/reviews').send({})
+
+                expect(res.body.message).toBe('Please include request body')
+            })
+            it('should post a new review to the database and return the review', async () => {
+                const newReview = await request(server).post('/reviews').send(singleReview)
+                const res = await request(server).get('/reviews')
+            
+                expect(res.body.length).toBe(3);
+                expect(newPost.status).toBe(201)
+                expect(newPost.body.message).toBe('New review added')
+                expect(newPost.body.addedReview.comments).toBe(singleReview.comments)
+            })
+        })
+        describe('UPDATE', () => {
+            it('should return an error when there is no review with the requested id', async () => {
+                const update = await request(server).put('/reviews/5').send(updatedInfo)
+
+                expect(update.body.message).toBe('No review with that ID')
+            })
+        })
+    
 })

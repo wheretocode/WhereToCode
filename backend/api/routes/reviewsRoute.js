@@ -107,7 +107,7 @@ function requireBody(req, res, next) {
   if (req.body && Object.keys(req.body).length) {
     next();
   } else {
-    next({ message: "Please include request body" });
+    res.status(500).json({message: "Please include request body"});
   }
 }
 
@@ -115,11 +115,11 @@ function requireBody(req, res, next) {
 async function validateId(req, res, next) {
   try {
     const { id } = req.params;
-    const post = await Posts.getReviewById(id);
-    if (post) {
+    const review = await REVIEW_MODEL.getReviewById(id);
+    if (review) {
       next();
     } else {
-      next({ message: "No review with that ID" });
+      res.status(404).json({message: "No review with that ID" })
     }
   } catch (err) {
     res.status(500).json(err.message);
