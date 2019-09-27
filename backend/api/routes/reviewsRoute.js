@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
     if (review) {
       res.status(200).json(review);
     } else {
-      res.status(404).json({ message: "Review is not found" });
+      res.status(404).json({ message: "Review is not found" , error});
     }
   } catch (err) {
     res
@@ -39,7 +39,7 @@ router.get("/:id/user", async (req, res) => {
     if (reviewUser) {
       res.status(200).json(reviewUser);
     } else {
-      res.status(400).send({ message: "User for this review is not found" });
+      res.status(400).send({ message: "User for this review is not found", error});
     }
   } catch (err) {
     res
@@ -54,7 +54,7 @@ router.get("/:id/location", async (req, res) => {
     if (reviewLocation) {
       res.status(200).json(reviewLocation);
     } else {
-      res.status(400).send({ message: "Location from this review is not found" });
+      res.status(400).send({ message: "Location from this review is not found" , error});
     }
   } catch (err) {
     res
