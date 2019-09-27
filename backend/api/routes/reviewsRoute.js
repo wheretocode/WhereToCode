@@ -21,10 +21,10 @@ router.get("/:id", async (req, res) => {
   try {
 
     const review = await REVIEW_MODEL.getReviewById(req.params.id);
-    if (review) {
+    if (review.length>0) {
       res.status(200).json(review);
     } else {
-      res.status(404).json({ message: "Review is not found" });
+      res.status(404).json({ message: "Review is not found" , error});
     }
   } catch (err) {
     res
@@ -116,10 +116,10 @@ async function validateId(req, res, next) {
   try {
     const { id } = req.params;
     const review = await REVIEW_MODEL.getReviewById(id);
-    if (review) {
-      next();
+    if (!review.err) {
+      next(res.status(404).json({message: "No review with that ID" }));
     } else {
-      res.status(404).json({message: "No review with that ID" })
+      next()
     }
   } catch (err) {
     res.status(500).json(err.message);

@@ -72,15 +72,16 @@ describe('REVIEWS ROUTE', () => {
                 const res = await request(server).get('/reviews')
             
                 expect(res.body.length).toBe(3);
-                expect(newPost.status).toBe(201)
-                expect(newPost.body.message).toBe('New review added')
-                expect(newPost.body.addedReview.comments).toBe(singleReview.comments)
+                expect(newReview.status).toBe(201)
+                expect(newReview.body.message).toBe('New review added')
+                expect(newReview.body.addedReview.comments).toBe(singleReview.comments)
             })
         })
         describe('UPDATE', () => {
             it('should return an error when there is no review with the requested id', async () => {
                 const update = await request(server).put('/reviews/5').send(updatedInfo)
 
+                expect(update.status).toBe(404);
                 expect(update.body.message).toBe('No review with that ID')
             })
         })
