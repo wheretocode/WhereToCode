@@ -8,8 +8,6 @@ import { Card } from 'grommet-controls';
 import Layout from '../components/Styling/Layout';
 import img1 from '../assets/img1.jpg'
 import * as ROUTES from '../Routes/routes';
-import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
-
 
 
 // const Landing = () => (
@@ -58,22 +56,21 @@ const Landing = () => (
           path='/history'
           color='brand'
         />
-            <NetworkSpeed />
 
         </Box> 
-      <Box gridArea='side' background='dark-2' align='center' justify='center'>
-      <ul>
-      <RoutedButton
-        label="Sign In"
-        path={ROUTES.SIGN_IN}
-        color='brand' 
-      />
-      <RoutedButton
-        label="Sign Up"
-        path={ROUTES.SIGN_UP}
-        color='brand'
-      />
-      </ul>
+        <Box gridArea='side' background='dark-2' align='center' justify='center'>
+          <ul>
+            <RoutedButton
+              label="Sign In"
+              path={ROUTES.SIGN_IN}
+              color='brand' 
+            />
+            <RoutedButton
+              label="Sign Up"
+              path={ROUTES.SIGN_UP}
+              color='brand'
+            />
+          </ul>
         </Box> 
         <Box gridArea='foot' background='dark-2'>
         <Box height="small" width="" overflow="hidden">
