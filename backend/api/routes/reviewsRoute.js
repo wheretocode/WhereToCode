@@ -79,7 +79,7 @@ router.post("/", requireBody, async (req, res) => {
 // @route PUT reviews/
 // @desc Edits a review
 // @access currently Public, needs to be protected
-router.put("/:id", requireBody, validateId, async (req, res) => {
+router.put("/:id", requireBody, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
     return res.status(200).json({message: "Review updated", updated})
@@ -92,7 +92,7 @@ router.put("/:id", requireBody, validateId, async (req, res) => {
 // @desc Deletes a review
 // Will be adding ID validation middleware
 // @access currently Public, needs to be protected
-router.delete("/:id", validateId, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const deleted = await REVIEW_MODEL.remove(req.params.id)
     return res.status(200).json({message: "Successful delete", deleted})
@@ -111,20 +111,7 @@ function requireBody(req, res, next) {
   }
 }
 
-// Middleware - Checks that there is an entry with the given ID
-async function validateId(req, res, next) {
-  try {
-    const { id } = req.params;
-    const review = await REVIEW_MODEL.getReviewById(id);
-    if (!review.err) {
-      next(res.status(404).json({message: "No review with that ID" }));
-    } else {
-      next()
-    }
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-}
+
 
 // EXPORTS
 module.exports = router;

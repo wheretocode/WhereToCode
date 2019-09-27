@@ -78,12 +78,18 @@ describe('REVIEWS ROUTE', () => {
             })
         })
         describe('UPDATE', () => {
-            it('should return an error when there is no review with the requested id', async () => {
-                const update = await request(server).put('/reviews/5').send(updatedInfo)
+            it('should update an existing review', async () => {
+              const update = await request(server).put('/reviews/1').send(updatedInfo)
 
-                expect(update.status).toBe(404);
-                expect(update.body.message).toBe('No review with that ID')
+              expect(update.body.message).toBe('Review updated');
             })
+        })
+        describe('DELETE', () => {
+          it('should delete an entry', async () => {
+            const deleted = await request(server).del('/reviews/1')
+            
+            expect(deleted.body.message).toBe('Successful delete')
+          })
         })
     
 })
