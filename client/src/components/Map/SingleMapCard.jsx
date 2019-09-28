@@ -4,10 +4,14 @@ const SingleMapCard = props => {
   return (
     <>
       {props.location !== "" ? (
-        <div style={{ border: "1px solid black", margin: 10 }}>
+        <div style={{ border: "1px solid black", margin: 10, padding: 10 }}>
           <p>{`name: ${props.location}`}</p>
-          <p>{`id: ${props.id}`}</p>
-          <button type="button" onClick={() => props.requestDetails(props.id)}>
+          <p>{`address: ${props.address}`}</p>
+          <button
+            id="detailButton"
+            type="button"
+            onClick={() => props.requestDetails(props.id)}
+          >
             Details
           </button>
         </div>

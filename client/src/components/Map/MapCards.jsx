@@ -37,6 +37,7 @@ class MapCards extends Component {
             <div id="map">
               <SingleMapCard
                 location={location.name}
+                address={location.address}
                 id={location.id}
                 requestDetails={this.props.requestDetails}
               />

@@ -57,7 +57,8 @@ class Map extends Component {
       "geometry",
       "icon",
       "name",
-      "place_id"
+      "place_id",
+      "opening_hours"
     ]);
 
     // When a new place is selected the map will be forced to update
@@ -75,7 +76,7 @@ class Map extends Component {
   };
 
   requestDetails = id => {
-    let map = new google.maps.Map(document.getElementById("map"));
+    let map = new google.maps.Map(document.getElementById("fakeMap"));
 
     let service = new google.maps.places.PlacesService(map);
 
@@ -104,6 +105,7 @@ class Map extends Component {
     let request = {
       location: place.geometry.location,
       id: place.place_id,
+      hours: place.opening_hours,
       radius: "500",
       query: "Cafe"
     };
@@ -139,7 +141,8 @@ class Map extends Component {
               ...this.state.locations,
               {
                 name: item.name,
-                id: item.place_id
+                id: item.place_id,
+                address: item.formatted_address
               }
             ]
           });
@@ -171,11 +174,14 @@ class Map extends Component {
 
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
 
+        {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
+        <div id="fakeMap"></div>
         <MapCards
           locations={this.state.locations}
           handleScriptLoad={this.handleScriptLoad}
           requestDetails={this.requestDetails}
         />
+        {console.log(this.state.locations)}
       </div>
     );
   }
