@@ -57,8 +57,7 @@ class Map extends Component {
       "geometry",
       "icon",
       "name",
-      "place_id",
-      "opening_hours"
+      "place_id"
     ]);
 
     // When a new place is selected the map will be forced to update
@@ -75,6 +74,7 @@ class Map extends Component {
     });
   };
 
+  // Takes location id of a nearby location from SingleMapCard and passes it to requestDetails which then calls a getDetails request
   requestDetails = id => {
     let map = new google.maps.Map(document.getElementById("fakeMap"));
 
@@ -109,6 +109,7 @@ class Map extends Component {
     let request = {
       location: place.geometry.location,
       id: place.place_id,
+      rating: place.rating,
       radius: "500",
       query: "Cafe"
     };
@@ -145,7 +146,8 @@ class Map extends Component {
               {
                 name: item.name,
                 id: item.place_id,
-                address: item.formatted_address
+                address: item.formatted_address,
+                rating: item.rating
               }
             ]
           });
