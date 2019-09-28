@@ -110,6 +110,8 @@ class Map extends Component {
       location: place.geometry.location,
       id: place.place_id,
       rating: place.rating,
+      icon: place.icon,
+      photos: place.photos,
       radius: "500",
       query: "Cafe"
     };
@@ -129,25 +131,30 @@ class Map extends Component {
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        results.map(item => {
+        results.map(place => {
           // Adds map markers to nearby locations
           let marker = new google.maps.Marker({
             map: map,
-            position: item.geometry.location,
-            title: item.name
+            position: place.geometry.location,
+            title: place.name
           });
 
-          marker.setPosition(item.geometry.location);
+          marker.setPosition(place.geometry.location);
           marker.setVisible(true);
 
           this.setState({
             locations: [
               ...this.state.locations,
               {
-                name: item.name,
-                id: item.place_id,
-                address: item.formatted_address,
-                rating: item.rating
+                name: place.name,
+                icon: !place.photos // Loads an img if it has one, if not it                           uses default google icon
+                  ? place.icon
+                  : place.photos[0].getUrl({
+                      maxWidth: 100
+                    }),
+                id: place.place_id,
+                address: place.formatted_address,
+                rating: place.rating
               }
             ]
           });

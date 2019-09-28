@@ -39,6 +39,7 @@ class MapCards extends Component {
                 location={location.name}
                 address={location.address}
                 rating={location.rating}
+                icon={location.icon}
                 id={location.id}
                 requestDetails={this.props.requestDetails}
               />
