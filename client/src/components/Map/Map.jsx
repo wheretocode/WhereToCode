@@ -5,6 +5,8 @@ import React, { Component } from "react";
 import Script from "react-load-script";
 import MapCards from "./MapCards";
 
+/*global google*/
+
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,8 @@ class Map extends Component {
       pos: {
         lat: 0,
         lng: 0
-      }
+      },
+      details: []
     };
   }
 
@@ -42,7 +45,8 @@ class Map extends Component {
     } // To disable any eslint 'google not defined' errors
 
     // Initialize Google Autocomplete
-    /*global google*/ this.autocomplete = new google.maps.places.Autocomplete(
+
+    this.autocomplete = new google.maps.places.Autocomplete(
       document.getElementById("autocomplete")
     );
 
@@ -70,10 +74,27 @@ class Map extends Component {
     });
   };
 
+  requestDetails = id => {
+    let map = new google.maps.Map(document.getElementById("map"));
+
+    let service = new google.maps.places.PlacesService(map);
+
+    let request = {
+      placeId: id,
+      fields: ["name", "formatted_phone_number"]
+    };
+
+    service.getDetails(request, (place, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log(`${place.name} and ${place.formatted_phone_number}`);
+      }
+    });
+  };
+
   handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13
+      zoom: 15
     });
 
     // Gets new place when auto complete search is clicked
@@ -109,6 +130,7 @@ class Map extends Component {
             position: item.geometry.location,
             title: item.name
           });
+
           marker.setPosition(item.geometry.location);
           marker.setVisible(true);
 
@@ -149,7 +171,11 @@ class Map extends Component {
 
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
 
-        <MapCards locations={this.state.locations} />
+        <MapCards
+          locations={this.state.locations}
+          handleScriptLoad={this.handleScriptLoad}
+          requestDetails={this.requestDetails}
+        />
       </div>
     );
   }
