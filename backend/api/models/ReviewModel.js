@@ -20,7 +20,7 @@ function getReviewById(id) {
 
 function getReviewsByUser(id) {
   return db("reviews as r")
-    .join("users as u", "r.user_id", "u.id")
+    .join("users as u", "u.id", "r.user_id")
     .join("locations as l", "r.location_id", "l.id")
     .select("u.id", "u.userName")
     .where("r.id", id);

@@ -21,10 +21,11 @@ router.get("/:id", async (req, res) => {
   try {
 
     const review = await REVIEW_MODEL.getReviewById(req.params.id);
-    if (review) {
+    if (review.length > 0) {
+
       res.status(200).json(review);
     } else {
-      res.status(404).json({ message: "Review is not found" , error});
+      res.status(404).json({ message: "Review is not found", error });
     }
   } catch (err) {
     res
@@ -35,11 +36,13 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/user", async (req, res) => {
   try {
+
     const reviewUser = await REVIEW_MODEL.getReviewsByUser(req.params.id)
     if (reviewUser) {
+
       res.status(200).json(reviewUser);
     } else {
-      res.status(400).send({ message: "User for this review is not found", error});
+      res.status(400).send({ message: "User for this review is not found", error });
     }
   } catch (err) {
     res
@@ -48,13 +51,33 @@ router.get("/:id/user", async (req, res) => {
   }
 });
 
+// router.get("/:id/location", async (req, res) => {
+//   try {
+//     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
+//     console.log("rl", reviewLocation);
+//     if (reviewLocation.length > 0 && reviewLocation) {
+//       console.log("RL:", reviewLocation);
+//       console.log("length:", reviewLocation.length);
+//       res.status(200).json(reviewLocation);
+//     } else if (reviewLocation.length < 1) {
+//       res.status(400).send({ message: "Location from this review is not found", error });
+//     }
+//   } catch (err) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching location", err });
+//   }
+// });
+
 router.get("/:id/location", async (req, res) => {
   try {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
-    if (reviewLocation) {
+    console.log("rl", reviewLocation);
+    if (reviewLocation.length > 0) {
       res.status(200).json(reviewLocation);
+      console.log("RL", reviewLocation);
     } else {
-      res.status(400).send({ message: "Location from this review is not found" , error});
+      res.status(400).send({ message: "Location from this review is not found", error });
     }
   } catch (err) {
     res
@@ -63,6 +86,8 @@ router.get("/:id/location", async (req, res) => {
   }
 });
 
+
+
 // @route POST reviews/
 // @desc Adds a new review
 // @access currently Public, needs to be protected
@@ -70,7 +95,7 @@ router.post("/", requireBody, async (req, res) => {
   let review = req.body;
   try {
     const addedReview = await REVIEW_MODEL.add(review);
-    return res.status(201).json({message: "New review added", addedReview})
+    return res.status(201).json({ message: "New review added", addedReview })
   } catch (err) {
     return res.status(500).json(err.message)
   }
@@ -82,7 +107,7 @@ router.post("/", requireBody, async (req, res) => {
 router.put("/:id", requireBody, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
-    return res.status(200).json({message: "Review updated", updated})
+    return res.status(200).json({ message: "Review updated", updated })
   } catch (err) {
     return res.status(500).json(err.message)
   }
@@ -95,7 +120,7 @@ router.put("/:id", requireBody, async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await REVIEW_MODEL.remove(req.params.id)
-    return res.status(200).json({message: "Successful delete", deleted})
+    return res.status(200).json({ message: "Successful delete", deleted })
   } catch (err) {
     res.status(500).json(err.message)
   }

@@ -4,16 +4,21 @@ const getAll_locations = () => {
   return db("locations");
 };
 
-const getLocationById = id => {};
+function add(location) {
+  return db("locations").insert(location).return(location);
+}
 
-const updateLocation = () => {};
+const getLocationById = id => { };
 
-const deleteLocation = () => {};
+const updateLocation = () => { };
+
+const deleteLocation = () => { };
 
 // EXPORTS
 module.exports = {
   getAll_locations,
   getLocationById,
   updateLocation,
-  deleteLocation
+  deleteLocation,
+  add
 };

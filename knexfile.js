@@ -19,6 +19,22 @@ module.exports = {
     },
     seeds: { directory: "./backend/seeds" }
   },
+  testing: {
+    client: 'postgresql',
+    connection: {
+      database: "postgres",
+      user: "postgres",
+      password: process.env.DB_Password
+    },
+
+    migrations: {
+      directory: './backend/migrations',
+      tableName: "knex_testmigrations"
+    },
+    seeds: {
+      directory: './backend/seeds',
+    },
+  },
   production: {
     client: "pg",
     connection: process.env.DATABASE_URL,
