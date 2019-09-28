@@ -82,12 +82,16 @@ class Map extends Component {
 
     let request = {
       placeId: id,
-      fields: ["name", "formatted_phone_number"]
+      fields: ["name", "formatted_phone_number", "opening_hours"]
     };
 
     service.getDetails(request, (place, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(`${place.name} and ${place.formatted_phone_number}`);
+        console.log(
+          `${place.name}, ${JSON.stringify(
+            place.opening_hours.weekday_text
+          )}, ${place.formatted_phone_number}`
+        );
       }
     });
   };
@@ -105,7 +109,6 @@ class Map extends Component {
     let request = {
       location: place.geometry.location,
       id: place.place_id,
-      hours: place.opening_hours,
       radius: "500",
       query: "Cafe"
     };
@@ -181,7 +184,6 @@ class Map extends Component {
           handleScriptLoad={this.handleScriptLoad}
           requestDetails={this.requestDetails}
         />
-        {console.log(this.state.locations)}
       </div>
     );
   }
