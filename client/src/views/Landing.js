@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Landing = () => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
+ 
 
   const activity = ["code", "study", "stream"];
 
