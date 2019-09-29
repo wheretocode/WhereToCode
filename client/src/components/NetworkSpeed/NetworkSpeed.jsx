@@ -6,7 +6,9 @@ import NetworkTableSpeeds from './NetworkTableSpeeds';
 
 import TriangleLoader from '../Loaders/TriangleLoader';
 
-import { Box, Button } from 'grommet';
+import { Box, Button, RoutedButton } from 'grommet';
+
+import * as ROUTES from '../../Routes/routes';
 
 class NetworkSpeed extends React.Component {
     constructor(props) {
@@ -62,6 +64,14 @@ class NetworkSpeed extends React.Component {
                                                                             alignSelf='center' 
                                                                             pad='large' 
                                                                             onClick={this.runNetworkTest}
+                                                                    />
+
+                                                                    <RoutedButton label='More Info'
+                                                                                    path={ROUTES.NETWORK} 
+                                                                                    color='gold' 
+                                                                                    alignSelf='center' 
+                                                                                    pad='large' 
+                                                                                    onClick={this.runNetworkTest}
                                                                     />
                                                                 </Box>
                                                               
