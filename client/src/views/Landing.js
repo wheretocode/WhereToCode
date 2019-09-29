@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+/* global google */
 
 import styled from "styled-components";
 
-const Landing = () => {
+import { withRouter, Link } from "react-router-dom";
+
+const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
+  const [place, setPlace] = useState({});
 
   const activity = ["code", "study", "stream"];
 
   function updateText() {
-    console.log("...in Landing");
     setCurrentActivity(activity[number]);
     return number === activity.length - 1
       ? setNumber(0)
@@ -17,8 +20,36 @@ const Landing = () => {
   }
 
   useEffect(() => {
+    const autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById("exploreAutoComplete"),
+      {
+        types: ["establishment"]
+      }
+    );
+    autocomplete.setFields([
+      "address_components",
+      "formatted_address",
+      "geometry",
+      "icon",
+      "name",
+      "place_id"
+    ]);
+    autocomplete.addListener("place_changed", () => {
+      setPlace(autocomplete.getPlace());
+    });
+  }, []);
+
+  useEffect(() => {
     setTimeout(updateText, 2000);
   }, [number]);
+
+  const searchNearbyLocations = () => {
+    // props.history.push("/home");
+    props.history.push({
+      pathname: "/home",
+      state: { place }
+    });
+  };
 
   return (
     <LandingPageContainer>
@@ -27,15 +58,15 @@ const Landing = () => {
           Find a place to <span>{currentActivity}</span> near you
         </h2>
         <div className="explore-btn">
-          <input placeholder="Explore" size="45"></input>
-          <button>Go</button>
+          <input id="exploreAutoComplete" placeholder="Explore" size="45" />\
+          <button onClick={searchNearbyLocations}>Go</button>
         </div>
       </SearchComponent>
     </LandingPageContainer>
   );
 };
 
-export default Landing;
+export default withRouter(Landing);
 
 const SearchComponent = styled.div`
   display: flex;

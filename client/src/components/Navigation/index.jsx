@@ -26,13 +26,9 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-  <ul>
-    <RoutedButton label="Home" path={ROUTES.HOME} />
-
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
+  <Box direction="row" justify="right" gap="small">
+    <SignOutButton />
+  </Box>
 );
 
 const NavigationNonAuth = () => (
