@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
+/* global google */
 
 import styled from "styled-components";
 
-const Landing = () => {
+import { withRouter, Link } from "react-router-dom";
+
+const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
+<<<<<<< HEAD
  
+=======
+  const [place, setPlace] = useState({});
+>>>>>>> c1f2341463da15424afd2cf57d26e9e3ce150a5b
 
   const activity = ["code", "study", "stream"];
 
   function updateText() {
-    console.log("...in Landing");
     setCurrentActivity(activity[number]);
     return number === activity.length - 1
       ? setNumber(0)
@@ -18,8 +24,36 @@ const Landing = () => {
   }
 
   useEffect(() => {
+    const autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById("exploreAutoComplete"),
+      {
+        types: ["establishment"]
+      }
+    );
+    autocomplete.setFields([
+      "address_components",
+      "formatted_address",
+      "geometry",
+      "icon",
+      "name",
+      "place_id"
+    ]);
+    autocomplete.addListener("place_changed", () => {
+      setPlace(autocomplete.getPlace());
+    });
+  }, []);
+
+  useEffect(() => {
     setTimeout(updateText, 2000);
   }, [number]);
+
+  // const searchNearbyLocations = () => {
+  //   // props.history.push("/home");
+  //   props.history.push({
+  //     pathname: "/home",
+  //     state: { place }
+  //   });
+  // };
 
   return (
     <LandingPageContainer>
@@ -27,16 +61,26 @@ const Landing = () => {
         <h2>
           Find a place to <span>{currentActivity}</span> near you
         </h2>
-        <div className="explore-btn">
-          <input placeholder="Explore" size="45"></input>
-          <button>Go</button>
-        </div>
+
+        <InputAndButtonContainer>
+          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
+          <GoButton
+            to={{
+              pathname: "/home"
+              // state: {
+              //   place: place
+              // }
+            }}
+          >
+            Go
+          </GoButton>
+        </InputAndButtonContainer>
       </SearchComponent>
     </LandingPageContainer>
   );
 };
 
-export default Landing;
+export default withRouter(Landing);
 
 const SearchComponent = styled.div`
   display: flex;
@@ -51,28 +95,6 @@ const SearchComponent = styled.div`
   span {
     color: gold;
   }
-  .explore-btn {
-    input {
-      height: 44px;
-      border-radius: 10px 0 0 10px;
-      border-right: none;
-      border: 1px solid white;
-    }
-    button {
-      margin-top: 5px;
-      font-size: 16px;
-      font-weight: bold;
-      height: 48px;
-      width: 64px;
-      border-radius: 0 10px 10px 0;
-      background: gold;
-      border: 1px solid gold;
-      border-left: none;
-      &:hover {
-        background: yellow;
-      }
-    }
-  }
 `;
 
 const LandingPageContainer = styled.div`
@@ -82,5 +104,37 @@ const LandingPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 94.2vh;
+`;
+
+const GoButton = styled(Link)`
+  display: flex
+  align-items: center;
+  text-decoration: none;
+  font-family: "Zilla Slab", serif;
+  font-size: 2rem;
+  color: black;
+  border-radius: 0 10px 10px 0;
+  background: gold;
+  border: 1px solid gold;
+  border-left: none;
+  padding: 0 10px 0 10px;
+  &:hover {
+    background: yellow;
+  }
+`;
+
+const Input = styled.input`
+  height: 44px;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  border: 1px solid white;
+  &::placeholder {
+    vertical-align: center;
+    font-size: 1rem;
+  }
+`;
+
+const InputAndButtonContainer = styled.div`
+  display: flex;
 `;

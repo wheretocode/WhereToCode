@@ -13,7 +13,6 @@ import Footer from "./components/Footer/Footer.jsx";
 
 import { Grommet } from "grommet";
 import "./App.css";
-import styled from "styled-components";
 
 //@ views
 import Landing from "./views/Landing";
@@ -41,7 +40,7 @@ const App = () => (
       <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.HOME} render={props => <Home {...props} />} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Footer />
     </Router>
