@@ -1,31 +1,67 @@
 import React from 'react';
-import Chart from 'react-apexcharts';
+import ReactApexChart from 'react-apexcharts';
 
 const AverageSpeedChart = () => {
-    const options = {
-        chart: {
-            id: 'averageSpeed'
+    const options =  {
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: '80%',
+            dataLabels: {
+              position: 'top',
+            },
+          }
         },
+        dataLabels: {
+          enabled: true,
+          offsetX: -6,
+          style: {
+            fontSize: '16px',
+            colors: ['#fff']
+          }
+        },
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['#fff']
+        },
+
         xaxis: {
-            categories: ['user', 'us', 'europe', 'china', 'russia']
+          categories: ['User', 'US', 'Europe','China', 'Russia'],
+          labels: {
+              style: {
+                  fontSize: '14px'
+              }
+          }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    fontSize: '18px'
+                }
+            }
         }
-    };
+      }
 
     const series = [
         {
-            name: 'download speed Mbps',
-            data: [10, 14.20, 12.8, 4.1, 11.6]
+            name: 'Download Speed (Mbps)',
+            data: [10, 14, 12, 8, 13]
+        },
+        {
+            name: 'Upload Speed (Mbps)',
+            data: [6, 8, 7, 5, 6]
         }
     ];
 
     return(
-        <div>
+        <div id='chart'>
             <h3>Average Download Speed by Region:</h3>
-             <Chart options={options} 
+             <ReactApexChart options={options} 
                     series={series} 
                     type="bar" 
                     width={500}
-                    height={320} />
+                    height={400} />
         </div>
     )
 }
