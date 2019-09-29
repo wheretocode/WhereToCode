@@ -1,24 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 
-class Network extends React.Component {
-    constructor(props) {
-        super(props);
+import NetworkKey from '../components/NetworkSpeed/NetworkKey';
 
-        this.state = {}
-    }
-
-    componentDidMount() {
-
-    }
-
-    render() {
+const Network = () =>  {
         return(
             <div>
                 Hello World
+                <NetworkKey />
             </div>
         )
-    }
 }
 
 export default Network;
