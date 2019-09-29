@@ -43,13 +43,13 @@ const Landing = props => {
     setTimeout(updateText, 2000);
   }, [number]);
 
-  const searchNearbyLocations = () => {
-    // props.history.push("/home");
-    props.history.push({
-      pathname: "/home",
-      state: { place }
-    });
-  };
+  // const searchNearbyLocations = () => {
+  //   // props.history.push("/home");
+  //   props.history.push({
+  //     pathname: "/home",
+  //     state: { place }
+  //   });
+  // };
 
   return (
     <LandingPageContainer>
@@ -57,10 +57,20 @@ const Landing = props => {
         <h2>
           Find a place to <span>{currentActivity}</span> near you
         </h2>
-        <div className="explore-btn">
-          <input id="exploreAutoComplete" placeholder="Explore" size="45" />\
-          <button onClick={searchNearbyLocations}>Go</button>
-        </div>
+
+        <InputAndButtonContainer>
+          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
+          <GoButton
+            to={{
+              pathname: "/home"
+              // state: {
+              //   place: place
+              // }
+            }}
+          >
+            Go
+          </GoButton>
+        </InputAndButtonContainer>
       </SearchComponent>
     </LandingPageContainer>
   );
@@ -81,28 +91,6 @@ const SearchComponent = styled.div`
   span {
     color: gold;
   }
-  .explore-btn {
-    input {
-      height: 44px;
-      border-radius: 10px 0 0 10px;
-      border-right: none;
-      border: 1px solid white;
-    }
-    button {
-      margin-top: 5px;
-      font-size: 16px;
-      font-weight: bold;
-      height: 48px;
-      width: 64px;
-      border-radius: 0 10px 10px 0;
-      background: gold;
-      border: 1px solid gold;
-      border-left: none;
-      &:hover {
-        background: yellow;
-      }
-    }
-  }
 `;
 
 const LandingPageContainer = styled.div`
@@ -112,5 +100,37 @@ const LandingPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 94.2vh;
+`;
+
+const GoButton = styled(Link)`
+  display: flex
+  align-items: center;
+  text-decoration: none;
+  font-family: "Zilla Slab", serif;
+  font-size: 2rem;
+  color: black;
+  border-radius: 0 10px 10px 0;
+  background: gold;
+  border: 1px solid gold;
+  border-left: none;
+  padding: 0 10px 0 10px;
+  &:hover {
+    background: yellow;
+  }
+`;
+
+const Input = styled.input`
+  height: 44px;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  border: 1px solid white;
+  &::placeholder {
+    vertical-align: center;
+    font-size: 1rem;
+  }
+`;
+
+const InputAndButtonContainer = styled.div`
+  display: flex;
 `;
