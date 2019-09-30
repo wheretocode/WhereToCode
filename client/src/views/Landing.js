@@ -5,10 +5,11 @@ import styled from "styled-components";
 
 import { withRouter, Link } from "react-router-dom";
 
+import * as ROUTES from "../Routes/routes";
+
 const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
-  const [place, setPlace] = useState({});
 
   const activity = ["code", "study", "stream"];
 
@@ -35,21 +36,13 @@ const Landing = props => {
       "place_id"
     ]);
     autocomplete.addListener("place_changed", () => {
-      setPlace(autocomplete.getPlace());
+      props.setPlace(autocomplete.getPlace());
     });
   }, []);
 
   useEffect(() => {
     setTimeout(updateText, 2000);
   }, [number]);
-
-  // const searchNearbyLocations = () => {
-  //   // props.history.push("/home");
-  //   props.history.push({
-  //     pathname: "/home",
-  //     state: { place }
-  //   });
-  // };
 
   return (
     <LandingPageContainer>
@@ -60,16 +53,7 @@ const Landing = props => {
 
         <InputAndButtonContainer>
           <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
-          <GoButton
-            to={{
-              pathname: "/home"
-              // state: {
-              //   place: place
-              // }
-            }}
-          >
-            Go
-          </GoButton>
+          <GoButton to={ROUTES.HOME}>Go</GoButton>
         </InputAndButtonContainer>
       </SearchComponent>
     </LandingPageContainer>
