@@ -11,15 +11,6 @@ import { Form, FormField, Button, Box, Text, Heading } from "grommet";
 
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
-// const SignUpPage = () => (
-//     <Box align="center" background="#555555" height="100vh" pad="large">
-//         <Heading level="2" responsive="true" size="medium" alignSelf="center">
-//             Sign Up
-//     </Heading>
-//         <SignUpForm />
-//     </Box>
-// );
-
 
 const StyledModal = Modal.styled`
   width: 20rem;
@@ -102,6 +93,7 @@ background: none;
 width: 70%;
 `;
 
+//@@BLACK SIGNUP BUTTON
 // const SignUpButton = styled.button`
 // width: 70%;
 // border-radius: 10px;
@@ -116,6 +108,7 @@ width: 70%;
 
 // `;
 
+//@@GOLD SIGNUP BUTTON
 const SignUpButton = styled.button`
 width: 55%;
 border-radius: 10px;

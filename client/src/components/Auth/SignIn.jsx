@@ -83,7 +83,7 @@ background: none;
 width: 70%;
 `;
 
-
+//@@GOLD LOGIN BUTTON
 const LoginButton = styled.button`
 width: 55%;
 border-radius: 10px;

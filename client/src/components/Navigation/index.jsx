@@ -29,16 +29,7 @@ const StyledModal = Modal.styled`
   border-radius: 30px;
 `;
 
-// const StyledModal = Modal.styled`
-//   width: 20rem;
-//   height: 20rem;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   background-color: white;
-//   opacity: ${props => props.opacity};
-//   transition: opacity ease 500ms;
-// `;
+
 
 const RegisterLink = styled(Link)`
   text-decoration: none;
@@ -76,7 +67,7 @@ const LoginLink = styled(Link)`
 `;
 
 
-function FancyModalButton() {
+function SignUpButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
@@ -189,14 +180,12 @@ transition: opacity ease 1000ms;
 const NavigationNonAuth = () => (
 
   <Box direction="row" justify="right" gap="small">
-    {/* 
-    <LoginLink to={ROUTES.SIGN_IN}>Login</LoginLink> */}
+  
     <ModalProvider backgroundComponent={FadingBackground}>
       <LoginButton />
     </ModalProvider>
     <ModalProvider backgroundComponent={FadingBackground}>
-      <FancyModalButton />
-      {/* <FancyModalButton to={ROUTES.SIGN_UP}/> */}
+      <SignUpButton />
     </ModalProvider>
 
   </Box>
