@@ -54,9 +54,11 @@ const AverageSpeedChart = () => {
         }
     ];
 
+    const chartStyle = { backgroundColor: 'white', padding: '10px', margin: '12px', boxShadow: '3px 3px 5px 3px #888888' }
+
     return(
-        <div id='chart'>
-            <h3>Average Download Speed by Region:</h3>
+        <div style={chartStyle}>
+            <h2>Average Download Speed by Region:</h2>
              <ReactApexChart options={options} 
                     series={series} 
                     type="bar" 

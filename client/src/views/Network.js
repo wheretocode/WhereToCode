@@ -11,10 +11,7 @@ const Network = () =>  {
                     <NetworkKey />
                 </div>
                 
-                <div>
-                    <h2>Network Data Visualized:</h2>
-                    <NetworkCharts />
-                </div>
+                <NetworkCharts />
             </div>
         )
 }

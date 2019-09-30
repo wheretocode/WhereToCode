@@ -21,9 +21,11 @@ const ServerLocationChart = () => {
         }],
     }
 
+    const chartStyle = { backgroundColor: 'white', padding: '10px', margin: '12px', boxShadow: '3px 3px 5px 3px #888888' }
+
     return(
-        <div>
-            <h3>Servers By Location</h3>
+        <div style={chartStyle}>
+            <h2>Servers By Location</h2>
             <ReactApexChart options={options}
                             series={options.series}
                             type='donut'
