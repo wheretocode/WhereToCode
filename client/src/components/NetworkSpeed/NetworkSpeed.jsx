@@ -1,36 +1,84 @@
 import React from 'react';
 import axios from 'axios';
 
+import NetworkTableGeneral from './NetworkTableGeneral';
+import NetworkTableSpeeds from './NetworkTableSpeeds';
+
+import TriangleLoader from '../Loaders/TriangleLoader';
+
+import { Box, Button, RoutedButton } from 'grommet';
+
+import * as ROUTES from '../../Routes/routes';
+
 class NetworkSpeed extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = { client: {}, server: {} }
+    }
+
+    resetState = () => {
+        this.setState({ client: {}, server: {} });
+    }
+
+    runNetworkTest = () => {
+        this.resetState();
+        //http://localhost:8080/api/network
+        axios.get('https://wheretocode-master.herokuapp.com/api/network')
+             .then(res => { 
+         
+                                this.setState({ 
+                                download: res.data.speeds.download,
+                                upload: res.data.speeds.upload,
+                                originalDownload: res.data.speeds.originalDownload.toFixed(0),
+                                originalUpload: res.data.speeds.originalDownload.toFixed(0),
+                                client: res.data.client,
+                                server: res.data.server
+                            })
+                        })
+             .catch(err => console.log(err));
     }
 
     componentDidMount() {
-        axios.get('https://wheretocode-master.herokuapp.com/api/network')
-             .then(res => {
-                        console.log(res.data)
-
-                        this.setState({ 
-                            download: (res.data.download / 125).toFixed(2),
-                            upload: (res.data.upload / 125).toFixed(2),
-                            originalDownload: res.data.originalDownload.toFixed(0),
-                            originalUpload: res.data.originalDownload.toFixed(0),
-                        })
-                    })
-             .catch(err => console.log(err));
+        this.runNetworkTest();
     }
 
     render() {
         return(
-            <div>
-                <p>Download Speed: {this.state.download} Mbps</p>
-                <p>Original Download Speed: {this.state.originalDownload} Bps</p>
-                <p>Upload Speed: {this.state.upload} Mbps</p>
-                <p>Original Upload Speed: {this.state.originalUpload} Bps</p>
-            </div>
+            <Box direction='row'
+                 justify='evenly'
+                 pad='medium'
+                 background='dark-2'
+            >
+
+
+                {
+                    Object.keys(this.state.client).length > 0 ? <Box>
+                                                                    <Box direction='row'>
+                                                                        <NetworkTableGeneral data={this.state} />
+                                                                        <NetworkTableSpeeds data={this.state} />
+                                                                    </Box>
+
+                                                                    <Button label='Run Test' 
+                                                                            color='gold' 
+                                                                            alignSelf='center' 
+                                                                            pad='large' 
+                                                                            onClick={this.runNetworkTest}
+                                                                    />
+
+                                                                    <RoutedButton label='More Info'
+                                                                                    path={ROUTES.NETWORK} 
+                                                                                    color='gold' 
+                                                                                    alignSelf='center' 
+                                                                                    pad='large' 
+                                                                                    onClick={this.runNetworkTest}
+                                                                    />
+                                                                </Box>
+                                                              
+                                                              : <TriangleLoader/>
+                }
+
+            </Box>
         );
     }
 

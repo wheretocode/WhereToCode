@@ -16,9 +16,10 @@ import "./App.css";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
 //@ views
-import Landing from "./views/Landing";
-import Home from "./views/Home";
-import AccountPage from "./views/Account";
+import Landing from './views/Landing';
+import Home from './views/Home';
+import AccountPage from './views/Account';
+import NetworkPage from './views/Network';
 
 //@ utils
 import * as ROUTES from "./Routes/routes";
@@ -35,16 +36,19 @@ const theme = {
 
 const App = () => (
   <Grommet theme={theme}>
-    <Router>
-      <Navigation />
-      <Route exact path={ROUTES.LANDING} component={Landing} />
-      <Route exact path={ROUTES.SIGN_UP} component={SignUpForm} />
-      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route exact path={ROUTES.HOME} render={props => <Home {...props} />} />
-      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-      <Footer />
-    </Router>
+  <Router>
+    <Navigation />
+    <Route exact path={ROUTES.LANDING} component={Landing} />
+    <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+    <Route
+      path={ROUTES.PASSWORD_FORGET}
+      component={PasswordForgetPage}
+    />
+    <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+    <Route exact path={ROUTES.HOME} component={Home} />
+    <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+    <Route path={ROUTES.NETWORK} component={NetworkPage} />
+  </Router>
   </Grommet>
 );
 

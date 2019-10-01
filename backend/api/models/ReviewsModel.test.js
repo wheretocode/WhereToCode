@@ -45,6 +45,11 @@ const singleReview = {
   location_id: 1
 }
 
+const updatedInfo = {
+  comments: "It was better this time",
+  internet_rating: 3
+}
+
 describe('REVIEWS MODEL', () => {
     describe('getAll_reviews()', () => {
         it('should return a list of all reviews', async () => {
@@ -77,6 +82,18 @@ describe('REVIEWS MODEL', () => {
         expect(reviews.length).toBe(1);
         expect(reviews[1]).toBe(undefined);
         expect(reviews[0].comments).toBe('average at best')
+      })
+    })
+    describe('update(id, update)', () => {
+      it('should update the review with the listed ID to include the new information being passed in', async () => {
+        const updated = await REVIEWS_MODEL.update(2, updatedInfo)
+        const reviews = await REVIEWS_MODEL.getAll_reviews();
+
+        expect(reviews.length).toBe(2);
+        expect(reviews[0].internet_rating).toBe(2);
+        expect(reviews[1].internet_rating).toBe(3);
+        expect(reviews[1].comments).toBe('It was better this time');
+        expect(reviews[1].user_id).toBe(2);
       })
     })
 })
