@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/index.js",
     "server": "nodemon backend/index.js",
-    "test": "cross-env DB_CONNECT=testing jest --watchAll --verbose"
+    "test": "cross-env ENVIRONMENT=testing jest --watchAll --verbose"
   },
   "repository": "https://github.com/wheretocode/WhereToCode.git",
   "author": "MrT3313 <rturgeon13@gmail.com>",

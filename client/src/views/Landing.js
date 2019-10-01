@@ -8,11 +8,7 @@ import { withRouter, Link } from "react-router-dom";
 const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
-<<<<<<< HEAD
- 
-=======
   const [place, setPlace] = useState({});
->>>>>>> c1f2341463da15424afd2cf57d26e9e3ce150a5b
 
   const activity = ["code", "study", "stream"];
 
