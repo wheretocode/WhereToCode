@@ -17,3 +17,5 @@ function add(user) {
 function getUserById(id) {
   return db("users").where(id);
 }
+
+

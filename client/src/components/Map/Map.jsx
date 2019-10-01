@@ -3,49 +3,40 @@ import React, { Component } from 'react';
 
 // Import React Script Library to load Google object
 import Script from 'react-load-script';
-
 import MapCards from './MapCards';
 
 class Map extends Component {
   constructor(props) {
     super(props);
-
-    // Placeholder state
-    this.initialState = {
-      locations: [
-        {
-          name: '',
-          place_Id: '' 
-        }
-      ] 
-    };
-
-    this.state = this.initialState
-    
-    // Bind Functions
-    this.handleScriptLoad = this.handleScriptLoad.bind(this);
-    this.handleMapChange = this.handleMapChange.bind(this);
+    this.state =  {
+      locations: [],
+      pos: {
+        lat: 0,
+        lng: 0
+      }
+    }
   }
 
-
-  handleScriptLoad() {
+  handleScriptLoad = () => {
     // Try HTML5 Geolocation
     if (navigator.geolocation) {
     
       navigator.geolocation.getCurrentPosition(
         position => {
-          let pos = {
+          this.setState({
+            pos: {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          };
+          }
+          });
           // Loads map
           let map = new google.maps.Map(document.getElementById('map'), {
-            center: pos,
+            center: this.state.pos,
             zoom: 13
           });
         }, () => {
           // If user denies geolocation info, default location is used
-          this.handleLocationError(false)
+          this.handleLocationError()
         }
       )
     }
@@ -61,30 +52,21 @@ class Map extends Component {
     this.autocomplete.addListener('place_changed', this.handleMapChange);
   }    
 
-  handleLocationError(browserHasGeolocation) {
+  handleLocationError = (browserHasGeolocation = false) => {
     // Set default location to Sydney, Australia
     let pos = { lat: -33.856, lng: 151.215 };
-
+    
     let map = new google.maps.Map(document.getElementById("map"), {
       center: pos,
       zoom: 15
     });
   }
 
-  handleMapChange() {
+  handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById('map'),{
       zoom: 13
     });
-
-    // Sets marker
-    let marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
-
-    // Marker is invisible on initial load
-    marker.setVisible(false);
 
     // Gets new place when auto complete search is clicked
     let place = this.autocomplete.getPlace();
@@ -94,7 +76,7 @@ class Map extends Component {
       location: place.geometry.location,
       placeId: place.place_id,
       radius: '500',
-      query: "cafe"
+      query: "Cafe"
     }
 
     // requests use of PlaceService 
@@ -103,30 +85,34 @@ class Map extends Component {
     // Sets map screen to new location based on lat and lng
     map.setCenter(place.geometry.location);
     // Sets marker to lat/lng position
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
     
     // Resets state when a new location is clicked
     if (this.state.locations.name !== ''){
-      this.setState(this.initialState)
+      this.setState({locations: []})
     }
 
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++){
-          
-          // Sets state for locations names and IDs
-          this.setState({ locations: [ ...this.state.locations,
-            {
-              name: results[i].name,
-              place_Id: results[i].place_id
-            }
-          ]})
+          results.map((item) => {
+            // Adds map markers to nearby locations
+            let marker = new google.maps.Marker({
+              map: map,
+              position: item.geometry.location,
+              title: item.name
+            });
+            marker.setPosition(item.geometry.location);
+            marker.setVisible(true);
+            
+            this.setState({ 
+              locations: [...this.state.locations, { 
+                name: item.name, 
+                place_id: item.place_id 
+              }]
+            })
+          })
         } 
       }
-      
-    }
     // PlaceService has the `textSearch` method
     service.textSearch(request, callback)
   }
@@ -142,7 +128,9 @@ class Map extends Component {
         
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
         
-        <MapCards locations={ this.state.locations } />
+        <MapCards locations={ this.state.locations } 
+
+        />
       </div>
     );
   }
