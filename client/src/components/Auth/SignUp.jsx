@@ -1,114 +1,240 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import { withFirebase } from '../../Firebase';
-import * as ROUTES from '../../Routes/routes';
+import { withFirebase } from "../../Firebase";
+import * as ROUTES from "../../Routes/routes";
 
-import { Form, FormField, Button, Box, Text, Heading } from 'grommet';
+import styled from "styled-components";
 
-const SignUpPage = () => (
-    <Box align="center" background="#555555" height="100vh" pad="large">
-        <Heading level="2" responsive="true" size="medium" alignSelf="center">Sign Up</Heading>
-        <SignUpForm />
-    </Box>
-);
+import axios from "axios";
+import { Form, FormField, Button, Box, Text, Heading } from "grommet";
 
-const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-};
+import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
-class SignUpFormBase extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = { ...INITIAL_STATE };
-    }
+const StyledModal = Modal.styled`
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  opacity: ${props => props.opacity};
+  transition: opacity ease 500ms;
+`;
 
-    onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
+const FormContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+width: 100%
+height: 100%;
+border-radius: 25px;
+background:white;
+border: 3px solid gold;
 
-        this.props.firebase
+`;
+
+
+const StyledHeader = styled.div`
+width: 100%;
+height: 100px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: baseline;
+background:black;
+color: white;
+position: relative;
+margin-top: -70px;
+border-radius: 30px;
+border: 3px solid gold;
+border-bottom: none;
+`;
+
+const StyledForm = styled.form`
+display:flex;
+flex-direction: column;
+justify-content: center;
+align-items: center
+text-align: center;
+margin-top: 30px;
+background: white;
+width: 70%;
+`;
+
+const StyledSvg = styled.svg`
+position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+
+`;
+
+const StyledInput = styled.input`
+opacity: .5;
+// border-radius: 25px;
+border: none;
+border-bottom: .7px solid grey;
+color: grey;
+padding-left: 10px;
+margin-left: 10px;
+margin-top: 15px;
+margin-bottom: 15px;
+font-size: 18px;
+font-family: "Poppins", serif;
+text-align: left;
+height: 30px;
+background: none;
+// box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+::placeholder: gold;
+width: 70%;
+`;
+
+//@@BLACK SIGNUP BUTTON
+// const SignUpButton = styled.button`
+// width: 70%;
+// border-radius: 10px;
+// background: black;
+// border: 1px solid gold;
+// color: white;
+// height: 10%;
+// text-align: center;
+// margin-top: 8%;
+// font-family: "Zilla Slab", serif;
+// font-size: 1.5rem;
+
+// `;
+
+//@@GOLD SIGNUP BUTTON
+const SignUpButton = styled.button`
+width: 55%;
+border-radius: 10px;
+background: black;
+border: 3px solid gold;
+color: white;
+height: 10%;
+text-align: center;
+margin-top: 8%;
+font-family: "Zilla Slab", serif;
+font-size: 1.5rem;
+display: flex;
+justify-content: center;
+align-items: center;
+
+`;
+
+
+const SignUpFormBase = props => {
+    //Hooks to update state 
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [passwordOne, setPasswordOne] = useState("");
+    const [passwordTwo, setPasswordTwo] = useState("");
+    const [error, setError] = useState(null);
+
+    const onSubmit = event => {
+
+        //send email & pw values form to firebase for authentication
+        props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.HOME);
+            .then(user => {
+                const newUser = {
+                    firebase_user_id: user.uid,
+                    userName: username,
+                    email: email
+                };
+                //send FB authenticated user UID, username and email to wheretocode Database
+                axios
+                    .post(
+                        "https://wheretocode-master.herokuapp.com/auth/register",
+                        newUser
+                    )
+                    .then(res => {
+                        console.log(res.data);
+                        setUsername("");
+                        setEmail("");
+                        setPasswordOne("");
+                        props.history.push(ROUTES.HOME);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             })
             .catch(error => {
-                this.setState({ error });
+                setError(error);
             });
-
         event.preventDefault();
     };
 
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+    const isInvalid =
+        passwordOne !== passwordTwo ||
+        passwordOne === "" ||
+        email === "" ||
+        username === "";
 
-    render() {
-        const {
-            username,
-            email,
-            passwordOne,
-            passwordTwo,
-            error,
-        } = this.state;
 
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            username === '';
 
-        return (
-            <Box width="medium">
-            <Form onSubmit={this.onSubmit}>
-                <FormField
+    return (
+
+
+        <FormContainer>
+            <StyledHeader>
+                <i class="fas fa-wifi fa-2x" style={{ color: "gold", marginRight: "14px" }}></i>
+                <h1 >HiveStack</h1>
+                <StyledSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" preserveAspectRatio="none">
+                    <circle fill="white" cx="0" cy="100" r="100" />
+                    <circle fill="white" cx="200" cy="100" r="100" />
+                </StyledSvg>
+            </StyledHeader>
+            <StyledForm onSubmit={onSubmit}>
+                <StyledInput
                     name="username"
                     value={username}
-                    onChange={this.onChange}
+                    onChange={e => setUsername(e.target.value)}
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Username"
                 />
-                <FormField
+                <StyledInput
                     name="email"
                     value={email}
-                    onChange={this.onChange}
+                    onChange={e => setEmail(e.target.value)}
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Email"
                 />
-                <FormField
+                <StyledInput
                     name="passwordOne"
                     value={passwordOne}
-                    onChange={this.onChange}
+                    onChange={e => setPasswordOne(e.target.value)}
                     type="password"
                     placeholder="Password"
+
                 />
-                <FormField
+                <StyledInput
                     name="passwordTwo"
                     value={passwordTwo}
-                    onChange={this.onChange}
+                    onChange={e => setPasswordTwo(e.target.value)}
                     type="password"
                     placeholder="Confirm Password"
                 />
-                <Button disabled={isInvalid} type="submit" primary label="Sign Up" />
-                   
 
-                {error && <p>{error.message}</p>}
-            </Form>
-            </Box>
-        );
-    }
-}
+            </StyledForm>
+            <SignUpButton disabled={isInvalid} onClick={onSubmit} primary label="Sign Up" >Sign Up</SignUpButton>
+
+            {/* <button onClick={props.toggleModal}>Close</button> */}
+        </FormContainer >
+
+
+    );
+};
 
 const SignUpLink = () => (
-    <Text alignSelf="center" margin="small">
+    <h6 alignSelf="center" margin="small">
         Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-    </Text>
+    </h6>
 );
 const SignUpForm = withRouter(withFirebase(SignUpFormBase));
-export default SignUpPage;
+// export default SignUpPage;
 export { SignUpForm, SignUpLink };
