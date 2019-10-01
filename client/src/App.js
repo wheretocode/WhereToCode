@@ -55,6 +55,7 @@ const App = () => {
           render={props => <Home {...props} place={place} />}
         />
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+        <Route path={ROUTES.NETWORK} component={NetworkPage} />
         <Footer />
       </Router>
     </Grommet>
