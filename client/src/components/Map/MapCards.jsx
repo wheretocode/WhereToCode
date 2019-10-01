@@ -8,26 +8,8 @@ import SingleMapCard from "./SingleMapCard";
 class MapCards extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      locationDetails: [],
-      id: []
-    };
+    this.state = {};
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.locations !== prevProps.locations) {
-  //     this.props.locations.map(location => {
-  //       this.setState({
-  //         id: [
-  //           ...this.state.id,
-  //           {
-  //             id: location.id
-  //           }
-  //         ]
-  //       });
-  //     });
-  //   }
-  // }
 
   render() {
     return (
