@@ -4,7 +4,14 @@ const SingleMapCard = props => {
   return (
     <>
       {props.location !== "" ? (
-        <div style={{ border: "1px solid black", margin: 10, padding: 10 }}>
+        <div
+          style={{
+            border: "1px solid black",
+            margin: 10,
+            padding: 10,
+            width: "500px"
+          }}
+        >
           <img src={props.icon} />
           <p>{`name: ${props.location}`}</p>
           {/* Placeholder rating */}
