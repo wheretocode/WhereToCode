@@ -22,10 +22,7 @@ const Landing = props => {
 
   useEffect(() => {
     const autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById("exploreAutoComplete"),
-      {
-        types: ["establishment"]
-      }
+      document.getElementById("exploreAutoComplete")
     );
     autocomplete.setFields([
       "address_components",
