@@ -20,6 +20,9 @@ import Home from './views/Home';
 import AccountPage from './views/Account';
 import Review from './views/Review';
 
+import NetworkPage from './views/Network';
+
+
 //@ utils
 import * as ROUTES from './Routes/routes';
 
@@ -135,6 +138,8 @@ const App = () => (
     <Route exact path={ROUTES.HOME} component={Home} />
     <Route path={ROUTES.ACCOUNT} component={AccountPage} />
     <Route exact path={ROUTES.REVIEW} component={Review} />
+    <Route path={ROUTES.NETWORK} component={NetworkPage} />
+
   </Router>
   </Grommet>
 
