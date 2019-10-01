@@ -14,7 +14,8 @@ class Map extends Component {
       pos: {
         lat: 0,
         lng: 0
-      }
+      },
+      details: []
     };
   }
 
@@ -135,10 +136,32 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
+  // Takes location id of a nearby location from SingleMapCard and passes it to requestDetails which then calls a getDetails request
+  requestDetails = id => {
+    let map = new google.maps.Map(document.getElementById("fakeMap"));
+
+    let service = new google.maps.places.PlacesService(map);
+
+    let request = {
+      placeId: id,
+      fields: ["name", "formatted_phone_number", "opening_hours"]
+    };
+
+    service.getDetails(request, (place, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log(
+          `${place.name}, ${JSON.stringify(
+            place.opening_hours.weekday_text
+          )}, ${place.formatted_phone_number}`
+        );
+      }
+    });
+  };
+
   handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13
+      zoom: 15
     });
 
     // Gets new place when auto complete search is clicked
@@ -147,7 +170,10 @@ class Map extends Component {
     // request object sets search query, search radius, and coordinates
     let request = {
       location: place.geometry.location,
-      placeId: place.place_id,
+      id: place.place_id,
+      rating: place.rating,
+      icon: place.icon,
+      photos: place.photos,
       radius: "500",
       query: "Cafe"
     };
@@ -167,22 +193,30 @@ class Map extends Component {
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        results.map(item => {
+        results.map(place => {
           // Adds map markers to nearby locations
           let marker = new google.maps.Marker({
             map: map,
-            position: item.geometry.location,
-            title: item.name
+            position: place.geometry.location,
+            title: place.name
           });
-          marker.setPosition(item.geometry.location);
+
+          marker.setPosition(place.geometry.location);
           marker.setVisible(true);
 
           this.setState({
             locations: [
               ...this.state.locations,
               {
-                name: item.name,
-                place_id: item.place_id
+                name: place.name,
+                icon: !place.photos // Loads an img if it has one, if not it uses default google icon
+                  ? place.icon
+                  : place.photos[0].getUrl({
+                      maxWidth: 100
+                    }),
+                id: place.place_id,
+                address: place.formatted_address,
+                rating: place.rating
               }
             ]
           });
@@ -210,7 +244,13 @@ class Map extends Component {
 
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
 
-        <MapCards locations={this.state.locations} />
+        {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
+        <div id="fakeMap"></div>
+        <MapCards
+          locations={this.state.locations}
+          handleScriptLoad={this.handleScriptLoad}
+          requestDetails={this.requestDetails}
+        />
       </div>
     );
   }

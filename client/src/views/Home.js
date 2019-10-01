@@ -10,12 +10,8 @@ const Home = ({ place }) => {
     <div>
       <h1>Hello World</h1>
       <p>Home Page accessed by authorized user</p>
-<<<<<<< HEAD
-      <Map place={place} />
-=======
       <NetworkSpeed />
       <Map />
->>>>>>> ddc9c22c1e44b8a37fd6316ab92ad8b40005a508
     </div>
   );
 };
