@@ -10,6 +10,7 @@ const Home = props => {
     <div>
       <h1>Hello World</h1>
       <p>Home Page accessed by authorized user</p>
+      <NetworkSpeed />
       <Map />
     </div>
   );
