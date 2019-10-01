@@ -46,9 +46,9 @@ const App = () => {
           path={ROUTES.LANDING}
           render={props => <Landing {...props} setPlace={setPlace} />}
         />
-        <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+
         <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-        <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+
         <Route
           exact
           path={ROUTES.HOME}
