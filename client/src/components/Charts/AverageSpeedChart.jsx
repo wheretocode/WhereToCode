@@ -58,7 +58,7 @@ const AverageSpeedChart = () => {
 
     return(
         <div style={chartStyle}>
-            <h2>Average Download Speed by Region:</h2>
+            <h2>Average Download Speed by Country:</h2>
              <ReactApexChart options={options} 
                     series={series} 
                     type="bar" 
