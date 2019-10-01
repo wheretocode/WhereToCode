@@ -6,3 +6,4 @@ export const LANDING = '/';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const REVIEW = '/review';
+export const THEME = '/theme';
