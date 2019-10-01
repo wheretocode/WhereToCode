@@ -15,7 +15,7 @@ function getAll_reviews() {
 }
 
 function getReviewById(id) {
-  return db("reviews").where({id});
+  return db("reviews").where({ id });
 }
 
 function getReviewsByUser(id) {
@@ -29,8 +29,8 @@ function getReviewsByUser(id) {
 function getReviewsByLocation(id) {
   return db("reviews as r")
     .join("users as u", "u.id", "r.user_id")
-        .join("locations as l", "r.location_id", "l.id")
-    .select("l.id","l.locationName")
+    .join("locations as l", "r.location_id", "l.id")
+    .select("l.id", "l.locationName")
     .where("r.id", id);
 }
 
@@ -39,9 +39,9 @@ function add(review) {
 }
 
 function remove(id) {
-  return db("reviews").where({id}).del();
+  return db("reviews").where({ id }).del();
 }
 
 function update(id, update) {
-  return db("reviews").where({id}).update(update).return(update);
+  return db("reviews").where({ id }).update(update).return(update);
 }
