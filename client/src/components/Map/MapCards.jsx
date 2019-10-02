@@ -1,15 +1,35 @@
-import React from "react"
+import React, { Component } from "react";
+
 import SingleMapCard from "./SingleMapCard";
 
-const MapCards = (props) => {
+/*global google*/
+
+class MapCards extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
     return (
-        <div>
-            {props.locations.map(location => {
-                return <SingleMapCard location={location.name} id={location.place_id}/>
-                
-            })}
-        </div>
-    )
+      <>
+        {this.props.locations.map(location => {
+          return (
+            <div>
+              <SingleMapCard
+                location={location.name}
+                address={location.address}
+                rating={location.rating}
+                icon={location.icon}
+                id={location.id}
+                requestDetails={this.props.requestDetails}
+              />
+            </div>
+          );
+        })}
+      </>
+    );
+  }
 }
 
 export default MapCards;
