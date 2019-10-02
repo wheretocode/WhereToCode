@@ -2,9 +2,9 @@
 const speedTest = require('speedtest-net')({ maxTime: 1000 });
 
 process.on('message', (msg) => {
-    console.log(msg)
+  
     speedTest.on('data', data => {
-
+        console.log(data)  
         if(data.speeds.download && data.speeds.upload) {
 
             process.send(data);
