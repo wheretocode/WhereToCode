@@ -49,7 +49,7 @@ const Landing = props => {
         </h2>
 
         <InputAndButtonContainer>
-          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
+          <Input id="exploreAutoComplete" placeholder="Explore" size="40" />
           <GoButton to={ROUTES.HOME}>Go</GoButton>
         </InputAndButtonContainer>
       </SearchComponent>
@@ -68,6 +68,10 @@ const SearchComponent = styled.div`
     color: white;
     font-family: "'Zilla Slab', serif";
     font-size: 48px;
+
+    @media(max-width:500px){
+      font-size: 28px;
+    }
   }
   span {
     color: gold;
