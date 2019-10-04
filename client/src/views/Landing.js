@@ -106,6 +106,7 @@ const Input = styled.input`
   border-radius: 10px 0 0 10px;
   border-right: none;
   border: 1px solid white;
+  padding-left: 10px;
   &::placeholder {
     vertical-align: center;
     font-size: 1rem;
