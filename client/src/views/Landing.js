@@ -1,128 +1,117 @@
-import React from 'react';
-import { Box, Image, Heading, Button, RoutedButton, Paragraph, Carousel, Stack, Text, Grid, } from 'grommet';
-import { Notification } from 'grommet-icons';
-import AppBar from '../components/Styling/AppBar';
-import { CardTitle, CardContent } from 'grommet-controls';
-import { Facebook, Twitter, Google } from 'grommet-icons';
-import { Card } from 'grommet-controls';
-import Layout from '../components/Styling/Layout';
-import img1 from '../assets/img1.jpg'
-import * as ROUTES from '../Routes/routes';
-import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
+import React, { useState, useEffect } from "react";
+/* global google */
 
+import styled from "styled-components";
 
+import { withRouter, Link } from "react-router-dom";
 
-// const Landing = () => (
-//     <AppBar>
-//     <div>
-//         <h1>Landing</h1>
-//     </div>
-//     <Button icon={<Notification />} onClick={() => {}} />
-//     </AppBar>
+import * as ROUTES from "../Routes/routes";
 
-// );
+const Landing = props => {
+  const [currentActivity, setCurrentActivity] = useState("code");
+  const [number, setNumber] = useState(1);
 
+  const activity = ["code", "study", "stream"];
 
-// export default Landing;
-// import NetworkSpeed from '../components/NetworkSpeed/NetworkSpeed'
+  function updateText() {
+    setCurrentActivity(activity[number]);
+    return number === activity.length - 1
+      ? setNumber(0)
+      : setNumber(number + 1);
+  }
 
-// const Landing = () => (
-//     <div>
-//         <h1>Landing</h1>
-//         <NetworkSpeed />
-//     </div>
-// );
+  useEffect(() => {
+    const autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById("exploreAutoComplete")
+    );
+    autocomplete.setFields([
+      "address_components",
+      "formatted_address",
+      "geometry",
+      "icon",
+      "name",
+      "place_id"
+    ]);
+    autocomplete.addListener("place_changed", () => {
+      props.setPlace(autocomplete.getPlace());
+    });
+  }, []);
 
+  useEffect(() => {
+    setTimeout(updateText, 2000);
+  }, [number]);
 
-const Landing = () => (
-    <Layout>
-    <Grid
-      areas={[
-        { name: 'main', start: [0, 0], end: [1, 1] },
-        { name: 'side', start: [2, 0], end: [2, 1] },
-        { name: 'foot', start: [0, 1], end: [2, 1] },
-      ]}
-      columns={['small', 'flex', 'medium']}
-      rows={['medium', 'small']}
-      gap=''
-    >
-      <Box gridArea='main' background='dark-2' align='start' margin-leftt='1' justify='center'>
-      <Heading margin='small' size='medium'>Lorem ipsum dolor sit amet,</Heading>
-        <Paragraph margin='small' style={{ maxWidth: '500px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum eros et blandit egestas. Donec finibus rutrum volutpat. Nunc congue feugiat felis nec pharetra. Morbi at tempor enim. Duis consectetur quam a rhoncus rhoncus. Fusce ac mattis metus. Pellentesque tristique lacus eget ante dapibus, eu aliquam ligula aliquet. Proin vehicula ut dui a lacinia. Nulla egestas commodo neque, vel cursus mi congue eu.
-        </Paragraph>
+  return (
+    <LandingPageContainer>
+      <SearchComponent>
+        <h2>
+          Find a place to <span>{currentActivity}</span> near you
+        </h2>
 
-        <Button
-          label="Learn More..."
-          onClick={() => {}}
-          style={{width:'30%', height:'20'}}
-          path='/history'
-          color='brand'
-        />
-            <NetworkSpeed />
-
-        </Box> 
-      <Box gridArea='side' background='dark-2' align='center' justify='center'>
-      <ul>
-      <RoutedButton
-        label="Sign In"
-        path={ROUTES.SIGN_IN}
-        color='brand' 
-      />
-      <RoutedButton
-        label="Sign Up"
-        path={ROUTES.SIGN_UP}
-        color='brand'
-      />
-      </ul>
-        </Box> 
-        <Box gridArea='foot' background='dark-2'>
-        <Box height="small" width="" overflow="hidden">
-          <Carousel fill>
-            <Image fit="cover" src="https://www.bunzlcatering.co.uk/wp-content/uploads/2015/06/coffee-shop-1.jpg" />
-            <Image fit="cover" src="http://assets.fieldingdesigngroup.com/images/coffeeshop/IMG_3556-min.jpg" />
-            <Image fit="cover" src="https://ujg1i3ze1133y9zav35eixy117m-wpengine.netdna-ssl.com/wp-content/uploads/2015/11/coffee-shop_best-location-for-coffee-shop-1.jpg" />
-          </Carousel>
-</Box>
-
-        </Box>
-    </Grid>      
-
-
-
-      <Box align='center'>
-        <Heading size='medium'>Lorem ipsum dolor sit amet,</Heading>
-        <Box direction='row' wrap='true'>
-
-          {/* //card 1 */}
-          <Card basis='1/2'>
-            <CardContent align='center'>
-              <Heading size='small'>Lorem ipsum dolor sit amet, </Heading>
-              <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum eros et blandit egestas. Donec finibus rutrum volutpat. Nunc congue feugiat felis nec pharetra. Morbi at tempor enim. Duis consectetur quam a rhoncus rhoncus. Fusce ac mattis metus. Pellentesque tristique lacus eget ante dapibus, eu aliquam ligula aliquet. Proin vehicula ut dui a lacinia. Nulla egestas commodo neque, vel cursus mi congue eu.
-              </Paragraph>
-            </CardContent>
-          </Card>
-
-        {/* card2 */}
-          <Card basis='1/2'>
-            <CardContent align='center'>
-              <Heading size='small'>Lorem ipsum dolor sit amet, </Heading>
-              <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum eros et blandit egestas. Donec finibus rutrum volutpat. Nunc congue feugiat felis nec pharetra. Morbi at tempor enim. Duis consectetur quam a rhoncus rhoncus. Fusce ac mattis metus. Pellentesque tristique lacus eget ante dapibus, eu aliquam ligula aliquet. Proin vehicula ut dui a lacinia. Nulla egestas commodo neque, vel cursus mi congue eu.
-              </Paragraph>
-            </CardContent>
-          </Card>
-
-
-          {/* //card3 */}
-          <Card basis=''>
-            <CardContent align='center' maxWidth='100%'>
-              <Heading size='small'>Lorem ipsum dolor sit amet, </Heading>
-              <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum eros et blandit egestas. Donec finibus rutrum volutpat. Nunc congue feugiat felis nec pharetra. Morbi at tempor enim. Duis consectetur quam a rhoncus rhoncus. Fusce ac mattis metus. Pellentesque tristique lacus eget ante dapibus, eu aliquam ligula aliquet. Proin vehicula ut dui a lacinia. Nulla egestas commodo neque, vel cursus mi congue eu.
-              </Paragraph>
-            </CardContent>
-          </Card>
-        </Box>
-      </Box>
-    </Layout>
+        <InputAndButtonContainer>
+          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
+          <GoButton to={ROUTES.HOME}>Go</GoButton>
+        </InputAndButtonContainer>
+      </SearchComponent>
+    </LandingPageContainer>
   );
-  
-  export default Landing;
+};
+
+export default withRouter(Landing);
+
+const SearchComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2 {
+    margin: 0 0 32px 0;
+    color: white;
+    font-family: "'Zilla Slab', serif";
+    font-size: 48px;
+  }
+  span {
+    color: gold;
+  }
+`;
+
+const LandingPageContainer = styled.div`
+  background: url("/heroimage.svg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 94.2vh;
+`;
+
+const GoButton = styled(Link)`
+  display: flex
+  align-items: center;
+  text-decoration: none;
+  font-family: "Zilla Slab", serif;
+  font-size: 2rem;
+  color: black;
+  border-radius: 0 10px 10px 0;
+  background: gold;
+  border: 1px solid gold;
+  border-left: none;
+  padding: 0 10px 0 10px;
+  &:hover {
+    background: yellow;
+  }
+`;
+
+const Input = styled.input`
+  height: 44px;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  border: 1px solid white;
+  &::placeholder {
+    vertical-align: center;
+    font-size: 1rem;
+  }
+`;
+
+const InputAndButtonContainer = styled.div`
+  display: flex;
+`;

@@ -1,15 +1,19 @@
-import React from 'react';
-import { withAuthorization } from '../components/Session';
+import React from "react";
+import { withAuthorization } from "../components/Session";
+import NetworkSpeed from "../components/NetworkSpeed/NetworkSpeed";
 
-import Map from '../components/Map/Map.jsx'
+import Map from "../components/Map/Map.jsx";
 
-const Home = () => (
+const Home = ({ place }) => {
+  return (
     <div>
-        <h1>Hello World</h1>
-        <p>Home Page accessed by authorized user</p>
-        <Map />
+      <h1>Hello World</h1>
+      <p>Home Page accessed by authorized user</p>
+      <NetworkSpeed />
+      <Map place={place} />
     </div>
-);
+  );
+};
 
 const condition = authUser => !!authUser;
 

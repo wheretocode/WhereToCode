@@ -23,7 +23,6 @@ router.get("/:id", async (req, res) => {
 
     const review = await REVIEW_MODEL.getReviewById(req.params.id);
     if (review.length > 0) {
-
       res.status(200).json(review);
     } else {
       res.status(404).json({ message: "Review is not found", error });
@@ -138,13 +137,17 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
+
+// Middleware - checks that there is a request body
 function requireBody(req, res, next) {
   if (req.body && Object.keys(req.body).length) {
     next();
   } else {
-    next({ message: "Please include request body" });
+    res.status(500).json({ message: "Please include request body" });
   }
 }
+
+
 
 // EXPORTS
 module.exports = router;
