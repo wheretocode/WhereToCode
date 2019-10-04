@@ -8,6 +8,8 @@ function add(location) {
   return db("locations").insert(location).return(location);
 }
 
+
+
 const getLocationById = id => { };
 
 const updateLocation = () => { };

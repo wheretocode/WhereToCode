@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 
+
 router.get("/:id", async (req, res) => {
   try {
 
@@ -33,6 +34,11 @@ router.get("/:id", async (req, res) => {
       .json({ message: "Error fetching review.", err });
   }
 });
+
+
+// @route Get user name & ID for this review
+// @desc Gets user name per review 
+// @access currently Public, needs to be protected
 
 router.get("/:id/user", async (req, res) => {
   try {
@@ -69,6 +75,11 @@ router.get("/:id/user", async (req, res) => {
 //   }
 // });
 
+
+// @route Get review location name/
+// @desc Gets location name per review 
+// @access currently Public, needs to be protected
+
 router.get("/:id/location", async (req, res) => {
   try {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
@@ -85,6 +96,7 @@ router.get("/:id/location", async (req, res) => {
       .json({ message: "Error fetching location", err });
   }
 });
+
 
 
 
