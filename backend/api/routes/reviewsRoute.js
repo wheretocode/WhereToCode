@@ -17,7 +17,9 @@ router.get("/", async (req, res) => {
 });
 
 
-
+// @route GET reviews/:id
+// @desc Gets the review by ID
+// @access Public
 router.get("/:id", async (req, res) => {
   try {
 
@@ -35,8 +37,8 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// @route Get user name & ID for this review
-// @desc Gets user name per review 
+// @route GET reviews/:id/user
+// @desc Gets all reviews by user ID
 // @access currently Public, needs to be protected
 
 router.get("/:id/user", async (req, res) => {
@@ -56,27 +58,10 @@ router.get("/:id/user", async (req, res) => {
   }
 });
 
-// router.get("/:id/location", async (req, res) => {
-//   try {
-//     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
-//     console.log("rl", reviewLocation);
-//     if (reviewLocation.length > 0 && reviewLocation) {
-//       console.log("RL:", reviewLocation);
-//       console.log("length:", reviewLocation.length);
-//       res.status(200).json(reviewLocation);
-//     } else if (reviewLocation.length < 1) {
-//       res.status(400).send({ message: "Location from this review is not found", error });
-//     }
-//   } catch (err) {
-//     res
-//       .status(500)
-//       .json({ message: "Error fetching location", err });
-//   }
-// });
 
 
-// @route Get review location name/
-// @desc Gets location name per review 
+// @route Get reviews/:id/location
+// @desc Gets all reviews by location ID
 // @access currently Public, needs to be protected
 
 router.get("/:id/location", async (req, res) => {
@@ -86,6 +71,47 @@ router.get("/:id/location", async (req, res) => {
     if (reviewLocation.length > 0) {
       res.status(200).json(reviewLocation);
       console.log("RL", reviewLocation);
+    } else {
+      res.status(400).send({ message: "Location from this review is not found", error });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching location", err });
+  }
+});
+
+// @route Get reviews/:id/feature
+// @desc Gets first highest rated review
+// @access currently Public, needs to be protected
+router.get("/:id/feature", async (req, res) => {
+  try {
+    const featureReview = await REVIEW_MODEL.firstHighestRating(req.params.id)
+    console.log("rl", featureReview);
+    if (Object.keys(featureReview).length > 0) {
+      res.status(200).json(featureReview);
+      console.log("after json", featureReview);
+    } else {
+      res.status(400).send({ message: "Location from this review is not found", error });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching location", err });
+  }
+});
+
+// @route Get reviews/:id/first
+// @desc Gets first posted review
+// @access currently Public, needs to be protected
+router.get("/:id/first", async (req, res) => {
+  try {
+    const featureReview = await REVIEW_MODEL.getFirstReviewByLocation(req.params.id)
+    console.log("rl", featureReview);
+    console.log("length", Object.keys(featureReview).length);
+    if (Object.keys(featureReview).length > 0) {
+      res.status(200).json(featureReview);
+      console.log("RL", featureReview);
     } else {
       res.status(400).send({ message: "Location from this review is not found", error });
     }

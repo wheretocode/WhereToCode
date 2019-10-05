@@ -7,7 +7,9 @@ module.exports = {
   getReviewsByLocation,
   add,
   remove,
-  update
+  update,
+  firstHighestRating,
+  getFirstReviewByLocation
 };
 
 function getAll_reviews() {
@@ -23,7 +25,7 @@ function getReviewsByUser(id) {
   return db("reviews as r")
     .join("users as u", "r.user_id", "u.id")
     .join("locations as l", "r.location_id", "l.id")
-    .select("l.locationName", "r.rating", "r.comments", "r.internet_rating")
+    .select("u.id as userId", "u.userName", "l.locationName", "r.rating", "r.comments", "r.internet_rating")
     .where("u.id", id);
 }
 
@@ -32,10 +34,31 @@ function getReviewsByLocation(id) {
   return db("reviews as r")
     .join("users as u", "u.id", "r.user_id")
     .join("locations as l", "r.location_id", "l.id")
-    .select("r.id", "r.rating", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .select("r.id as ratingId", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
     .where("l.id", id);
 }
 
+//first review posted (by location id )
+function getFirstReviewByLocation(id) {
+  return db("reviews as r")
+    .join("users as u", "u.id", "r.user_id")
+    .join("locations as l", "r.location_id", "l.id")
+    .select("r.id as ratingId", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .where("l.id", id).first();
+}
+
+
+
+//first highest rated review (by location id)
+function firstHighestRating(id) {
+  return db("reviews as r")
+    .join("users as u", "u.id", "r.user_id")
+    .join("locations as l", "r.location_id", "l.id")
+    .select("r.id", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .where("l.id", id).andWhere(function () {
+      this.max("r.rating")
+    }).first()
+}
 
 
 function add(review) {

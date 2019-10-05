@@ -22,22 +22,20 @@ module.exports = {
   testing: {
     client: 'postgresql',
     connection: {
-<<<<<<< HEAD
       database: "postgres",
       user: "postgres",
       password: process.env.DB_Password
     },
 
     migrations: {
-      directory: './backend/migrations',
-      tableName: "knex_testmigrations"
-=======
-      database: "Postgres", user: "postgres", password: process.env.DB_Password
+
+      database: "Postgres",
+      user: "postgres",
+      password: process.env.DB_Password
     },
     useNullAsDefault: true,
     migrations: {
       directory: './backend/migrations',
->>>>>>> 127b1d6c6d6f1b6e0beb9c8fdfbe404d023fe4df
     },
     seeds: {
       directory: './backend/seeds',
