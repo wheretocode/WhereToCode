@@ -87,10 +87,12 @@ router.get("/:id/location", async (req, res) => {
 router.get("/:id/feature", async (req, res) => {
   try {
     const featureReview = await REVIEW_MODEL.firstHighestRating(req.params.id)
-    console.log("rl", featureReview);
+    console.log("featReview", featureReview);
+    console.log("featReviewLength", Object.keys(featureReview).length);
     if (Object.keys(featureReview).length > 0) {
       res.status(200).json(featureReview);
       console.log("after json", featureReview);
+      console.log("after json length", Object.keys(featureReview).length);
     } else {
       res.status(400).send({ message: "Location from this review is not found", error });
     }

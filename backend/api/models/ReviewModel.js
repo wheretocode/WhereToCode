@@ -50,11 +50,23 @@ function getFirstReviewByLocation(id) {
 
 
 //first highest rated review (by location id)
+// function firstHighestRating(id) {
+//   return db("reviews as r")
+//     .join("users as u", "u.id", "r.user_id")
+//     .join("locations as l", "r.location_id", "l.id")
+//     .select("r.id", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+//     .where("l.id", id).andWhere(function () {
+//       this.max("r.rating")
+//     }).orWhere(function () {
+//       this.where("r.rating", ">", 0).andWhere("l.id", id)
+//     }).first()
+// }
+
 function firstHighestRating(id) {
   return db("reviews as r")
     .join("users as u", "u.id", "r.user_id")
     .join("locations as l", "r.location_id", "l.id")
-    .select("r.id", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .select("l.locationName", "r.id as ratingId", "r.rating as rating_score", "r.comments", "r.internet_rating", "r.secure_wifi", "u.id as userId", "u.userName")
     .where("l.id", id).andWhere(function () {
       this.max("r.rating")
     }).first()
