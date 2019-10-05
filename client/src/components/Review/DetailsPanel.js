@@ -42,14 +42,15 @@ const DetailsPanel = props => {
     <StyleModal>
       <Header> Details </Header>
       <Content>
-        <p>Name: {props.details[0]}</p>
-        <p>Phone: {props.details[1]}</p>
-        <ul>
-          Hours:
-          {props.hours.map(day => {
-            return <li>{day}</li>;
-          })}
-        </ul>
+        <h2>Name:</h2>
+        <p>{props.details[0]}</p>
+        <h2>Phone:</h2>
+        <p>{props.details[1]}</p>
+        <h2>Hours:</h2>
+
+        {props.hours.map(day => {
+          return <p>- {day} -</p>;
+        })}
       </Content>
       <Actions>
         <Popup
