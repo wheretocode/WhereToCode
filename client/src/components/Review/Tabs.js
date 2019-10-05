@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import DetailsPanel from './DetailsPanel';
-import AllReviewsPanel from './AllReviewsPanel';
-import ReviewPanel from './ReviewPanel';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
- 
-export default () => (
+import React, { Component } from "react";
+import DetailsPanel from "./DetailsPanel";
+import AllReviewsPanel from "./AllReviewsPanel";
+import ReviewPanel from "./ReviewPanel";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+
+export default props => (
   <Tabs>
     <TabList>
-      <Tab >Details</Tab>
+      <Tab>Details</Tab>
       <Tab>All Reviews</Tab>
       <Tab>Leave A Review</Tab>
     </TabList>
- 
+
     <TabPanel>
-      <DetailsPanel/>
+      <DetailsPanel details={props.details} hours={props.hours} />
     </TabPanel>
     <TabPanel>
-      <AllReviewsPanel/>
+      <AllReviewsPanel />
     </TabPanel>
     <TabPanel>
-      <ReviewPanel/>
+      <ReviewPanel />
     </TabPanel>
   </Tabs>
 );
