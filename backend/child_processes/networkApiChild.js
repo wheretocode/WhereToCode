@@ -1,5 +1,5 @@
 //Speed Test API
-const speedTest = require('speedtest-net')({ maxTime: 1000 });
+const speedTest = require('speedtest-net')({ maxTime: 1000, serversURL: 'http://www.speedtest.net/speedtest-servers-static.php' });
 
 process.on('message', (msg) => {
     speedTest.on('config', config => {
