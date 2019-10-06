@@ -94,14 +94,16 @@ router.get("/:id/feature", async (req, res) => {
       console.log("after json", featureReview);
       console.log("after json length", Object.keys(featureReview).length);
     } else {
-      res.status(400).send({ message: "Location from this review is not found", error });
+      res.status(404).send({ message: "Location from this review is not found", error });
     }
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Error fetching location", err });
+      .json({ message: "Error fetching Review. Location May Not Have A Review. " });
   }
 });
+
+
 
 // @route Get reviews/:id/first
 // @desc Gets first posted review
@@ -120,7 +122,7 @@ router.get("/:id/first", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Error fetching location", err });
+      .json({ message: "Error fetching location" });
   }
 });
 
