@@ -1,5 +1,5 @@
 //Speed Test API
-const speedTest = require('speedtest-net')({ maxTime: 1000, serverID: '3524' });
+const speedTest = require('speedtest-net')({ maxTime: 1000, serverId: '3524' });
 
 process.on('message', (msg) => {
 
