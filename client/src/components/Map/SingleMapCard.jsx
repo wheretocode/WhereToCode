@@ -27,7 +27,9 @@ class SingleMapCard extends Component {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.setState({
           details: [place.name, place.formatted_phone_number],
-          hours: place.opening_hours.weekday_text
+          hours: !place.opening_hours
+            ? ["N/A"]
+            : place.opening_hours.weekday_text
         });
       }
     });
