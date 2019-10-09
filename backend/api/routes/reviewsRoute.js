@@ -38,7 +38,7 @@ router.get("/:id", async (req, res) => {
 
 
 // @route GET reviews/:id/user
-// @desc Gets all reviews by user ID
+// @desc Gets all reviews for Location ID by Users
 // @access currently Public, needs to be protected
 
 router.get("/:id/user", async (req, res) => {
@@ -61,7 +61,7 @@ router.get("/:id/user", async (req, res) => {
 
 
 // @route Get reviews/:id/location
-// @desc Gets all reviews by location ID
+// @desc Gets all reviews for location ID
 // @access currently Public, needs to be protected
 
 router.get("/:id/location", async (req, res) => {
