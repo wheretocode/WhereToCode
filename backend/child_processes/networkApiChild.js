@@ -1,16 +1,17 @@
+const selectServer = require('./selectServerLogic');
 //Speed Test API
-const speedTest = require('speedtest-net')({ maxTime: 1000, serverId: '3524' });
+const speedTest = require('speedtest-net')({ maxTime: 1000, serverId: selectServer() });
 
 process.on('message', (msg) => {
 
     speedTest.on('config', config => {
-        console.log('Configuration info:');
-        console.dir(config);
+        //console.log('Configuration info:');
+        //console.dir(config);
       });
   
     speedTest.on('data', data => {
-        console.log('data info: ')
-        console.dir(data)  
+        //console.log('data info: ')
+        //console.dir(data)  
         if(data.speeds.download && data.speeds.upload) {
 
             process.send(data);
