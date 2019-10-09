@@ -20,7 +20,7 @@ function getReviewById(id) {
   return db("reviews").where({ id });
 }
 
-//reviews by user id
+//reviews of each user by location id
 function getReviewsByUser(id) {
   return db("reviews as r")
     .join("users as u", "r.user_id", "u.id")
@@ -38,7 +38,7 @@ function getReviewsByLocation(id) {
     .where("l.id", id);
 }
 
-//first review posted (by location id )
+//first review posted by location id 
 function getFirstReviewByLocation(id) {
   return db("reviews as r")
     .join("users as u", "u.id", "r.user_id")
@@ -49,7 +49,7 @@ function getFirstReviewByLocation(id) {
 
 
 
-
+//first highest rated review by location id
 function firstHighestRating(id) {
   return db("reviews as r")
     .join("users as u", "u.id", "r.user_id")
