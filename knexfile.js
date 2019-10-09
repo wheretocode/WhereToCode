@@ -22,7 +22,16 @@ module.exports = {
   testing: {
     client: 'postgresql',
     connection: {
-      database: "Postgres", user: "postgres", password: process.env.DB_Password
+      database: "postgres",
+      user: "postgres",
+      password: process.env.DB_Password
+    },
+
+    migrations: {
+
+      database: "Postgres",
+      user: "postgres",
+      password: process.env.DB_Password
     },
     useNullAsDefault: true,
     migrations: {
