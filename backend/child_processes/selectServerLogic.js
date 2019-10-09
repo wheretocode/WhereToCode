@@ -9,7 +9,7 @@ const selectServer = userLocation => {
     const stateServers = servers.filter(server => {
       const serverLocation = server['-name'].split(', ')[1];
   
-      return serverLocation ? serverLocation.toLowerCase() === 'va'
+      return serverLocation ? serverLocation.toLowerCase() === 'ca'
                             : false;
     });
   
