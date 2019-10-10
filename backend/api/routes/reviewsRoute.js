@@ -17,14 +17,17 @@ router.get("/", async (req, res) => {
 });
 
 
+// @route GET reviews/:id
+// @desc Gets the review by ID
+// @access Public
 router.get("/:id", async (req, res) => {
   try {
 
     const review = await REVIEW_MODEL.getReviewById(req.params.id);
-    if (review.length>0) {
+    if (review.length > 0) {
       res.status(200).json(review);
     } else {
-      res.status(404).json({ message: "Review is not found" , error});
+      res.status(404).json({ message: "Review is not found", error });
     }
   } catch (err) {
     res
@@ -33,13 +36,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
+// @route GET reviews/:id/user
+// @desc Gets all reviews for Location ID by Users
+// @access currently Public, needs to be protected
+
 router.get("/:id/user", async (req, res) => {
   try {
+
     const reviewUser = await REVIEW_MODEL.getReviewsByUser(req.params.id)
     if (reviewUser) {
+
       res.status(200).json(reviewUser);
     } else {
-      res.status(400).send({ message: "User for this review is not found" });
+      res.status(400).send({ message: "User for this review is not found", error });
     }
   } catch (err) {
     res
@@ -48,13 +58,21 @@ router.get("/:id/user", async (req, res) => {
   }
 });
 
+
+
+// @route Get reviews/:id/location
+// @desc Gets all reviews for location ID
+// @access currently Public, needs to be protected
+
 router.get("/:id/location", async (req, res) => {
   try {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
-    if (reviewLocation) {
+    console.log("rl", reviewLocation);
+    if (reviewLocation.length > 0) {
       res.status(200).json(reviewLocation);
+      console.log("RL", reviewLocation);
     } else {
-      res.status(400).send({ message: "Location from this review is not found" });
+      res.status(400).send({ message: "Location from this review is not found", error });
     }
   } catch (err) {
     res
@@ -63,6 +81,54 @@ router.get("/:id/location", async (req, res) => {
   }
 });
 
+// @route Get reviews/:id/feature
+// @desc Gets first highest rated review
+// @access currently Public, needs to be protected
+router.get("/:id/feature", async (req, res) => {
+  try {
+    const featureReview = await REVIEW_MODEL.firstHighestRating(req.params.id)
+    console.log("featReview", featureReview);
+    console.log("featReviewLength", Object.keys(featureReview).length);
+    if (Object.keys(featureReview).length > 0) {
+      res.status(200).json(featureReview);
+      console.log("after json", featureReview);
+      console.log("after json length", Object.keys(featureReview).length);
+    } else {
+      res.status(404).send({ message: "Location from this review is not found", error });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching Review. Location May Not Have A Review. " });
+  }
+});
+
+
+
+// @route Get reviews/:id/first
+// @desc Gets first posted review
+// @access currently Public, needs to be protected
+router.get("/:id/first", async (req, res) => {
+  try {
+    const featureReview = await REVIEW_MODEL.getFirstReviewByLocation(req.params.id)
+    console.log("rl", featureReview);
+    console.log("length", Object.keys(featureReview).length);
+    if (Object.keys(featureReview).length > 0) {
+      res.status(200).json(featureReview);
+      console.log("RL", featureReview);
+    } else {
+      res.status(400).send({ message: "Location from this review is not found", error });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching location" });
+  }
+});
+
+
+
+
 // @route POST reviews/
 // @desc Adds a new review
 // @access currently Public, needs to be protected
@@ -70,7 +136,7 @@ router.post("/", requireBody, async (req, res) => {
   let review = req.body;
   try {
     const addedReview = await REVIEW_MODEL.add(review);
-    return res.status(201).json({message: "New review added", addedReview})
+    return res.status(201).json({ message: "New review added", addedReview })
   } catch (err) {
     return res.status(500).json(err.message)
   }
@@ -82,7 +148,7 @@ router.post("/", requireBody, async (req, res) => {
 router.put("/:id", requireBody, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
-    return res.status(200).json({message: "Review updated", updated})
+    return res.status(200).json({ message: "Review updated", updated })
   } catch (err) {
     return res.status(500).json(err.message)
   }
@@ -95,7 +161,7 @@ router.put("/:id", requireBody, async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await REVIEW_MODEL.remove(req.params.id)
-    return res.status(200).json({message: "Successful delete", deleted})
+    return res.status(200).json({ message: "Successful delete", deleted })
   } catch (err) {
     res.status(500).json(err.message)
   }
@@ -107,7 +173,7 @@ function requireBody(req, res, next) {
   if (req.body && Object.keys(req.body).length) {
     next();
   } else {
-    res.status(500).json({message: "Please include request body"});
+    res.status(500).json({ message: "Please include request body" });
   }
 }
 
