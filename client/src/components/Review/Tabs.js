@@ -4,7 +4,9 @@ import AllReviewsPanel from './AllReviewsPanel';
 import ReviewPanel from './ReviewPanel';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
  
-export default () => (
+export default () => {
+
+  return(
   <Tabs>
     <TabList>
       <Tab >Details</Tab>
@@ -13,7 +15,9 @@ export default () => (
     </TabList>
  
     <TabPanel>
-      <DetailsPanel/>
+
+      <DetailsPanel/>          
+
     </TabPanel>
     <TabPanel>
       <AllReviewsPanel/>
@@ -22,4 +26,4 @@ export default () => (
       <ReviewPanel/>
     </TabPanel>
   </Tabs>
-);
+);}
