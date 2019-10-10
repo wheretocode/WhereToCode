@@ -34,6 +34,8 @@ const Landing = props => {
     ]);
     autocomplete.addListener("place_changed", () => {
       props.setPlace(autocomplete.getPlace());
+      console.log(autocomplete.getPlace().geometry.location.lat());
+      console.log(autocomplete.getPlace().geometry.location.lng());
     });
   }, []);
 

@@ -7,37 +7,37 @@ exports.seed = function(knex) {
       return knex("users").insert([
         {
           firebase_user_id: "5VSGCGzux6NVSFHn9Tnoe0XrUPD2",
-          userName: "Ronny_userName",
+          user_name: "Ronny_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "hy65tgv",
-          userName: "Reed_userName",
+          user_name: "Reed_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "JgE4Y5pEXQZuTc0GWBOXu5yVt1Y2",
-          userName: "Bernard_userName",
+          user_name: "Bernard_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "YXRkpmEwMBhcU7rFth48ivrIu872",
-          userName: "Levi_userName",
+          user_name: "Levi_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "jhgftr56y",
-          userName: "Ami_userName",
+          user_name: "Ami_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "YXRkpmEwMBhcU7rFth48ivrIu872",
-          userName: "David_userName",
+          user_name: "David_userName",
           email: "test@email.com"
         },
         {
           firebase_user_id: "rkth6gQQkKgAGWdNAPAnr3crFp73",
-          userName: "Diamond_userName",
+          user_name: "Diamond_userName",
           email: "test@email.com"
         }
       ]);

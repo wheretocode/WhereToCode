@@ -3,11 +3,11 @@ exports.up = async function(knex) {
     tbl.increments(); // primary key - user id
     tbl.string("firebase_user_id"); // firebase id
     tbl
-      .string("userName") // RonnySAlvarado
+      .string("user_name") // RonnySAlvarado
       .notNullable()
       .unique();
     tbl.string("email"); // Rsalvarado777@gmail.com
-    tbl.integer("reviewCount").default(0); // 300
+    tbl.integer("review_count").default(0); // 300
     tbl.timestamps(true, true); // when account was created
   });
 };

@@ -86,6 +86,7 @@ class Map extends Component {
 
     // Gets new place when auto complete search is clicked
     let place = this.state.initialPlace;
+    console.log(place.geometry.location);
 
     // request object sets search query, search radius, and coordinates
     let request = {
