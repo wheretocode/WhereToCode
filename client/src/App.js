@@ -19,7 +19,7 @@ import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 import Landing from "./views/Landing";
 import Home from "./views/Home";
 import AccountPage from "./views/Account";
-import NetworkPage from "./views/Network";
+// import NetworkPage from "./views/Network";
 
 //@ utils
 import * as ROUTES from "./Routes/routes";
@@ -55,7 +55,7 @@ const App = () => {
           render={props => <Home {...props} place={place} />}
         />
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        <Route path={ROUTES.NETWORK} component={NetworkPage} />
+        {/* <Route path={ROUTES.NETWORK} component={NetworkPage} /> */}
         <Footer />
       </Router>
     </Grommet>
