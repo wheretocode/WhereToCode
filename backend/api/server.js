@@ -24,7 +24,7 @@ server.use("/auth", authRoute);
 server.use("/locations", locationsRoute);
 server.use("/users", usersRoute);
 server.use("/reviews", reviewsRoute);
-server.use("/api", routes);
+// server.use("/api", routes);
 
 // HOMEPAGE ROUTING
 server.get("/", async (req, res) => {
