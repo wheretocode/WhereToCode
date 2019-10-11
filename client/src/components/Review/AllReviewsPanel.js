@@ -56,7 +56,7 @@ const StyleModal = styled.div`
         return (
           <StyleModal>
     <Header> Reviews </Header>
-    <Content>      {" "}
+    <Content>      
     <ul>
             { this.state.reviews.map(review =>
             <li>UserId: {review.user_id},  Rating: {review.rating}, Comments:{review.comments}</li>)}
