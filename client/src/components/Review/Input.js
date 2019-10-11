@@ -4,7 +4,7 @@ const Input = props => {
   //console.log(props.value);
   return (
     <div>
-      <label for={props.name}>
+      <label htmlfor={props.name}>
         {props.title}
       </label>
       <input
