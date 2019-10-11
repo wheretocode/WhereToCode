@@ -42,12 +42,10 @@ import Button from "../Review/Button";
             [name]: value
           }
         }),
-        () => console.log(this.state.newUser)
       );
     }
   
     handleTextArea(e) {
-      console.log("Inside handleTextArea");
       let value = e.target.value;
       this.setState(
         prevState => ({
@@ -56,7 +54,6 @@ import Button from "../Review/Button";
             comments: value
           }
         }),
-        () => console.log(this.state.newUser)
       );
     }
   
@@ -75,7 +72,6 @@ import Button from "../Review/Button";
         }
       }).then(response => {
         response.json().then(data => {
-          console.log("Successful" + data);
         });
       });
     }
