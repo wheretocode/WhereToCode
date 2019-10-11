@@ -24,7 +24,6 @@
     "speedtest-net": "^1.5.1"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
   }
