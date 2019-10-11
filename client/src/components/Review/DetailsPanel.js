@@ -37,13 +37,13 @@ class DetailsPanel extends React.Component {
       return (
         <StyleModal>
         <Header> Details </Header>
-        <Content>     
-        {this.state.location_id.map(location =>
+        <Content>      {" "}
+        {this.state.location_id.map(location => { return (
         <ul key={location.id}>
         <li> <p>UserId: {location.user_id},</p> </li>
         <li> <p>Rating: {location.rating},</p> </li>
         <li> <p>Comments: {location.comment}</p> </li>
-        </ul>)}
+        </ul>)})}
         </Content>
         </StyleModal>
       )}}
