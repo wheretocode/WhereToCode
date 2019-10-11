@@ -9,12 +9,12 @@ const Home = ({ place }) => {
     <div>
       <h1>Hello World</h1>
       <p>Home Page accessed by authorized user</p>
-      {/* <NetworkSpeed /> */}
       <Map place={place} />
     </div>
   );
 };
 
 const condition = authUser => !!authUser;
+// <NetworkSpeed />
 
 export default withAuthorization(condition)(Home);
