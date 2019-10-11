@@ -37,7 +37,7 @@ class DetailsPanel extends React.Component {
       return (
         <StyleModal>
         <Header> Details </Header>
-        <Content>      {" "}
+        <Content>     
         {this.state.location_id.map(location =>
         <ul key={location.id}>
         <li> <p>UserId: {location.user_id},</p> </li>
