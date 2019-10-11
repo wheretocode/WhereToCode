@@ -4,10 +4,8 @@
   "description": "Labs PT",
   "main": "backend/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack",
     "start": "node backend/index.js",
-    "server": "nodemon backend/index.js",
-    "test": "cross-env ENVIRONMENT=testing jest --watchAll --verbose"
+    "server": "nodemon backend/index.js"
   },
   "repository": "https://github.com/wheretocode/WhereToCode.git",
   "author": "MrT3313 <rturgeon13@gmail.com>",
@@ -24,7 +22,6 @@
     "speedtest-net": "^1.5.1"
   },
   "devDependencies": {
-    "cross-env": "^6.0.3",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
   }
