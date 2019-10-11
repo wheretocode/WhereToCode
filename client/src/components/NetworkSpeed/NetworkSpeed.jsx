@@ -1,87 +1,86 @@
-import React from 'react';
-import axios from 'axios';
+// import React from 'react';
+// import axios from 'axios';
 
-import NetworkTableGeneral from './NetworkTableGeneral';
-import NetworkTableSpeeds from './NetworkTableSpeeds';
+// import NetworkTableGeneral from './NetworkTableGeneral';
+// import NetworkTableSpeeds from './NetworkTableSpeeds';
 
-import TriangleLoader from '../Loaders/TriangleLoader';
+// import TriangleLoader from '../Loaders/TriangleLoader';
 
-import { Box, Button, RoutedButton } from 'grommet';
+// import { Box, Button, RoutedButton } from 'grommet';
 
-import * as ROUTES from '../../Routes/routes';
+// import * as ROUTES from '../../Routes/routes';
 
-class NetworkSpeed extends React.Component {
-    constructor(props) {
-        super(props);
+// class NetworkSpeed extends React.Component {
+//     constructor(props) {
+//         super(props);
 
-        this.state = { client: {}, server: {} }
-    }
+//         this.state = { client: {}, server: {} }
+//     }
 
-    resetState = () => {
-        this.setState({ client: {}, server: {} });
-    }
+//     resetState = () => {
+//         this.setState({ client: {}, server: {} });
+//     }
 
-    runNetworkTest = () => {
-        this.resetState();
-        //http://localhost:8080/api/network
-        axios.get('https://wheretocode-master.herokuapp.com/api/network')
-             .then(res => { 
-         
-                                this.setState({ 
-                                download: res.data.speeds.download,
-                                upload: res.data.speeds.upload,
-                                originalDownload: res.data.speeds.originalDownload.toFixed(0),
-                                originalUpload: res.data.speeds.originalDownload.toFixed(0),
-                                client: res.data.client,
-                                server: res.data.server
-                            })
-                        })
-             .catch(err => console.log(err));
-    }
+//     runNetworkTest = () => {
+//         this.resetState();
+//         //http://localhost:8080/api/network
+//         axios.get('https://wheretocode-master.herokuapp.com/api/network')
+//              .then(res => {
 
-    componentDidMount() {
-        this.runNetworkTest();
-    }
+//                                 this.setState({
+//                                 download: res.data.speeds.download,
+//                                 upload: res.data.speeds.upload,
+//                                 originalDownload: res.data.speeds.originalDownload.toFixed(0),
+//                                 originalUpload: res.data.speeds.originalDownload.toFixed(0),
+//                                 client: res.data.client,
+//                                 server: res.data.server
+//                             })
+//                         })
+//              .catch(err => console.log(err));
+//     }
 
-    render() {
-        return(
-            <Box direction='row'
-                 justify='evenly'
-                 pad='medium'
-                 background='dark-2'
-            >
+//     componentDidMount() {
+//         this.runNetworkTest();
+//     }
 
+//     render() {
+//         return(
+//             <Box direction='row'
+//                  justify='evenly'
+//                  pad='medium'
+//                  background='dark-2'
+//             >
 
-                {
-                    Object.keys(this.state.client).length > 0 ? <Box>
-                                                                    <Box direction='row'>
-                                                                        <NetworkTableGeneral data={this.state} />
-                                                                        <NetworkTableSpeeds data={this.state} />
-                                                                    </Box>
+//                 {
+//                     Object.keys(this.state.client).length > 0 ? <Box>
+//                                                                     <Box direction='row'>
+//                                                                         <NetworkTableGeneral data={this.state} />
+//                                                                         <NetworkTableSpeeds data={this.state} />
+//                                                                     </Box>
 
-                                                                    <Button label='Run Test' 
-                                                                            color='gold' 
-                                                                            alignSelf='center' 
-                                                                            pad='large' 
-                                                                            onClick={this.runNetworkTest}
-                                                                    />
+//                                                                     <Button label='Run Test'
+//                                                                             color='gold'
+//                                                                             alignSelf='center'
+//                                                                             pad='large'
+//                                                                             onClick={this.runNetworkTest}
+//                                                                     />
 
-                                                                    <RoutedButton label='More Info'
-                                                                                    path={ROUTES.NETWORK} 
-                                                                                    color='gold' 
-                                                                                    alignSelf='center' 
-                                                                                    pad='large' 
-                                                                                    onClick={this.runNetworkTest}
-                                                                    />
-                                                                </Box>
-                                                              
-                                                              : <TriangleLoader/>
-                }
+//                                                                     <RoutedButton label='More Info'
+//                                                                                     path={ROUTES.NETWORK}
+//                                                                                     color='gold'
+//                                                                                     alignSelf='center'
+//                                                                                     pad='large'
+//                                                                                     onClick={this.runNetworkTest}
+//                                                                     />
+//                                                                 </Box>
 
-            </Box>
-        );
-    }
+//                                                               : <TriangleLoader/>
+//                 }
 
-}
+//             </Box>
+//         );
+//     }
 
-export default NetworkSpeed;
+// }
+
+// export default NetworkSpeed;
