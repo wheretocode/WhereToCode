@@ -4,7 +4,6 @@
   "description": "Labs PT",
   "main": "backend/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack",
     "start": "node backend/index.js",
     "server": "nodemon backend/index.js",
     "test": "cross-env ENVIRONMENT=testing jest --watchAll --verbose"
