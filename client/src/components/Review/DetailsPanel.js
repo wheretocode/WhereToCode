@@ -39,11 +39,11 @@ class DetailsPanel extends React.Component {
         <Content>
           {" "}
           <h2>Name:</h2>
-          <p>{props.details[0]}</p>
+          <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
-          <p>{props.details[1]}</p>
+          <p>{this.props.details[1]}</p>
           <h2>Hours:</h2>
-          {props.hours.map(day => {
+          {this.props.hours.map(day => {
             return <p>- {day} -</p>;
           })}
           {this.state.location_id.map(location => {

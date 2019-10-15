@@ -4,7 +4,7 @@ import AllReviewsPanel from "./AllReviewsPanel";
 import ReviewPanel from "./ReviewPanel";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
-export default () => {
+export default props => {
   return (
     <Tabs>
       <TabList>

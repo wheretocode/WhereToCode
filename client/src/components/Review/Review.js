@@ -64,10 +64,10 @@ const Close = styled.div`
   border: 1px solid #cfcece;
 `;
 
-export default ({ close }) => (
+export default props => (
   <StyleModal>
     <Close>
-      <a Close onClick={close}>
+      <a Close onClick={props.close}>
         &times;
       </a>
     </Close>
