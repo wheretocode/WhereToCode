@@ -1,4 +1,7 @@
 import React from "react";
+import Popup from "reactjs-popup";
+import Review from "../Review/Review";
+
 
 const SingleMapCard = props => {
   return (
@@ -17,9 +20,9 @@ const SingleMapCard = props => {
           {/* Placeholder rating */}
           <p>{`rating: ${props.rating}`}</p>
           <p>{`address: ${props.address}`}</p>
-          <button type="button" onClick={() => props.requestDetails(props.id)}>
-            Details
-          </button>
+          <Popup modal trigger={<button>Details</button>}>
+        {close => <Review close={close} />}
+      </Popup>
         </div>
       ) : null}
     </>
