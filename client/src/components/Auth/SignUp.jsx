@@ -143,7 +143,7 @@ const SignUpFormBase = props => {
             .then(user => {
                 const newUser = {
                     firebase_user_id: user.uid,
-                    userName: username,
+                    user_name: username,
                     email: email
                 };
                 //send FB authenticated user UID, username and email to wheretocode Database

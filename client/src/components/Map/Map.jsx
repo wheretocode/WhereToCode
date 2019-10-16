@@ -148,28 +148,6 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
-  // Takes location id of a nearby location from SingleMapCard and passes it to requestDetails which then calls a getDetails request
-  requestDetails = id => {
-    let map = new google.maps.Map(document.getElementById("fakeMap"));
-
-    let service = new google.maps.places.PlacesService(map);
-
-    let request = {
-      placeId: id,
-      fields: ["name", "formatted_phone_number", "opening_hours"]
-    };
-
-    service.getDetails(request, (place, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(
-          `${place.name}, ${JSON.stringify(
-            place.opening_hours.weekday_text
-          )}, ${place.formatted_phone_number}`
-        );
-      }
-    });
-  };
-
   handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById("map"), {
@@ -258,10 +236,7 @@ class Map extends Component {
 
         {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
         <div id="fakeMap"></div>
-        <MapCards
-          locations={this.state.locations}
-          requestDetails={this.requestDetails}
-        />
+        <MapCards locations={this.state.locations} />
       </div>
     );
   }

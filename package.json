@@ -5,7 +5,8 @@
   "main": "backend/index.js",
   "scripts": {
     "start": "node backend/index.js",
-    "server": "nodemon backend/index.js"
+    "server": "nodemon backend/index.js",
+    "test": " ENVIRONMENT=testing jest --watchAll --verbose"
   },
   "repository": "https://github.com/wheretocode/WhereToCode.git",
   "author": "MrT3313 <rturgeon13@gmail.com>",

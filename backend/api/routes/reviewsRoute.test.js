@@ -78,7 +78,7 @@ describe("REVIEWS ROUTE", () => {
       expect(res.body.length).toBe(3);
       expect(newReview.status).toBe(201);
       expect(newReview.body.message).toBe("New review added");
-      expect(newReview.body.addedReview.comments).toBe(singleReview.comments);
+      expect(newReview.body.addedReview.comment).toBe(singleReview.comment);
     });
   });
   describe("UPDATE", () => {
