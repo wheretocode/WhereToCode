@@ -187,6 +187,8 @@ class Map extends Component {
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        let bounds = new google.maps.LatLngBounds();
+
         results.map(place => {
           // Adds map markers to nearby locations
           let marker = new google.maps.Marker({
@@ -195,8 +197,12 @@ class Map extends Component {
             title: place.name
           });
 
+          bounds.extend(marker.getPosition());
+
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
+          map.fitBounds(bounds);
+          map.setCenter(bounds.getCenter());
 
           this.setState({
             locations: [
