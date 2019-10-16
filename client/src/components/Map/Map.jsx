@@ -15,7 +15,8 @@ class Map extends Component {
         lat: 0,
         lng: 0
       },
-      details: []
+      details: [],
+      query: ""
     };
   }
 
@@ -36,7 +37,7 @@ class Map extends Component {
             // Loads map
             let map = new google.maps.Map(document.getElementById("map"), {
               center: this.state.pos,
-              zoom: 13
+              zoom: 15
             });
           },
           () => {
@@ -147,6 +148,10 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
+  handleInputChange = e => {
+    this.setState({ query: e.target.value });
+  };
+
   handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById("map"), {
@@ -164,7 +169,7 @@ class Map extends Component {
       icon: place.icon,
       photos: place.photos,
       radius: "500",
-      query: "Cafe"
+      query: this.state.query || "cafe"
     };
 
     // requests use of PlaceService
@@ -225,6 +230,13 @@ class Map extends Component {
           alignItems: "center"
         }}
       >
+        <input
+          id="locationType"
+          style={{ width: "25%" }}
+          placeholder="What are you looking for..."
+          onChange={this.handleInputChange}
+          value={this.state.query}
+        />
         <input
           id="autocomplete"
           style={{ width: "25%" }}
