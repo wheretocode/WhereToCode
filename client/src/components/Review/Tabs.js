@@ -21,9 +21,12 @@ const STYLED_TabList = styled(TabList)`
   display: flex;
   justify-content: space-around;
 
+  font-size: 20px;
   font-weight: bold;
   color: white;
   background-color: #555555;
+
+  padding: 0;
 
   list-style: none;
 `;
