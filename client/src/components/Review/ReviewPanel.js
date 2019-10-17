@@ -1,12 +1,27 @@
+// IMPORTS
 import React, { Component } from 'react';
+import styled from 'styled-components'
+
+// COMPONENTS
 import TextArea from "../Review/TextArea";
 import Select from "../Review/Select";
 import Button from "../Review/Button";
 
-  const buttonStyle = {
-    margin: "10px 10px 10px 10px"
-  };
+const buttonStyle = {
+  margin: "10px 10px 10px 10px"
+};
+const Header = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
   
+  color: #FBD702;
+
+  width: 100%;
+  padding: 5px;
+
+  border-bottom: 1px solid gray;
+`
   
   class ReviewPanel extends Component {
     constructor(props) {
@@ -90,6 +105,8 @@ import Button from "../Review/Button";
   
     render() {
       return (
+        <>
+        <Header> Leave a Review </Header>
         <form onSubmit={this.handleFormSubmit}>
           {/*User */}
           <Select
@@ -142,6 +159,7 @@ import Button from "../Review/Button";
             style={buttonStyle}
           />
         </form>
+        </>
       );
     }
   }
