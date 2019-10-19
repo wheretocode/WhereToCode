@@ -56,8 +56,8 @@ class AllReviewsPanel extends React.Component {
         <Header> Reviews </Header>
         <Content>      
           <ul className='ratingInfo'>
-            { this.state.reviews.map(review =>
-              <li>
+            { this.state.reviews.map((review, index) =>
+              <li key={index}>
                   Rating: {review.rating} -- Comments:{review.comments}
               </li>)
             }

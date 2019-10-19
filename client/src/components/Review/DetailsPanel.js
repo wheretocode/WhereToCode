@@ -100,8 +100,8 @@ class DetailsPanel extends React.Component {
             <p>{this.props.details[1]}</p>
           <h2 className='hours'>Hours:</h2>
           <ul>
-            {this.props.hours.map(day => {
-              return <li><div>{day}</div></li>;
+            {this.props.hours.map((data, index) => {
+              return <li key={index}><div>{data}</div></li>;
             })}
           </ul>
           <STYLED_featureReview>
@@ -111,10 +111,6 @@ class DetailsPanel extends React.Component {
             {this.state.location_id.map(location => {
               return (
                 <ul key={location.id}>
-                  {/* <li>
-                    {" "}
-                    <p>UserId: {location.user_id},</p>{" "}
-                  </li> */}
                   <li>
                     {" "}
                     <p>Rating: {location.rating},</p>{" "}
