@@ -43,11 +43,6 @@ const STYLED_form = styled.form`
     display: flex;
     justify-content: center;
   }
-  .paraComment {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
   border-radius: 10px 10px 10px 10px;
   background-color: white;
@@ -165,7 +160,6 @@ class ReviewPanel extends Component {
             handleChange={this.handleInput}
           />
           {/*Comment */}
-          <div className='paraComment'>
             <TextArea
               title={"Comments"}
               rows={10}
@@ -174,7 +168,6 @@ class ReviewPanel extends Component {
               handleChange={this.handleTextArea}
               placeholder={"Leave a comment"}
             />
-          </div>
           {/*Submit */}
       {/* // -- // */}
           <div className='buttonContainer'>
