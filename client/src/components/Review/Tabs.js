@@ -20,6 +20,8 @@ const STYLED_Tabs = styled(Tabs)`
 const STYLED_TabList = styled(TabList)`
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  flex-wrap: flex;
 
   font-size: 20px;
   font-weight: bold;
@@ -30,15 +32,22 @@ const STYLED_TabList = styled(TabList)`
 
   list-style: none;
 `;
+const STYLED_tab = styled(Tab)`
+  display: flex;
+  justify-content: center;
+
+  text-align: center;
+  width: 20%;
+`;
 
 // COMPONENT & EXPORT
 export default props => {
   return (
     <STYLED_Tabs>
       <STYLED_TabList>
-        <Tab>Details</Tab>
-        <Tab>All Reviews</Tab>
-        <Tab>Leave A Review</Tab>
+        <STYLED_tab>Details</STYLED_tab>
+        <STYLED_tab>All Reviews</STYLED_tab>
+        <STYLED_tab>Leave a Review</STYLED_tab>
       </STYLED_TabList>
 
       <TabPanel>

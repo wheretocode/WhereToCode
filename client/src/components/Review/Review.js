@@ -5,18 +5,17 @@ import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 import Tabs from "./Tabs";
 
 const FormContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-width: 100%
-height: 100%;
-border-radius: 25px;
-background:white;
-border: 3px solid gold;
-
-// `;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  background:white;
+  border: 3px solid gold;
+`;
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
   background: ${props => (props.primary ? "palevioletred" : "white")};

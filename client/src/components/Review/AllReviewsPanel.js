@@ -17,25 +17,32 @@ const Button = styled.button`
 `
 
 const StyleModal = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+
   font-size: 12px;
 `
 
 const Header = styled.div`
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   
   color: #FBD702;
 
   width: 100%;
-  padding: 5px;
-
-  border-bottom: 1px solid gray;
+  margin-bottom: 15px;
 `
 const Content = styled.div`
+  display: flex;
 
-  width: 100%;
-  padding: 10px 5px;
+  padding: 15px;
+  margin: 5px 0 5px 0;
+
+  border-radius: 10px 10px 10px 10px;
+  background-color: white;
 `
 const Actions = styled.div`
   width: 100%;
@@ -63,9 +70,11 @@ class AllReviewsPanel extends React.Component {
       <StyleModal>
         <Header> Reviews </Header>
         <Content>      
-          <ul>
+          <ul className='ratingInfo'>
             { this.state.reviews.map(review =>
-              <li>UserId: {review.user_id},  Rating: {review.rating}, Comments:{review.comments}</li>)
+              <li>
+                  Rating: {review.rating} -- Comments:{review.comments}
+              </li>)
             }
           </ul>
         </Content>    

@@ -18,11 +18,10 @@ const Header = styled.div`
   font-size: 20px;
   font-weight: bold;
 
-  width: 100%;
-  margin-bottom: 10px;
-
   color: #FBD702;
 
+  width: 100%;
+  margin-bottom: 15px;
 `;
 const STYLED_hours = styled.div`
 
@@ -43,7 +42,7 @@ const Content = styled.div`
   
 
   h2 {
-    margin: 0, 0, 5px, 0;
+    margin: 0 0 5px 0;
   }
   p {
     margin: 0px;
@@ -98,10 +97,10 @@ class DetailsPanel extends React.Component {
             {this.state.location_id.map(location => {
               return (
                 <ul key={location.id}>
-                  <li>
+                  {/* <li>
                     {" "}
                     <p>UserId: {location.user_id},</p>{" "}
-                  </li>
+                  </li> */}
                   <li>
                     {" "}
                     <p>Rating: {location.rating},</p>{" "}
