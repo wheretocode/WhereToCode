@@ -9,11 +9,10 @@ const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 
   font-size: 12px;
 `;
-
 const Header = styled.div`
   text-align: center;
   font-size: 20px;
@@ -23,9 +22,6 @@ const Header = styled.div`
 
   width: 100%;
   margin-bottom: 15px;
-`;
-const STYLED_hours = styled.div`
-
 `;
 const STYLED_featuredReview = styled.div`
   text-align: center;
@@ -40,13 +36,9 @@ const Content = styled.div`
   flex-direction: column;
 
   padding: 15px;
-  
 
-  h2 {
+  h2, p {
     margin: 0 0 5px 0;
-  }
-  p {
-    margin: 0px;
   }
   .hours {
     margin-bottom: 0px;
@@ -60,7 +52,6 @@ const STYLED_featureReview = styled.div`
   flex-direction: column;
 `;
 
-// BUTTONS
 const Actions = styled.div`
   width: 100%;
   padding: 10px 5px;
@@ -78,14 +69,14 @@ const Button = styled.button`
   border-radius: 3px;
 `
 
-
-
-// COMPONENT TO EXPORT
+// COMPONENT
 class DetailsPanel extends React.Component {
+  // STATE
   state = {
     location_id: []
   };
 
+  // METHODS
   componentDidMount() {
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
@@ -95,10 +86,12 @@ class DetailsPanel extends React.Component {
       });
   }
 
+  // RENDER
   render() {
     return (
       <StyleModal>
         <Header> Details </Header>
+      {/* // -- // */}
         <Content>
           {" "}
           <h2>Name:</h2>
@@ -108,7 +101,7 @@ class DetailsPanel extends React.Component {
           <h2 className='hours'>Hours:</h2>
           <ul>
             {this.props.hours.map(day => {
-              return <li><STYLED_hours>{day}</STYLED_hours></li>;
+              return <li><div>{day}</div></li>;
             })}
           </ul>
           <STYLED_featureReview>
@@ -135,7 +128,7 @@ class DetailsPanel extends React.Component {
             })}
           </STYLED_featureReview>
         </Content>
-
+      {/* // -- // */}
         <Actions>
           <Popup
             trigger={<Button> View Internet Speed </Button>}
@@ -151,7 +144,6 @@ class DetailsPanel extends React.Component {
     );
   }
 }
-
 
 // EXPORT
 export default DetailsPanel;

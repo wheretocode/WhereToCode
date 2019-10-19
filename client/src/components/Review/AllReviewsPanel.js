@@ -23,6 +23,7 @@ const Header = styled.div`
   width: 100%;
   margin-bottom: 15px;
 `
+
 const Content = styled.div`
   display: flex;
 
@@ -32,14 +33,14 @@ const Content = styled.div`
   border-radius: 10px 10px 10px 10px;
   background-color: white;
 `
-
-
-
+// COMPONENT
 class AllReviewsPanel extends React.Component {
+  // STATE
   state = {
     reviews: []
   }
 
+  // METHODS
   componentDidMount() {
     axios.get(`https://wheretocode-master.herokuapp.com/reviews/`)
       .then(res => {
@@ -48,6 +49,7 @@ class AllReviewsPanel extends React.Component {
       })
   }
 
+  // RENDER
   render() {
     return (
       <StyleModal>
@@ -65,4 +67,6 @@ class AllReviewsPanel extends React.Component {
     )
   }
 }
+
+// EXPORT
 export default AllReviewsPanel;

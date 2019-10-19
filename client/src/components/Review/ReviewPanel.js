@@ -7,108 +7,137 @@ import TextArea from "../Review/TextArea";
 import Select from "../Review/Select";
 import Button from "../Review/Button";
 
+// STYLES
 const buttonStyle = {
-  margin: "10px 10px 10px 10px"
+  margin: "10px 10px 10px 10px",
 };
+
+// STYLED COMPONENTS
+const StyleModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+
+  font-size: 12px;
+`
 const Header = styled.div`
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   
   color: #FBD702;
 
   width: 100%;
-  padding: 5px;
-
-  border-bottom: 1px solid gray;
+  margin-bottom: 15px;
 `
-  
-  class ReviewPanel extends Component {
-    constructor(props) {
-      super(props);
-  
-      this.state = {
+const STYLED_form = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+  margin: 5px 0 5px 0;
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+  }
+  .paraComment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  border-radius: 10px 10px 10px 10px;
+  background-color: white;
+`
+// COMPONENT
+class ReviewPanel extends Component {
+  constructor(props) {
+    super(props);
+
+  // STATE
+    this.state = {
+      newUser: {
+        user_id: '',
+        rating: '',
+        internet_rating: '',
+        comments: ''
+      },
+      user_id: ["8","4","2"],
+      rating: ["1", "2", "3"],
+      internet_rating: ["1", "2", "3"],
+    };
+    
+    this.handleTextArea = this.handleTextArea.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleClearForm = this.handleClearForm.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+  }
+
+  // METHODS
+  handleInput(e) {
+    let value = e.target.value;
+    let name = e.target.name;
+    this.setState(
+      prevState => ({
         newUser: {
-          user_id: '',
-          rating: '',
-          internet_rating: '',
-          comments: ''
-        },
-        user_id: ["8","4","2"],
-        rating: ["1", "2", "3"],
-        internet_rating: ["1", "2", "3"],
-      };
-      
-      this.handleTextArea = this.handleTextArea.bind(this);
-      this.handleFormSubmit = this.handleFormSubmit.bind(this);
-      this.handleClearForm = this.handleClearForm.bind(this);
-      this.handleInput = this.handleInput.bind(this);
-    }
-  
-  
-  
-    handleInput(e) {
-      let value = e.target.value;
-      let name = e.target.name;
-      this.setState(
-        prevState => ({
-          newUser: {
-            ...prevState.newUser,
-            [name]: value
-          }
-        }),
-      );
-    }
-  
-    handleTextArea(e) {
-      let value = e.target.value;
-      this.setState(
-        prevState => ({
-          newUser: {
-            ...prevState.newUser,
-            comments: value
-          }
-        }),
-      );
-    }
-  
-  
-  
-    handleFormSubmit(e) {
-      e.preventDefault();
-      let userData = this.state.newUser;
-  
-      fetch("https://wheretocode-master.herokuapp.com/reviews", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          ...prevState.newUser,
+          [name]: value
         }
-      }).then(response => {
-        response.json().then(data => {
-        });
-      });
-    }
-  
-    handleClearForm(e) {
-      e.preventDefault();
-      this.setState({
+      }),
+    );
+  }
+  handleTextArea(e) {
+    let value = e.target.value;
+    this.setState(
+      prevState => ({
         newUser: {
-          user_id: '',
-          rating: '',
-          comments: '',
-          internet_rating: ''
+          ...prevState.newUser,
+          comments: value
         }
+      }),
+    );
+  }
+  handleFormSubmit(e) {
+    e.preventDefault();
+    let userData = this.state.newUser;
+
+    fetch("https://wheretocode-master.herokuapp.com/reviews", {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      response.json().then(data => {
       });
-    }
-  
-    render() {
-      return (
-        <>
+    });
+  }
+  handleClearForm(e) {
+    e.preventDefault();
+    this.setState({
+      newUser: {
+        user_id: '',
+        rating: '',
+        comments: '',
+        internet_rating: ''
+      }
+    });
+  }
+
+  // RENDER
+  render() {
+    return (
+      <StyleModal>
         <Header> Leave a Review </Header>
-        <form onSubmit={this.handleFormSubmit}>
-          {/*User */}
+      {/* // -- // */}
+        <STYLED_form onSubmit={this.handleFormSubmit}>
+          {/*User 
+            Do we need the user to enter their own ID here or can we get that off state? 
+          */}
           <Select
             title={"User Id"}
             name={'user_id'}
@@ -136,33 +165,38 @@ const Header = styled.div`
             handleChange={this.handleInput}
           />
           {/*Comment */}
-          <TextArea
-            title={"Comments"}
-            rows={10}
-            value={this.state.newUser.comments}
-            name={'comment'}
-            handleChange={this.handleTextArea}
-            placeholder={"Leave a comment"}
-          />
+          <div className='paraComment'>
+            <TextArea
+              title={"Comments"}
+              rows={10}
+              value={this.state.newUser.comments}
+              name={'comment'}
+              handleChange={this.handleTextArea}
+              placeholder={"Leave a comment"}
+            />
+          </div>
           {/*Submit */}
-          <Button
-            action={this.handleFormSubmit}
-            type={"primary"}
-            title={"Submit"}
-            style={buttonStyle}
-          />
-          {/* Clear form */}
-          <Button
-            action={this.handleClearForm}
-            type={"secondary"}
-            title={"Clear"}
-            style={buttonStyle}
-          />
-        </form>
-        </>
-      );
-    }
+      {/* // -- // */}
+          <div className='buttonContainer'>
+            <Button
+              action={this.handleFormSubmit}
+              type={"primary"}
+              title={"Submit"}
+              style={buttonStyle}
+            />
+            {/* Clear form */}
+            <Button
+              action={this.handleClearForm}
+              type={"secondary"}
+              title={"Clear"}
+              style={buttonStyle}
+            />
+          </div>
+        </STYLED_form>
+      </StyleModal>
+    );
   }
+}
 
+// EXPORT
   export default ReviewPanel;
-  
