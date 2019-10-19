@@ -2,6 +2,7 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
+import Popup from "reactjs-popup";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
@@ -59,6 +60,26 @@ const STYLED_featureReview = styled.div`
   flex-direction: column;
 `;
 
+// BUTTONS
+const Actions = styled.div`
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+`
+const Button = styled.button`
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`
+
+
+
 // COMPONENT TO EXPORT
 class DetailsPanel extends React.Component {
   state = {
@@ -114,6 +135,18 @@ class DetailsPanel extends React.Component {
             })}
           </STYLED_featureReview>
         </Content>
+
+        <Actions>
+          <Popup
+            trigger={<Button> View Internet Speed </Button>}
+            position="top center"
+            closeOnDocumentClick
+          >
+            <span>
+              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or DEFAULT w/ NO INFO
+            </span>
+          </Popup>
+        </Actions>
       </StyleModal>
     );
   }

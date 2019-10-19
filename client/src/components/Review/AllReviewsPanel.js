@@ -1,21 +1,9 @@
 // IMPORTS
 import React from "react";
-import Popup from "reactjs-popup";
 import styled from "styled-components";
 import axios from 'axios';
 
 // STYLED COMPONENTS
-const Button = styled.button`
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
-
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`
-
 const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,12 +32,7 @@ const Content = styled.div`
   border-radius: 10px 10px 10px 10px;
   background-color: white;
 `
-const Actions = styled.div`
-  width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
-`
+
 
 
 class AllReviewsPanel extends React.Component {
@@ -78,33 +61,7 @@ class AllReviewsPanel extends React.Component {
             }
           </ul>
         </Content>    
-  <Actions>
-  <Popup
-    trigger={<Button> Trigger </Button>}
-    position="top center"
-    closeOnDocumentClick
-  >
-    <span>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-      magni omnis delectus nemo, maxime molestiae dolorem numquam
-      mollitia, voluptate ea, accusamus excepturi deleniti ratione
-      sapiente! Laudantium, aperiam doloribus. Odit, aut.
-    </span>
-  </Popup>
-  <Popup
-    trigger={<Button> Trigger </Button>}
-    position="top center"
-    closeOnDocumentClick
-  >
-    <span>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-      magni omnis delectus nemo, maxime molestiae dolorem numquam
-      mollitia, voluptate ea, accusamus excepturi deleniti ratione
-      sapiente! Laudantium, aperiam doloribus. Odit, aut.
-    </span>
-  </Popup>
-</Actions>
-</StyleModal>
+      </StyleModal>
     )
   }
 }
