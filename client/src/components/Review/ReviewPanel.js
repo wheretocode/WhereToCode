@@ -133,17 +133,9 @@ class ReviewPanel extends Component {
           {/*User 
             Do we need the user to enter their own ID here or can we get that off state? 
           */}
-          <Select
-            title={"User Id"}
-            name={'user_id'}
-            options={this.state.user_id}
-            value={this.state.newUser.user_id}
-            placeholder={"Select User Id"}
-            handleChange={this.handleInput}
-          />
           {/* Rating */}
           <Select
-            title={"Rating"}
+            title={"Location Rating"}
             name={'rating'}
             options={this.state.rating}
             value={this.state.newUser.rating}
