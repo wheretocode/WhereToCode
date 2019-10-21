@@ -21,7 +21,10 @@ function getAll_reviewsWithUser() {
 }
 
 function getReviewById(id) {
-  return db("reviews").where({ id });
+  return db("reviews as r")
+    .join("users as u", "r.user_id", "u.id")
+    .select("r.rating", "r.comments", "r.internet_rating", "r.upload_speed", "r.download_speed", "r.secure_wifi", "r.user_id", "r.location_id", "u.userName")
+    .where("r.id", id);
 }
 
 //reviews of each user by location id
@@ -65,8 +68,18 @@ function firstHighestRating(id) {
 }
 
 
+// function add(review) {
+//   return db("reviews as r")
+//     .join("users as u", "u.id", "r.user_id")
+//     .insert(review).select("u.username", "r.rating", "r.internet_rating", "r.comments")
+//   //.where("r.userName", review.userName)
+
+// }
+
 function add(review) {
-  return db("reviews").insert(review).return(review);
+  return db("reviews")
+    .insert(review).return(review);
+
 }
 
 function remove(id) {

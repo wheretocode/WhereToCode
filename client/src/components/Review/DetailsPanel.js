@@ -27,8 +27,11 @@ class DetailsPanel extends React.Component {
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
       .then(res => {
-        const location_id = res.data;
+
+        console.log("res.data", res.data);
+        const location_id = res.data[0];
         this.setState({ location_id });
+
       });
   }
 
@@ -38,6 +41,7 @@ class DetailsPanel extends React.Component {
         <Header> Details </Header>
         <Content>
           {" "}
+
           <h2>Name:</h2>
           <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
@@ -46,24 +50,24 @@ class DetailsPanel extends React.Component {
           {this.props.hours.map(day => {
             return <p>- {day} -</p>;
           })}
-          {this.state.location_id.map(location => {
-            return (
-              <ul key={location.id}>
-                <li>
-                  {" "}
-                  <p>UserId: {location.user_id},</p>{" "}
-                </li>
-                <li>
-                  {" "}
-                  <p>Rating: {location.rating},</p>{" "}
-                </li>
-                <li>
-                  {" "}
-                  <p>Comments: {location.comment}</p>{" "}
-                </li>
-              </ul>
-            );
-          })}
+
+
+          <ul key={this.state.location_id.id}>
+            <li>
+              {" "}
+              <p>User: {this.state.location_id.userName},</p>{" "}
+            </li>
+            <li>
+              {" "}
+              <p>Rating: {this.state.location_id.rating},</p>{" "}
+            </li>
+            <li>
+              {" "}
+              <p>Comments: {this.state.location_id.comments}</p>{" "}
+            </li>
+          </ul>
+
+          {/* })} */}
         </Content>
       </StyleModal>
     );

@@ -2,7 +2,7 @@ import React from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
-import Tabs from "./Tabs";
+import Tabs1 from "./Tabs1";
 
 const FormContainer = styled.div`
 display: flex;
@@ -71,6 +71,6 @@ export default props => (
         &times;
       </a>
     </Close>
-    <Tabs details={props.details} hours={props.hours} />
+    <Tabs1 details={props.details} hours={props.hours} />
   </StyleModal>
 );

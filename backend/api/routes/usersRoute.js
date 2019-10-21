@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 // @route  GET users/:userid
 // @desc   Gets a specific user from the database
 // @access Public
-router.get("/:userid", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const specifiedUser = await USERS_MODEL.getUserById(id);
