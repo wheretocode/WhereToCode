@@ -17,6 +17,16 @@ router.get("/", async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
+router.post("/", requireBody, async (req, res) => {
+  let location = req.body;
+  try {
+    const addedLocation = await LOCATIONS_MODEL.add(location);
+    return res.status(201).json({ message: "New location added", addedLocation })
+  } catch (err) {
+    return res.status(500).json(err.message)
+  }
+})
 // - POST - //
 // - PUT - //
 // - DEL - //
