@@ -26,7 +26,7 @@ class NetworkSpeed extends React.Component {
         // https://wheretocode-master.herokuapp.com/api/network
         axios.get('https://wheretocode-staging-3.herokuapp.com/api/network')
              .then(res => { 
-         console.log(res)
+            console.log(res)
                                 this.setState({ 
                                 download: res.data.speeds.download.toFixed(2),
                                 upload: res.data.speeds.upload.toFixed(2),
@@ -78,45 +78,45 @@ class NetworkSpeed extends React.Component {
         // }
 
    
-        const xhr = new XMLHttpRequest();
+    //     const xhr = new XMLHttpRequest();
         
     
-        xhr.onreadystatechange = function () {
-            // we only need to know when the request has completed
-            if (xhr.readyState === 4 && xhr.status === 200) {
+    //     xhr.onreadystatechange = function () {
+    //         // we only need to know when the request has completed
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
 
-                // Here we stop the timer & register end time
-                const endTime = ((new Date()).getTime() / 1000);
+    //             // Here we stop the timer & register end time
+    //             const endTime = ((new Date()).getTime() / 1000);
 
-                // Also, calculate the file-size which has transferred
-                const fileSize = xhr.responseText.length;
-                console.log(fileSize)
-                // N.B: fileSize reports number of Bytes
+    //             // Also, calculate the file-size which has transferred
+    //             const fileSize = xhr.responseText.length;
+    //             console.log(fileSize)
+    //             // N.B: fileSize reports number of Bytes
                 
-                console.log(endTime,startTime)
-                const duration = endTime - startTime
-                const bitsLoaded = fileSize * 8
+    //             console.log(endTime,startTime)
+    //             const duration = endTime - startTime
+    //             const bitsLoaded = fileSize * 8
 
 
-                // Calculate the connection-speed
-                console.log(duration, bitsLoaded)
-                const speedBps = (bitsLoaded / duration).toFixed(0);
-                const speedKbps = (speedBps / 1024).toFixed(2);
-                const speedMBps = (speedKbps / 1024).toFixed(2);
-                const speedMbps = (speedMBps * 8).toFixed(2);
+    //             // Calculate the connection-speed
+    //             console.log(duration, bitsLoaded)
+    //             const speedBps = (bitsLoaded / duration).toFixed(0);
+    //             const speedKbps = (speedBps / 1024).toFixed(2);
+    //             const speedMBps = (speedKbps / 1024).toFixed(2);
+    //             const speedMbps = (speedMBps * 8).toFixed(2);
  
 
-                // Report the result
-                console.log(speedBps + " Bps\n", speedKbps + " kbps\n", speedMbps + " Mbps\n", speedMBps + " MBps\n");
-            }
-        }
+    //             // Report the result
+    //             console.log(speedBps + " Bps\n", speedKbps + " kbps\n", speedMbps + " Mbps\n", speedMBps + " MBps\n");
+    //         }
+    //     }
 
-        // Snap back; here's where we start the timer
-        const startTime = ((new Date()).getTime() / 1000);
+    //     // Snap back; here's where we start the timer
+    //     const startTime = ((new Date()).getTime() / 1000);
 
-        // All set, let's hit it!
-        xhr.open("GET", "https://images.pexels.com/photos/1338789/pexels-photo-1338789.jpeg", true);
-        xhr.send();
+    //     // All set, let's hit it!
+    //     xhr.open("GET", "https://images.pexels.com/photos/1338789/pexels-photo-1338789.jpeg", true);
+    //     xhr.send();
     }
 
     render() {
