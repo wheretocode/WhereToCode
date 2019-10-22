@@ -24,6 +24,7 @@ class DetailsPanel extends React.Component {
   };
 
   componentDidMount() {
+
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
       .then(res => {
@@ -33,6 +34,8 @@ class DetailsPanel extends React.Component {
         this.setState({ location_id });
 
       });
+
+
   }
 
   render() {

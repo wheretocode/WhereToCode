@@ -27,6 +27,15 @@ router.post("/", requireBody, async (req, res) => {
     return res.status(500).json(err.message)
   }
 })
+
+function requireBody(req, res, next) {
+  if (req.body && Object.keys(req.body).length) {
+    next();
+  } else {
+    res.status(500).json({ message: "Please include request body" });
+  }
+}
+
 // - POST - //
 // - PUT - //
 // - DEL - //
