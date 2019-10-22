@@ -67,6 +67,9 @@ class Map extends Component {
 
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener("place_changed", this.handleMapChange);
+    document
+      .getElementById("searchButton")
+      .addEventListener("click", this.handleMapChange);
   }
 
   handleLocationError = (browserHasGeolocation = false) => {
@@ -149,6 +152,7 @@ class Map extends Component {
   };
 
   handleInputChange = e => {
+    e.preventDefault();
     this.setState({ query: e.target.value });
   };
 
@@ -236,18 +240,21 @@ class Map extends Component {
           alignItems: "center"
         }}
       >
-        <input
-          id="locationType"
-          style={{ width: "25%" }}
-          placeholder="What are you looking for..."
-          onChange={this.handleInputChange}
-          value={this.state.query}
-        />
-        <input
-          id="autocomplete"
-          style={{ width: "25%" }}
-          placeholder="Enter location..."
-        />
+        <form onSubmit={this.handleInputChange} id="searchForm">
+          <input
+            id="locationType"
+            style={{ width: "25%" }}
+            placeholder="What are you looking for..."
+            onChange={this.handleInputChange}
+            value={this.state.query}
+          />
+          <input
+            id="autocomplete"
+            style={{ width: "25%" }}
+            placeholder="Enter location..."
+          />
+          <button id="searchButton">Submit</button>
+        </form>
 
         <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
 
