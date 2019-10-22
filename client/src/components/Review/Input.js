@@ -1,5 +1,7 @@
+// IMPROTS
 import React from "react";
 
+// COMPONENT
 const Input = props => {
   //console.log(props.value);
   return (
@@ -20,4 +22,5 @@ const Input = props => {
   );
 };
 
+// EXPORTS
 export default Input;

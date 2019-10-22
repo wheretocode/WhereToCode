@@ -2,4 +2,19 @@ body {
     margin: 0;
 }
 
+.btn {
+    border-radius: 5px;
+    padding: 5px;
+    weight: bold;
+}
+
+.btn-primary {
+    background-color: #FBD702;
+    color: black;
+}
+.btn-secondary {
+    background-color: red;
+    color: black;
+}
+
 @import './components/Loaders/TriangleLoader.css';
