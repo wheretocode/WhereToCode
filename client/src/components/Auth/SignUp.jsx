@@ -127,8 +127,6 @@ const SignUpFormBase = props => {
         props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(user => {
-                console.log("user.user.uid", user.user.uid);
-                console.log("user", user);
                 const newUser = {
                     firebase_user_id: user.user.uid,
                     userName: username,

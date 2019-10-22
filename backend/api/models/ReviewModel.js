@@ -68,13 +68,6 @@ function firstHighestRating(id) {
 }
 
 
-// function add(review) {
-//   return db("reviews as r")
-//     .join("users as u", "u.id", "r.user_id")
-//     .insert(review).select("u.username", "r.rating", "r.internet_rating", "r.comments")
-//   //.where("r.userName", review.userName)
-
-// }
 
 function add(review) {
   return db("reviews")

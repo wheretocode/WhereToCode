@@ -82,8 +82,6 @@ class DetailsPanel extends React.Component {
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
       .then(res => {
-
-        console.log("res.data", res.data);
         const location_id = res.data[0];
         this.setState({ location_id });
 

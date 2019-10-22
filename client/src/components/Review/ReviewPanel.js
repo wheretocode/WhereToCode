@@ -80,8 +80,6 @@ class ReviewPanel1 extends Component {
     axios
       .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
       .then(user => {
-        console.log("get", user);
-        console.log("userid", user.data[0].id);
         let currentUserId = {
           user_id: user.data[0].id,
           rating: null,
