@@ -27,14 +27,14 @@ class NetworkSpeed extends React.Component {
         axios.get('https://wheretocode-staging-3.herokuapp.com/api/network')
              .then(res => { 
             console.log(res)
-                                this.setState({ 
-                                download: res.data.speeds.download.toFixed(2),
-                                upload: res.data.speeds.upload.toFixed(2),
-                                originalDownload: res.data.speeds.originalDownload.toFixed(0),
-                                originalUpload: res.data.speeds.originalDownload.toFixed(0),
-                                client: res.data.client,
-                                server: res.data.server
-                            })
+                            this.setState({ 
+                            download: res.data.speeds.download.toFixed(2),
+                            upload: res.data.speeds.upload.toFixed(2),
+                            originalDownload: res.data.speeds.originalDownload.toFixed(0),
+                            originalUpload: res.data.speeds.originalDownload.toFixed(0),
+                            client: res.data.client,
+                            server: res.data.server
+                        })
                         })
              .catch(err => console.log(err));
     }

@@ -11,7 +11,7 @@ process.on('message', (msg) => {
   
     speedTest.on('data', data => {
         //console.log('data info: ')
-        //console.dir(data)  
+        console.dir(data)  
         if(data.speeds.download && data.speeds.upload) {
 
             process.send(data);
