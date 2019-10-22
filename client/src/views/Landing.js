@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-/* global google */
-
 import styled from "styled-components";
+import PlacesAutocomplete from "react-places-autocomplete";
+import { GoogleApiWrapper } from "google-maps-react";
 
-import { withRouter, Link } from "react-router-dom";
-
-import * as ROUTES from "../Routes/routes";
-
-const Landing = props => {
+const Landing = ({ address, setAddress, handleSelect }) => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
 
@@ -21,25 +17,6 @@ const Landing = props => {
   }
 
   useEffect(() => {
-    const autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById("exploreAutoComplete")
-    );
-    autocomplete.setFields([
-      "address_components",
-      "formatted_address",
-      "geometry",
-      "icon",
-      "name",
-      "place_id"
-    ]);
-    autocomplete.addListener("place_changed", () => {
-      props.setPlace(autocomplete.getPlace());
-      console.log(autocomplete.getPlace().geometry.location.lat());
-      console.log(autocomplete.getPlace().geometry.location.lng());
-    });
-  }, []);
-
-  useEffect(() => {
     setTimeout(updateText, 2000);
   }, [number]);
 
@@ -49,22 +26,49 @@ const Landing = props => {
         <h2>
           Find a place to <span>{currentActivity}</span> near you
         </h2>
+        <PlacesAutocomplete
+          value={address}
+          onChange={setAddress}
+          onSelect={handleSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading
+          }) => (
+            <div>
+              <Input {...getInputProps({ placeholder: "Explore" })} />
 
-        <InputAndButtonContainer>
-          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
-          <GoButton to={ROUTES.HOME}>Go</GoButton>
-        </InputAndButtonContainer>
+              <div>
+                {loading ? <div>...loading</div> : null}
+                {suggestions.map(suggestion => {
+                  const style = {
+                    backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                  };
+                  return (
+                    <div {...getSuggestionItemProps(suggestion, { style })}>
+                      {suggestion.description}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </PlacesAutocomplete>
       </SearchComponent>
     </LandingPageContainer>
   );
 };
-
-export default withRouter(Landing);
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyDHoSSopykjcVtpJm-Xzn4KeViNp1rgjGQ"
+})(Landing);
 
 const SearchComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 70%;
   h2 {
     margin: 0 0 32px 0;
     color: white;
@@ -86,34 +90,14 @@ const LandingPageContainer = styled.div`
   height: 94.2vh;
 `;
 
-const GoButton = styled(Link)`
-  display: flex
-  align-items: center;
-  text-decoration: none;
-  font-family: "Zilla Slab", serif;
-  font-size: 2rem;
-  color: black;
-  border-radius: 0 10px 10px 0;
-  background: gold;
-  border: 1px solid gold;
-  border-left: none;
-  padding: 0 10px 0 10px;
-  &:hover {
-    background: yellow;
-  }
-`;
-
 const Input = styled.input`
   height: 44px;
-  border-radius: 10px 0 0 10px;
-  border-right: none;
+  width: 30rem;
+  // not happy with this, but it works
+  border-radius: 10px;
   border: 1px solid white;
   &::placeholder {
     vertical-align: center;
     font-size: 1rem;
   }
-`;
-
-const InputAndButtonContainer = styled.div`
-  display: flex;
 `;

@@ -1,6 +1,7 @@
 //@ imports
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 //@ components
 
@@ -34,32 +35,60 @@ const theme = {
   }
 };
 
-const App = () => {
-  const [place, setPlace] = useState("");
+const App = ({ history }) => {
+  const [address, setAddress] = useState(""); //ChIJJ61u3ZsmQYYRwYz9_mgRu2o
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  const [placeId, setPlaceId] = useState("");
+
+  const handleSelect = async value => {
+    const result = await geocodeByAddress(value);
+    const latLng = await getLatLng(result[0]);
+    console.log(result[0]);
+    setPlaceId(result[0].place_id);
+    setAddress(value);
+    setCoordinates(latLng);
+    history.push(ROUTES.HOME);
+  };
 
   return (
     <Grommet theme={theme}>
-      <Router>
-        <Navigation />
-        <Route
-          exact
-          path={ROUTES.LANDING}
-          render={props => <Landing {...props} setPlace={setPlace} />}
-        />
+      {/* <Navigation /> */}
+      <Route
+        exact
+        path={ROUTES.LANDING}
+        render={props => (
+          <Landing
+            {...props}
+            handleSelect={handleSelect}
+            address={address}
+            setAddress={setAddress}
+            setCoordinates={setCoordinates}
+            setPlaceId={setPlaceId}
+            coordinates={coordinates}
+            placeId={placeId}
+          />
+        )}
+      />
 
-        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
 
-        <Route
-          exact
-          path={ROUTES.HOME}
-          render={props => <Home {...props} place={place} />}
-        />
-        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        {/* <Route path={ROUTES.NETWORK} component={NetworkPage} /> */}
-        <Footer />
-      </Router>
+      <Route
+        exact
+        path={ROUTES.HOME}
+        render={props => (
+          <Home
+            {...props}
+            address={address}
+            coordinates={coordinates}
+            placeId={placeId}
+          />
+        )}
+      />
+      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+      {/* <Route path={ROUTES.NETWORK} component={NetworkPage} /> */}
+      {/* <Footer /> */}
     </Grommet>
   );
 };
 
-export default withAuthentication(App);
+export default withRouter(withAuthentication(App));

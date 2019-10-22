@@ -1,36 +1,32 @@
-import React, { Component } from "react";
-
+import React from "react";
+import styled from "styled-components";
 import SingleMapCard from "./SingleMapCard";
 
 /*global google*/
 
-class MapCards extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <>
-        {this.props.locations.map(location => {
-          return (
-            <div>
-              <SingleMapCard
-                key={location.id}
-                location={location.name}
-                address={location.address}
-                rating={location.rating}
-                icon={location.icon}
-                id={location.id}
-                requestDetails={this.props.requestDetails}
-              />
-            </div>
-          );
-        })}
-      </>
-    );
-  }
-}
+const MapCards = ({ locations }) => {
+  return (
+    <MapCardsContainer>
+      {locations.map(location => {
+        return (
+          <SingleMapCard
+            key={location.id}
+            location={location.name}
+            address={location.address}
+            rating={location.rating}
+            icon={location.icon}
+            id={location.id}
+          />
+        );
+      })}
+    </MapCardsContainer>
+  );
+};
 
 export default MapCards;
+
+const MapCardsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+`;

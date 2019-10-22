@@ -1,19 +1,24 @@
 import React from "react";
-// import { withAuthorization } from "../components/Session";
+import { withAuthorization } from "../components/Session";
+import styled from "styled-components";
 // import NetworkSpeed from "../components/NetworkSpeed/NetworkSpeed";
 
 import Map from "../components/Map/Map.jsx";
 
-const Home = ({ place }) => {
+const Home = ({ placeId, coordinates, address }) => {
   return (
-    <div>
+    <MapContainer>
       {/* <NetworkSpeed /> */}
-      <Map place={place} />
-    </div>
+      <Map placeId={placeId} coordinates={coordinates} address={address} />
+    </MapContainer>
   );
 };
 
-// const condition = authUser => !!authUser;
+const condition = authUser => !!authUser;
 
-// export default withAuthorization(condition)(Home);
-export default Home;
+export default withAuthorization(condition)(Home);
+// export default Home;
+
+const MapContainer = styled.div`
+  width: 100vw;
+`;

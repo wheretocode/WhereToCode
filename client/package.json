@@ -18,6 +18,7 @@
     "react-apexcharts": "^1.3.3",
     "react-dom": "^16.9.0",
     "react-load-script": "^0.0.6",
+    "react-places-autocomplete": "^7.2.1",
     "react-ratings-declarative": "^3.4.1",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
