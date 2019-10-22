@@ -1,8 +1,22 @@
+// IMPORT
 import React from "react";
+import styled from 'styled-components'
 
+// STYLED COMPONENTS
+const Select_CONTAINER = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  
+  label {
+    margin-right: 10px; 
+  }
+`;
+
+// COMPONENT
 const Select = props => {
   return (
-    <div>
+    <Select_CONTAINER>
       <label for={props.name}> {props.title} </label>
       <select
         id={props.name}
@@ -21,8 +35,9 @@ const Select = props => {
           );
         })}
       </select>
-    </div>
+    </Select_CONTAINER>
   );
 };
 
+// EXPORT
 export default Select;

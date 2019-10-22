@@ -1,5 +1,7 @@
+// IMPORTS
 import React from "react";
 
+// BUTTON
 const Button = props => {
   console.log(props.style);
   return (
@@ -15,4 +17,5 @@ const Button = props => {
   );
 };
 
+// EXPORT
 export default Button;

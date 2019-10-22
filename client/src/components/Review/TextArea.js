@@ -1,5 +1,10 @@
+// IMPORTS
 import React from "react";
+import styled from 'styled-components'
 
+// STYLED COMPONENTS
+
+// COMPONENT
 const TextArea = props => (
   <div>
     <label>{props.title}</label>
