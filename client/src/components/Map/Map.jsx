@@ -67,6 +67,7 @@ class Map extends Component {
 
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener("place_changed", this.handleMapChange);
+
     document
       .getElementById("searchButton")
       .addEventListener("click", this.handleMapChange);
@@ -152,8 +153,11 @@ class Map extends Component {
   };
 
   handleInputChange = e => {
-    e.preventDefault();
     this.setState({ query: e.target.value });
+  };
+
+  preventFormDefault = e => {
+    e.preventDefault();
   };
 
   handleMapChange = () => {
@@ -240,7 +244,7 @@ class Map extends Component {
           alignItems: "center"
         }}
       >
-        <form onSubmit={this.handleInputChange} id="searchForm">
+        <form onSubmit={this.preventFormDefault}>
           <input
             id="locationType"
             style={{ width: "25%" }}
