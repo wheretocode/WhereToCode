@@ -47,11 +47,9 @@ class NetworkSpeed extends React.Component {
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
-            console.log(latitude, longitude)
 
             axios.get(`http://api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
                 .then(res => {
-                    console.log(res.data);
                     const parser = new DOMParser()
 
                     const XMLres =  parser.parseFromString(res.data, "text/xml")

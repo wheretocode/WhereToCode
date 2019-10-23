@@ -1,17 +1,34 @@
 const serverList = require('./servers.json');
+const convertState = reqiure('./stateMap.js');
 
 const selectServer = userLocation => {
     //destruct server array
     const servers = serverList.servers.server
-    //servers.map(server => console.log(server['-name'].split(', ')[1]));
-  
-    //filter servers by user location
-    const stateServers = servers.filter(server => {
-      const serverLocation = server['-name'].split(', ')[1];
-  
-      return serverLocation ? serverLocation.toLowerCase() === 'ca'
-                            : false;
-    });
+    
+    const stateAbbr = convertState(userLocation, "abbr");
+    console.log("STATE:::::", stateAbbr);
+
+    let stateServers;
+
+
+    if(userLocation.length > 0) {
+      //filter servers based on user location
+      stateServers = servers.filter(server => {
+        const serverLocation = server['-name'].split(', ')[1];
+
+        return serverLocation ? serverLocation.toLowerCase() === stateAbbr
+                              : false;
+      });
+
+    } else {
+      //filter defaults to California servers
+      stateServers = servers.filter(server => {
+        const serverLocation = server['-name'].split(', ')[1];
+
+        return serverLocation ? serverLocation.toLowerCase() === 'ca'
+                              : false;
+      });
+    }
   
   
     //Pick and Select Random Server from List of Options
