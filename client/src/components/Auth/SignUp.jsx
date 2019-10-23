@@ -7,7 +7,7 @@ import * as ROUTES from "../../Routes/routes";
 import styled from "styled-components";
 
 import axios from "axios";
-import { Form, FormField, Button, Box, Text, Heading } from "grommet";
+
 
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
@@ -93,20 +93,6 @@ background: none;
 width: 70%;
 `;
 
-//@@BLACK SIGNUP BUTTON
-// const SignUpButton = styled.button`
-// width: 70%;
-// border-radius: 10px;
-// background: black;
-// border: 1px solid gold;
-// color: white;
-// height: 10%;
-// text-align: center;
-// margin-top: 8%;
-// font-family: "Zilla Slab", serif;
-// font-size: 1.5rem;
-
-// `;
 
 //@@GOLD SIGNUP BUTTON
 const SignUpButton = styled.button`
@@ -136,16 +122,17 @@ const SignUpFormBase = props => {
     const [error, setError] = useState(null);
 
     const onSubmit = event => {
-
+        console.log("firebase", props.firebase);
         //send email & pw values form to firebase for authentication
         props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(user => {
                 const newUser = {
-                    firebase_user_id: user.uid,
+                    firebase_user_id: user.user.uid,
                     userName: username,
                     email: email
                 };
+                console.log("new user:", newUser);
                 //send FB authenticated user UID, username and email to wheretocode Database
                 axios
                     .post(
@@ -222,8 +209,6 @@ const SignUpFormBase = props => {
 
             </StyledForm>
             <SignUpButton disabled={isInvalid} onClick={onSubmit} primary label="Sign Up" >Sign Up</SignUpButton>
-
-            {/* <button onClick={props.toggleModal}>Close</button> */}
         </FormContainer >
 
 

@@ -5,3 +5,4 @@ export const LANDING = '/';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const NETWORK = '/network-info';
+export const REVIEW = '/review';
