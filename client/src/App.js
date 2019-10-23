@@ -15,6 +15,7 @@ import { Grommet } from "grommet";
 import "./App.css";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
+
 //@ views
 import Landing from "./views/Landing";
 import Home from "./views/Home";
@@ -54,6 +55,7 @@ const App = () => {
           path={ROUTES.HOME}
           render={props => <Home {...props} place={place} />}
         />
+
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.NETWORK} component={NetworkPage} />
         <Footer />

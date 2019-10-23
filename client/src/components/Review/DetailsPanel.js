@@ -78,12 +78,16 @@ class DetailsPanel extends React.Component {
 
   // METHODS
   componentDidMount() {
+
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
       .then(res => {
-        const location_id = res.data;
+        const location_id = res.data[0];
         this.setState({ location_id });
+
       });
+
+
   }
 
   // RENDER
@@ -91,13 +95,14 @@ class DetailsPanel extends React.Component {
     return (
       <StyleModal>
         <Header> Details </Header>
-      {/* // -- // */}
+        {/* // -- // */}
         <Content>
           {" "}
+
           <h2>Name:</h2>
-            <p>{this.props.details[0]}</p>
+          <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
-            <p>{this.props.details[1]}</p>
+          <p>{this.props.details[1]}</p>
           <h2 className='hours'>Hours:</h2>
           <ul>
             {this.props.hours.map((data, index) => {
@@ -108,23 +113,24 @@ class DetailsPanel extends React.Component {
             <STYLED_featuredReview>
               Latest Review
             </STYLED_featuredReview>
-            {this.state.location_id.map(location => {
-              return (
-                <ul key={location.id}>
-                  <li>
-                    {" "}
-                    <p>Rating: {location.rating},</p>{" "}
-                  </li>
-                  <li>
-                    {" "}
-                    <p>Comments: {location.comment}</p>{" "}
-                  </li>
-                </ul>
-              );
-            })}
+            <ul key={this.state.location_id.id}>
+              <li>
+                {" "}
+                <p>User: {this.state.location_id.userName},</p>{" "}
+              </li>
+              <li>
+                {" "}
+                <p>Rating: {this.state.location_id.rating},</p>{" "}
+              </li>
+              <li>
+                {" "}
+                <p>Comments: {this.state.location_id.comments}</p>{" "}
+              </li>
+            </ul>
           </STYLED_featureReview>
+          {/* })} */}
         </Content>
-      {/* // -- // */}
+        {/* // -- // */}
         <Actions>
           <Popup
             trigger={<Button> View Internet Speed </Button>}
