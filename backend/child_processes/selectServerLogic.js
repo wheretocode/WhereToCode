@@ -9,7 +9,7 @@ const selectServer = userLocation => {
 
     let stateServers;
   
-    if(stateAbbr.length > 0) {
+    if(stateAbbr && stateAbbr.length > 0) {
       //filter servers based on user location
       stateServers = servers.filter(server => {
         const serverLocation = server['-name'].split(', ')[1];
