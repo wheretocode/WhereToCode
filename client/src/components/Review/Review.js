@@ -4,6 +4,7 @@ import Popup from "reactjs-popup";
 import styled from "styled-components";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
+
 // IMPORT COMPONENTS
 import Tabs from "./Tabs";
 

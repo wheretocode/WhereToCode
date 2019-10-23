@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import Review from "../Review/Review";
 
+
 /*global google*/
 
 class SingleMapCard extends Component {
@@ -9,7 +10,8 @@ class SingleMapCard extends Component {
     super(props);
     this.state = {
       details: [],
-      hours: []
+      hours: [],
+      id: null
     };
   }
 
@@ -29,16 +31,20 @@ class SingleMapCard extends Component {
           details: [place.name, place.formatted_phone_number],
           hours: !place.opening_hours
             ? ["N/A"]
-            : place.opening_hours.weekday_text
+            : place.opening_hours.weekday_text,
+          id: id
         });
       }
     });
+
   };
 
   render() {
     return (
       <>
+
         {this.props.location !== "" ? (
+
           <div
             style={{
               border: "1px solid black",
@@ -54,16 +60,22 @@ class SingleMapCard extends Component {
             <p>{`address: ${this.props.address}`}</p>
             <Popup modal trigger={<button>Details</button>}>
               {close => (
+
                 <Review
                   close={close}
                   onClick={this.requestDetails(this.props.id)}
                   details={this.state.details}
                   hours={this.state.hours}
+                  locationId={this.state.id}
                 />
+
               )}
             </Popup>
+
           </div>
+
         ) : null}
+
       </>
     );
   }
