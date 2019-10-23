@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import Review from "../Review/Review";
 import styled from "styled-components";
+import StarRatings from "react-star-ratings";
 
 /*global google*/
 
@@ -45,7 +46,17 @@ class SingleMapCard extends Component {
             <DetailContainer>
               <h2>{`${this.props.location}`}</h2>
               {/* Placeholder rating */}
-              <h4>{`rating: ${this.props.rating}`}</h4>
+              <h4>
+                {`rating: ${this.props.rating} `}
+                <StarRatings
+                  rating={this.props.rating}
+                  starRatedColor="gold"
+                  numberOfStars={5}
+                  name="rating"
+                  starDimension="15px"
+                  starSpacing="0px"
+                />
+              </h4>
               <p>{`${this.props.address}`}</p>
               <Popup modal trigger={<DetailButton>Details</DetailButton>}>
                 {close => (

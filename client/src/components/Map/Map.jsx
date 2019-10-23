@@ -221,16 +221,20 @@ class Map extends Component {
   render() {
     return (
       <HomeContainer>
-        <div style={{ width: "49vw", padding: "5% 0 0 0" }}>
+        <div
+          style={{
+            width: this.state.locations.length !== 0 ? "49vw" : "0",
+            padding: "5% 0 0 0"
+          }}
+        >
           <MapCards locations={this.state.locations} />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            // alignItems: "flex-start",
             padding: "5% 0 0 0",
-            width: "49vw"
+            width: this.state.locations.length !== 0 ? "49vw" : "100%"
           }}
         >
           <input
@@ -242,7 +246,7 @@ class Map extends Component {
           <div
             id="map"
             style={{
-              height: "81.5vh",
+              height: "82.85vh",
               width: "100%"
             }}
           ></div>
