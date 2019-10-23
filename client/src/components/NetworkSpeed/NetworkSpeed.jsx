@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import NetworkTableGeneral from './NetworkTableGeneral';
 import NetworkTableSpeeds from './NetworkTableSpeeds';
+import xmlToJson from './XmlConverter';
 
 import TriangleLoader from '../Loaders/TriangleLoader';
 
@@ -21,25 +22,48 @@ class NetworkSpeed extends React.Component {
         this.setState({ client: {}, server: {} });
     }
 
-    runNetworkTest = () => {
+    runNetworkTest = US_state => {
         this.resetState();
-        //http://localhost:8080/api/network
-        axios.get('https://wheretocode-master.herokuapp.com/api/network')
+        // https://wheretocode-staging-3.herokuapp.com/api/network
+        axios.get('https://wheretocode-master.herokuapp.com/api/network', {
+                params: {
+                    state: US_state
+                }
+            })
              .then(res => { 
-         
-                                this.setState({ 
-                                download: res.data.speeds.download,
-                                upload: res.data.speeds.upload,
-                                originalDownload: res.data.speeds.originalDownload.toFixed(0),
-                                originalUpload: res.data.speeds.originalDownload.toFixed(0),
-                                client: res.data.client,
-                                server: res.data.server
-                            })
+                            this.setState({ 
+                            download: res.data.speeds.download.toFixed(2),
+                            upload: res.data.speeds.upload.toFixed(2),
+                            originalDownload: res.data.speeds.originalDownload.toFixed(0),
+                            originalUpload: res.data.speeds.originalDownload.toFixed(0),
+                            client: res.data.client,
+                            server: res.data.server
+                        })
                         })
              .catch(err => console.log(err));
     }
 
     componentDidMount() {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+
+            axios.get(`http://api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
+                .then(res => {
+                    const parser = new DOMParser()
+
+                    const XMLres =  parser.parseFromString(res.data, "text/xml")
+
+                    const JSONres = xmlToJson(XMLres);
+
+                    const US_state = JSONres.geonames.address.adminName1["#text"];
+
+                    this.runNetworkTest(US_state);
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        });
+
         this.runNetworkTest();
     }
 
@@ -59,12 +83,12 @@ class NetworkSpeed extends React.Component {
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
 
-                                                                    <Button label='Run Test' 
+                                                                    {/* <Button label='Run Test' 
                                                                             color='gold' 
                                                                             alignSelf='center' 
                                                                             pad='large' 
                                                                             onClick={this.runNetworkTest}
-                                                                    />
+                                                                    /> */}
 
                                                                     <RoutedButton label='More Info'
                                                                                     path={ROUTES.NETWORK} 

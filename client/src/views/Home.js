@@ -24,4 +24,5 @@ const Home = ({ place }) => {
 
 const condition = authUser => !!authUser;
 
+
 export default withAuthorization(condition)(Home);

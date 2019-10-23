@@ -1,9 +1,12 @@
+const selectServer = require('./selectServerLogic');
 //Speed Test API
-const speedTest = require('speedtest-net')({ maxTime: 1000 });
+speedTest = require('speedtest-net');
+
 
 process.on('message', (msg) => {
-    speedTest.on('data', data => {
+    const test = speedTest({ maxTime: 1000, serverId: selectServer(msg.state)});
 
+      test.on('data', data => {
         if(data.speeds.download && data.speeds.upload) {
 
             process.send(data);
@@ -14,6 +17,14 @@ process.on('message', (msg) => {
 
         }
     });
+
+    test.on('result', url => {
+        if (!url) {
+          console.log('Could not successfully post test results.');
+        } else {
+          console.log('Test result url:', url);
+        }
+      });
 });
 
 process.on('disconnect', () => {
