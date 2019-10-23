@@ -9,8 +9,7 @@ const selectServer = userLocation => {
 
     if (userLocation) stateAbbr = convertState(userLocation, "abbr");
 
- 
-  
+    
     if(stateAbbr && stateAbbr.length > 0) {
       //filter servers based on user location
       stateServers = servers.filter(server => {
