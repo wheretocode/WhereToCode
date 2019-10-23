@@ -84,12 +84,12 @@ class NetworkSpeed extends React.Component {
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
 
-                                                                    <Button label='Run Test' 
+                                                                    {/* <Button label='Run Test' 
                                                                             color='gold' 
                                                                             alignSelf='center' 
                                                                             pad='large' 
                                                                             onClick={this.runNetworkTest}
-                                                                    />
+                                                                    /> */}
 
                                                                     <RoutedButton label='More Info'
                                                                                     path={ROUTES.NETWORK} 
