@@ -5,7 +5,7 @@ const selectServer = userLocation => {
     //destruct server array
     const servers = serverList.servers.server
     
-    const stateAbbr = convertState(userLocation, "abbr");
+    if (userLocation) const stateAbbr = convertState(userLocation, "abbr");
 
     let stateServers;
   
