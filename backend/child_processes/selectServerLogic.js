@@ -4,10 +4,12 @@ const convertState = require('./stateMap.js');
 const selectServer = userLocation => {
     //destruct server array
     const servers = serverList.servers.server
-    
-    if (userLocation) const stateAbbr = convertState(userLocation, "abbr");
+    let stateServers,
+        stateAbbr;
 
-    let stateServers;
+    if (userLocation) stateAbbr = convertState(userLocation, "abbr");
+
+ 
   
     if(stateAbbr && stateAbbr.length > 0) {
       //filter servers based on user location
