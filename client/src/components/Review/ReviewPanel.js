@@ -59,8 +59,8 @@ class ReviewPanel1 extends Component {
     this.state = {
       newUser: {
         user_id: null,
-        rating: null,
-        internet_rating: null,
+        rating: " ",
+        internet_rating: " ",
         comments: ''
       },
       rating: ["1", "2", "3"],
