@@ -78,10 +78,7 @@ class ReviewPanel1 extends Component {
 
   // COMPONENT
   componentDidMount() {
-    const check = this.props.close
-    console.log(check);
 
-    console.log(this.state.uid);
     axios
       .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
       .then(user => {
