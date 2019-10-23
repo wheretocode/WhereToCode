@@ -4,7 +4,7 @@ const router = express.Router();
 
 // url/api/network
 router.get('/', (req, res) => {
-        console.log("REQUEST", req.params)
+        console.log("REQUEST", req.query)
         const forked = fork('./backend/child_processes/networkApiChild.js');
 
         forked.on('message', (msg) => {
