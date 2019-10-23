@@ -1,4 +1,4 @@
-export default function abbrState(input, to){
+const abbrState = (input, to) => {
     const states = [
         ['Arizona', 'AZ'],
         ['Alabama', 'AL'],
@@ -68,3 +68,5 @@ export default function abbrState(input, to){
         }    
     }
 }
+
+module.exports = abbrState;
