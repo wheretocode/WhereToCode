@@ -1,5 +1,5 @@
 const serverList = require('./servers.json');
-const convertState = reqiure('./stateMap.js');
+const convertState = require('./stateMap.js');
 
 const selectServer = userLocation => {
     //destruct server array
