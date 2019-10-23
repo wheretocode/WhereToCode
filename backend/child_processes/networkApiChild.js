@@ -3,7 +3,7 @@ const selectServer = require('./selectServerLogic');
 const speedTest = require('speedtest-net')({ maxTime: 1000, serverId: selectServer() });
 
 process.on('message', (msg) => {
-
+    console.log("message", msg);
     speedTest.on('config', config => {
         //console.log('Configuration info:');
         //console.dir(config);
