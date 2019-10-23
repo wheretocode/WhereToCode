@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import NetworkTableGeneral from './NetworkTableGeneral';
 import NetworkTableSpeeds from './NetworkTableSpeeds';
+import xmlToJson from './XmlConverter';
 
 import TriangleLoader from '../Loaders/TriangleLoader';
 
@@ -21,10 +22,14 @@ class NetworkSpeed extends React.Component {
         this.setState({ client: {}, server: {} });
     }
 
-    runNetworkTest = () => {
+    runNetworkTest = US_state => {
         this.resetState();
         // https://wheretocode-master.herokuapp.com/api/network
-        axios.get('https://wheretocode-staging-3.herokuapp.com/api/network')
+        axios.get('https://wheretocode-staging-3.herokuapp.com/api/network', {
+                params: {
+                    state: US_state
+                }
+            })
              .then(res => { 
             console.log(res)
                             this.setState({ 
@@ -40,83 +45,29 @@ class NetworkSpeed extends React.Component {
     }
 
     componentDidMount() {
-        // let imageAddr = "https://images.pexels.com/photos/1338789/pexels-photo-1338789.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
-        // let startTime, endTime;
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            console.log(latitude, longitude)
 
-        // const downloadSize = 1626000;
-        // const download = new Image();
+            axios.get(`http://api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
+                .then(res => {
+                    console.log(res.data);
+                    const parser = new DOMParser()
 
-        // download.onload = function () {
-        //     endTime = (new Date()).getTime();
-        //     showResults();
-        // }
+                    const XMLres =  parser.parseFromString(res.data, "text/xml")
 
-        // startTime = (new Date()).getTime();
-        // const cacheBuster = "?nnn=" + startTime;
+                    const JSONres = xmlToJson(XMLres);
 
-        // download.src = imageAddr + cacheBuster;
-    
-        // function showResults() {
-        //     var duration = Math.round((endTime - startTime) / 1000);
-        //     var bitsLoaded = downloadSize * 8;
-        //     var speedBps = (bitsLoaded / duration).toFixed(0);
-        //     var speedKbps = (speedBps / 1024).toFixed(2);
-        //     var speedMbps = (speedKbps / 1024).toFixed(2);
-    
-        //     const data = {
-        //         duration,
-        //         bitsLoaded,
-        //         speedBps,
-        //         speedKbps,
-        //         speedMbps
-        //     }
-    
-        //     alert("Your connection speed is: \n" + 
-        //         speedBps + " bps\n"   + 
-        //         speedKbps + " kbps\n" + 
-        //         speedMbps + " Mbps\n" );
-        // }
+                    const US_state = JSONres.geonames.address.adminName1["#text"];
 
-   
-    //     const xhr = new XMLHttpRequest();
-        
-    
-    //     xhr.onreadystatechange = function () {
-    //         // we only need to know when the request has completed
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
+                    this.runNetworkTest(US_state);
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        });
 
-    //             // Here we stop the timer & register end time
-    //             const endTime = ((new Date()).getTime() / 1000);
-
-    //             // Also, calculate the file-size which has transferred
-    //             const fileSize = xhr.responseText.length;
-    //             console.log(fileSize)
-    //             // N.B: fileSize reports number of Bytes
-                
-    //             console.log(endTime,startTime)
-    //             const duration = endTime - startTime
-    //             const bitsLoaded = fileSize * 8
-
-
-    //             // Calculate the connection-speed
-    //             console.log(duration, bitsLoaded)
-    //             const speedBps = (bitsLoaded / duration).toFixed(0);
-    //             const speedKbps = (speedBps / 1024).toFixed(2);
-    //             const speedMBps = (speedKbps / 1024).toFixed(2);
-    //             const speedMbps = (speedMBps * 8).toFixed(2);
- 
-
-    //             // Report the result
-    //             console.log(speedBps + " Bps\n", speedKbps + " kbps\n", speedMbps + " Mbps\n", speedMBps + " MBps\n");
-    //         }
-    //     }
-
-    //     // Snap back; here's where we start the timer
-    //     const startTime = ((new Date()).getTime() / 1000);
-
-    //     // All set, let's hit it!
-    //     xhr.open("GET", "https://images.pexels.com/photos/1338789/pexels-photo-1338789.jpeg", true);
-    //     xhr.send();
+        this.runNetworkTest();
     }
 
     render() {
