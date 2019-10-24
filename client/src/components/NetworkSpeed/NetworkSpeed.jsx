@@ -47,7 +47,7 @@ class NetworkSpeed extends React.Component {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
 
-            axios.get(`http://api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
+            axios.get(`//api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
                 .then(res => {
                     const parser = new DOMParser()
 
@@ -56,7 +56,7 @@ class NetworkSpeed extends React.Component {
                     const JSONres = xmlToJson(XMLres);
 
                     const US_state = JSONres.geonames.address.adminName1["#text"];
-
+         
                     this.runNetworkTest(US_state);
                 })
                 .catch(err => {
