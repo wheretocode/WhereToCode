@@ -9,14 +9,7 @@ const Home = ({ place }) => {
   return (
 
     <div>
-
-      <p>Home Page accessed by authorized user</p>
-      <NetworkSpeed />
       <Map place={place} />
-
-
-
-
     </div>
 
   );

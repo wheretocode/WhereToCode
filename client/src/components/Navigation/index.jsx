@@ -9,12 +9,10 @@ import { Box, Button, RoutedButton, Heading, Anchor } from "grommet";
 
 import { Link } from "react-router-dom";
 
-
 import { SignUpForm } from "../Auth/SignUp.jsx";
 import { SignInForm } from "../Auth/SignIn.jsx";
 
 import styled from "styled-components";
-
 
 //styled modal is css for pop up
 const StyledModal = Modal.styled`
@@ -28,8 +26,6 @@ const StyledModal = Modal.styled`
   transition: opacity ease 1000ms;
   border-radius: 30px;
 `;
-
-
 
 const RegisterLink = styled(Link)`
   text-decoration: none;
@@ -54,8 +50,6 @@ const Navbar = styled.div`
   padding-top: 20px;
 `;
 
-
-
 const LoginLink = styled(Link)`
   text-decoration: none;
   color: white;
@@ -65,7 +59,6 @@ const LoginLink = styled(Link)`
   font-family: "Zilla Slab", serif;
   border-radius: 5px;
 `;
-
 
 function SignUpButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +80,6 @@ function SignUpButton() {
       setTimeout(resolve, 200);
     });
   }
-
 
   return (
     <div>
@@ -130,7 +122,6 @@ function LoginButton() {
     });
   }
 
-
   return (
     <div>
       <LoginLink onClick={toggleModal}>Login</LoginLink>
@@ -171,25 +162,20 @@ const NavigationAuth = () => (
   </Box>
 );
 
-
 const FadingBackground = styled(BaseModalBackground)`
-opacity: ${props => props.opacity};
-transition: opacity ease 1000ms;
+  opacity: ${props => props.opacity};
+  transition: opacity ease 1000ms;
 `;
 
 const NavigationNonAuth = () => (
-
   <Box direction="row" justify="right" gap="small">
-  
     <ModalProvider backgroundComponent={FadingBackground}>
       <LoginButton />
     </ModalProvider>
     <ModalProvider backgroundComponent={FadingBackground}>
       <SignUpButton />
     </ModalProvider>
-
   </Box>
 );
 
 export default Navigation;
-
