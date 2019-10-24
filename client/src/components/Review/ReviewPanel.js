@@ -59,13 +59,14 @@ class ReviewPanel1 extends Component {
     this.state = {
       newUser: {
         user_id: null,
-        rating: null,
-        internet_rating: null,
+        rating: " ",
+        internet_rating: " ",
         comments: ''
       },
       rating: ["1", "2", "3"],
       internet_rating: ["1", "2", "3"],
-      uid: this.props.firebase.auth.currentUser.uid
+      uid: this.props.firebase.auth.currentUser.uid,
+      submitted: false
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -77,6 +78,7 @@ class ReviewPanel1 extends Component {
 
   // COMPONENT
   componentDidMount() {
+
     axios
       .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
       .then(user => {
@@ -129,6 +131,8 @@ class ReviewPanel1 extends Component {
 
 
 
+
+
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
@@ -138,9 +142,15 @@ class ReviewPanel1 extends Component {
       .then(response => {
         console.log("res", response)
       })
+      .then(res => {
+        this.setState({ submitted: true })
+      })
+
       .catch(error => {
         console.log(error);
       })
+
+
   }
 
 
@@ -162,59 +172,60 @@ class ReviewPanel1 extends Component {
   render() {
     return (
       <>
-        <StyleModal>
-          <Header> Leave a Review </Header>
+        {(this.state.submitted ? <StyleModal><Header>Thank You For Submitting A Review</Header></StyleModal> :
+          <StyleModal>
+            <Header> Leave a Review </Header>
 
-          <STYLED_form form onSubmit={this.handleFormSubmit}>
+            <STYLED_form form onSubmit={this.handleFormSubmit}>
 
 
-            {/* Rating Required*/}
-            <Select
-              title={"Location Rating"}
-              name={'rating'}
-              options={this.state.rating}
-              value={this.state.newUser.rating}
-              placeholder={"Select Rating"}
-              handleChange={this.handleInput}
-            />
-            {/*Internet Rating */}
-            <Select
-              title={"Interet Rating"}
-              name={'internet_rating'}
-              options={this.state.internet_rating}
-              value={this.state.newUser.internet_rating}
-              placeholder={"Select Internet Rating"}
-              handleChange={this.handleInput}
-            />
-            {/*Comment */}
-            <TextArea
-              title={"Comments"}
-              rows={10}
-              value={this.state.newUser.comments}
-              name={'comment'}
-              handleChange={this.handleTextArea}
-              placeholder={"Leave a comment"}
-            />
-            {/*Submit */}
-            <div className='buttonContainer'>
-              <Button
-                action={this.handleFormSubmit}
-                type={"primary"}
-                title={"Submit"}
-                style={buttonStyle}
+              {/* Rating Required*/}
+              <Select
+                title={"Location Rating"}
+                name={'rating'}
+                options={this.state.rating}
+                value={this.state.newUser.rating}
+                placeholder={"Select Rating"}
+                handleChange={this.handleInput}
               />
-              {/* Clear form */}
-              <Button
-                action={this.handleClearForm}
-                type={"secondary"}
-                title={"Clear"}
-                style={buttonStyle}
+              {/*Internet Rating */}
+              <Select
+                title={"Interet Rating"}
+                name={'internet_rating'}
+                options={this.state.internet_rating}
+                value={this.state.newUser.internet_rating}
+                placeholder={"Select Internet Rating"}
+                handleChange={this.handleInput}
               />
-            </div>
-          </STYLED_form>
-        </StyleModal>
+              {/*Comment */}
+              <TextArea
+                title={"Comments"}
+                rows={10}
+                value={this.state.newUser.comments}
+                name={'comment'}
+                handleChange={this.handleTextArea}
+                placeholder={"Leave a comment"}
+              />
+              {/*Submit */}
+              <div className='buttonContainer'>
+                <Button
+                  action={this.handleFormSubmit}
+                  type={"primary"}
+                  title={"Submit"}
+                  style={buttonStyle}
+                />
+                {/* Clear form */}
+                <Button
+                  action={this.handleClearForm}
+                  type={"secondary"}
+                  title={"Clear"}
+                  style={buttonStyle}
+                />
+              </div>
+            </STYLED_form>
+          </StyleModal>
 
-
+        )}
       </>
     );
   }

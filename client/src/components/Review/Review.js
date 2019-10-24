@@ -34,6 +34,6 @@ export default props => (
         &times;
       </a>
     </Close>
-    <Tabs details={props.details} hours={props.hours} />
+    <Tabs close={props.close} details={props.details} hours={props.hours} />
   </StyleModal>
 );
