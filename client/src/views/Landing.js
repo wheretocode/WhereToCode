@@ -7,6 +7,9 @@ import { withRouter, Link } from "react-router-dom";
 
 import * as ROUTES from "../Routes/routes";
 
+import AppExamples from '../components/Landing/AppExamples';
+import Info from '../components/Landing/Info';
+
 const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
   const [number, setNumber] = useState(1);
@@ -43,6 +46,7 @@ const Landing = props => {
 
   return (
     <LandingPageContainer>
+      <LandingScreen>
       <SearchComponent>
         <h2>
           Find a place to <span>{currentActivity}</span> near you
@@ -53,6 +57,12 @@ const Landing = props => {
           <GoButton to={ROUTES.HOME}>Go</GoButton>
         </InputAndButtonContainer>
       </SearchComponent>
+      </LandingScreen>
+      <LearnMore>
+        <p>Learn More ↓</p>
+      </LearnMore>
+      <AppExamples />
+      <Info />
     </LandingPageContainer>
   );
 };
@@ -68,9 +78,17 @@ const SearchComponent = styled.div`
     color: white;
     font-family: "'Zilla Slab', serif";
     font-size: 48px;
+    font-weight: normal;
+
+    span{
+      font-weight: bold;
+    }
 
     @media(max-width:500px){
       font-size: 28px;
+      width: 80%;
+      text-align: center;
+      line-height: 1;
     }
   }
   span {
@@ -79,14 +97,21 @@ const SearchComponent = styled.div`
 `;
 
 const LandingPageContainer = styled.div`
-  background: url("/heroimage.svg");
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 94.2vh;
 `;
+
+const LandingScreen = styled.div`
+background: url("/heroimage.svg");
+background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 92.2vh;
+
+@media(max-width: 500px){
+  height: 98vh;
+}
+`
 
 const GoButton = styled(Link)`
   display: flex
@@ -115,8 +140,23 @@ const Input = styled.input`
     vertical-align: center;
     font-size: 1rem;
   }
+  @media(max-width: 500){
+    width: 50px;
+  }
 `;
 
 const InputAndButtonContainer = styled.div`
   display: flex;
+`;
+
+const LearnMore = styled.div`
+  width: 100%;
+  border: 1px solid gold;
+  background: gold;
+  text-align: center;
+  p {
+    margin: 8px;
+    font-size: 14px;
+    font-weight: bold;
+  }
 `;
