@@ -5,10 +5,6 @@ import styled from "styled-components";
 import * as ROUTES from "../../Routes/routes";
 
 class SignOutButton1 extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   submit = e => {
     this.props.firebase.doSignOut().then(() => {
       this.props.history.push(ROUTES.LANDING);

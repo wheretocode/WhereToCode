@@ -1,15 +1,15 @@
 // IMPORTS
-  import React, { Component } from "react";
-  import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-  import styled from 'styled-components'
+import React from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import styled from "styled-components";
 
 // COMPONENTS
-  import DetailsPanel from "./DetailsPanel";
-  import AllReviewsPanel from "./AllReviewsPanel";
-  import ReviewPanel from "./ReviewPanel";
+import DetailsPanel from "./DetailsPanel";
+import AllReviewsPanel from "./AllReviewsPanel";
+import ReviewPanel from "./ReviewPanel";
 
 // STYLED COMPONENTS
-const STYLED_Tabs = styled(Tabs)`
+const StyledTabs = styled(Tabs)`
   display: flex;
   flex-direction: column;
 
@@ -17,7 +17,7 @@ const STYLED_Tabs = styled(Tabs)`
 
   border-radius: 10px;
 `;
-const STYLED_TabList = styled(TabList)`
+const StyledTabList = styled(TabList)`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -32,7 +32,7 @@ const STYLED_TabList = styled(TabList)`
 
   list-style: none;
 `;
-const STYLED_tab = styled(Tab)`
+const StyledTab = styled(Tab)`
   display: flex;
   justify-content: center;
 
@@ -43,12 +43,12 @@ const STYLED_tab = styled(Tab)`
 // COMPONENT & EXPORT
 export default props => {
   return (
-    <STYLED_Tabs>
-      <STYLED_TabList>
-        <STYLED_tab>Details</STYLED_tab>
-        <STYLED_tab>All Reviews</STYLED_tab>
-        <STYLED_tab>Leave a Review</STYLED_tab>
-      </STYLED_TabList>
+    <StyledTabs>
+      <StyledTabList>
+        <StyledTab>Details</StyledTab>
+        <StyledTab>All Reviews</StyledTab>
+        <StyledTab>Leave a Review</StyledTab>
+      </StyledTabList>
 
       <TabPanel>
         <DetailsPanel details={props.details} hours={props.hours} />
@@ -59,6 +59,6 @@ export default props => {
       <TabPanel>
         <ReviewPanel />
       </TabPanel>
-    </STYLED_Tabs>
+    </StyledTabs>
   );
 };

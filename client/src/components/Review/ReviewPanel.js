@@ -1,6 +1,6 @@
 // IMPORTS
-import React, { Component } from 'react';
-import styled from 'styled-components'
+import React, { Component } from "react";
+import styled from "styled-components";
 
 // COMPONENTS
 import TextArea from "../Review/TextArea";
@@ -9,7 +9,7 @@ import Button from "../Review/Button";
 
 // STYLES
 const buttonStyle = {
-  margin: "10px 10px 10px 10px",
+  margin: "10px 10px 10px 10px"
 };
 
 // STYLED COMPONENTS
@@ -21,18 +21,18 @@ const StyleModal = styled.div`
   padding: 10px;
 
   font-size: 12px;
-`
+`;
 const Header = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  
-  color: #FBD702;
+
+  color: #fbd702;
 
   width: 100%;
   margin-bottom: 15px;
-`
-const STYLED_form = styled.form`
+`;
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
 
@@ -46,25 +46,25 @@ const STYLED_form = styled.form`
 
   border-radius: 10px 10px 10px 10px;
   background-color: white;
-`
+`;
 // COMPONENT
 class ReviewPanel extends Component {
   constructor(props) {
     super(props);
 
-  // STATE
+    // STATE
     this.state = {
       newUser: {
-        user_id: '',
-        rating: '',
-        internet_rating: '',
-        comments: ''
+        user_id: "",
+        rating: "",
+        internet_rating: "",
+        comments: ""
       },
-      user_id: ["8","4","2"],
+      user_id: ["8", "4", "2"],
       rating: ["1", "2", "3"],
-      internet_rating: ["1", "2", "3"],
+      internet_rating: ["1", "2", "3"]
     };
-    
+
     this.handleTextArea = this.handleTextArea.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
@@ -75,25 +75,21 @@ class ReviewPanel extends Component {
   handleInput(e) {
     let value = e.target.value;
     let name = e.target.name;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          [name]: value
-        }
-      }),
-    );
+    this.setState(prevState => ({
+      newUser: {
+        ...prevState.newUser,
+        [name]: value
+      }
+    }));
   }
   handleTextArea(e) {
     let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          comments: value
-        }
-      }),
-    );
+    this.setState(prevState => ({
+      newUser: {
+        ...prevState.newUser,
+        comments: value
+      }
+    }));
   }
   handleFormSubmit(e) {
     e.preventDefault();
@@ -107,18 +103,17 @@ class ReviewPanel extends Component {
         "Content-Type": "application/json"
       }
     }).then(response => {
-      response.json().then(data => {
-      });
+      response.json().then(data => {});
     });
   }
   handleClearForm(e) {
     e.preventDefault();
     this.setState({
       newUser: {
-        user_id: '',
-        rating: '',
-        comments: '',
-        internet_rating: ''
+        user_id: "",
+        rating: "",
+        comments: "",
+        internet_rating: ""
       }
     });
   }
@@ -128,15 +123,15 @@ class ReviewPanel extends Component {
     return (
       <StyleModal>
         <Header> Leave a Review </Header>
-      {/* // -- // */}
-        <STYLED_form onSubmit={this.handleFormSubmit}>
+        {/* // -- // */}
+        <StyledForm onSubmit={this.handleFormSubmit}>
           {/*User 
             Do we need the user to enter their own ID here or can we get that off state? 
           */}
           {/* Rating */}
           <Select
             title={"Location Rating"}
-            name={'rating'}
+            name={"rating"}
             options={this.state.rating}
             value={this.state.newUser.rating}
             placeholder={"Select Rating"}
@@ -145,24 +140,24 @@ class ReviewPanel extends Component {
           {/*Internet Rating */}
           <Select
             title={"Interet Rating"}
-            name={'internet_rating'}
+            name={"internet_rating"}
             options={this.state.internet_rating}
             value={this.state.newUser.internet_rating}
             placeholder={"Select Internet Rating"}
             handleChange={this.handleInput}
           />
           {/*Comment */}
-            <TextArea
-              title={"Comments"}
-              rows={10}
-              value={this.state.newUser.comments}
-              name={'comment'}
-              handleChange={this.handleTextArea}
-              placeholder={"Leave a comment"}
-            />
+          <TextArea
+            title={"Comments"}
+            rows={10}
+            value={this.state.newUser.comments}
+            name={"comment"}
+            handleChange={this.handleTextArea}
+            placeholder={"Leave a comment"}
+          />
           {/*Submit */}
-      {/* // -- // */}
-          <div className='buttonContainer'>
+          {/* // -- // */}
+          <div className="buttonContainer">
             <Button
               action={this.handleFormSubmit}
               type={"primary"}
@@ -177,11 +172,11 @@ class ReviewPanel extends Component {
               style={buttonStyle}
             />
           </div>
-        </STYLED_form>
+        </StyledForm>
       </StyleModal>
     );
   }
 }
 
 // EXPORT
-  export default ReviewPanel;
+export default ReviewPanel;

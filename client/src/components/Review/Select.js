@@ -1,22 +1,22 @@
 // IMPORT
 import React from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 // STYLED COMPONENTS
-const Select_CONTAINER = styled.div`
+const SelectContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  
+
   label {
-    margin-right: 10px; 
+    margin-right: 10px;
   }
 `;
 
 // COMPONENT
 const Select = props => {
   return (
-    <Select_CONTAINER>
+    <SelectContainer>
       <label for={props.name}> {props.title} </label>
       <select
         id={props.name}
@@ -35,7 +35,7 @@ const Select = props => {
           );
         })}
       </select>
-    </Select_CONTAINER>
+    </SelectContainer>
   );
 };
 

@@ -18,12 +18,12 @@ const Header = styled.div`
   font-size: 20px;
   font-weight: bold;
 
-  color: #FBD702;
+  color: #fbd702;
 
   width: 100%;
   margin-bottom: 15px;
 `;
-const STYLED_featuredReview = styled.div`
+const StyledFeaturedReview = styled.div`
   text-align: center;
   font-size: 18px;
   font-weight: bold;
@@ -37,7 +37,8 @@ const Content = styled.div`
 
   padding: 15px;
 
-  h2, p {
+  h2,
+  p {
     margin: 0 0 5px 0;
   }
   .hours {
@@ -47,7 +48,7 @@ const Content = styled.div`
   border-radius: 10px 10px 10px 10px;
   background-color: white;
 `;
-const STYLED_featureReview = styled.div`
+const StyledFeatureReview = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -57,17 +58,17 @@ const Actions = styled.div`
   padding: 10px 5px;
   margin: auto;
   text-align: center;
-`
+`;
 const Button = styled.button`
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+  background: ${props => (props.primary ? "palevioletred" : "white")};
+  color: ${props => (props.primary ? "white" : "palevioletred")};
 
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
-`
+`;
 
 // COMPONENT
 class DetailsPanel extends React.Component {
@@ -91,23 +92,25 @@ class DetailsPanel extends React.Component {
     return (
       <StyleModal>
         <Header> Details </Header>
-      {/* // -- // */}
+        {/* // -- // */}
         <Content>
           {" "}
           <h2>Name:</h2>
-            <p>{this.props.details[0]}</p>
+          <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
-            <p>{this.props.details[1]}</p>
-          <h2 className='hours'>Hours:</h2>
+          <p>{this.props.details[1]}</p>
+          <h2 className="hours">Hours:</h2>
           <ul>
             {this.props.hours.map((data, index) => {
-              return <li key={index}><div>{data}</div></li>;
+              return (
+                <li key={index}>
+                  <div>{data}</div>
+                </li>
+              );
             })}
           </ul>
-          <STYLED_featureReview>
-            <STYLED_featuredReview>
-              Latest Review
-            </STYLED_featuredReview>
+          <StyledFeatureReview>
+            <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
             {this.state.location_id.map(location => {
               return (
                 <ul key={location.id}>
@@ -122,9 +125,9 @@ class DetailsPanel extends React.Component {
                 </ul>
               );
             })}
-          </STYLED_featureReview>
+          </StyledFeatureReview>
         </Content>
-      {/* // -- // */}
+        {/* // -- // */}
         <Actions>
           <Popup
             trigger={<Button> View Internet Speed </Button>}
@@ -132,7 +135,8 @@ class DetailsPanel extends React.Component {
             closeOnDocumentClick
           >
             <span>
-              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or DEFAULT w/ NO INFO
+              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or
+              DEFAULT w/ NO INFO
             </span>
           </Popup>
         </Actions>

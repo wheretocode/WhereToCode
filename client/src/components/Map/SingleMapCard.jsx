@@ -42,7 +42,7 @@ class SingleMapCard extends Component {
       <>
         {this.props.location !== "" ? (
           <SingleMapCardContainer>
-            <img src={this.props.icon} />
+            <img src={this.props.icon} alt="Icon of the location" />
             <DetailContainer>
               <h2>{`${this.props.location}`}</h2>
               {/* Placeholder rating */}

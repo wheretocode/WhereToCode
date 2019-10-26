@@ -29,6 +29,8 @@ class Map extends Component {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
+            localStorage.setItem("lat", position.coords.latitude);
+            localStorage.setItem("lng", position.coords.longitude);
             this.setState({
               pos: {
                 lat: position.coords.latitude,
@@ -48,9 +50,6 @@ class Map extends Component {
         );
       } // To disable any eslint 'google not defined' errors
     }
-
-    // Initialize Google Autocomplete
-    /*global google*/
 
     this.autocomplete = new google.maps.places.Autocomplete(
       document.getElementById("autocomplete")
@@ -87,6 +86,7 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
+    console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
@@ -234,13 +234,20 @@ class Map extends Component {
             display: "flex",
             flexDirection: "column",
             padding: "5% 0 0 0",
-            width: this.state.locations.length !== 0 ? "49vw" : "100%"
+            width: this.state.locations.length !== 0 ? "49vw" : "100%",
+            alignItems: "center"
           }}
         >
           <input
             id="autocomplete"
             style={{ width: "99.6%", height: "30px" }}
             placeholder="Enter location..."
+            style={{
+              border: "none",
+              borderBottom: "2px solid lightgray",
+              width: "30%",
+              marginBottom: "20px"
+            }}
           />
 
           <div
