@@ -87,6 +87,7 @@ const SingleMapCardContainer = styled.div`
   margin: 0;
   padding: 14px;
   align-items: center;
+  background: white;
   img {
     margin-right: 10px;
     height: 300px;

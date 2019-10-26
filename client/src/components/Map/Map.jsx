@@ -224,7 +224,7 @@ class Map extends Component {
         <div
           style={{
             width: this.state.locations.length !== 0 ? "49vw" : "0",
-            padding: "5% 0 0 0"
+            padding: "8% 0 0 0"
           }}
         >
           <MapCards locations={this.state.locations} />
@@ -244,9 +244,11 @@ class Map extends Component {
             placeholder="Enter location..."
             style={{
               border: "none",
-              borderBottom: "2px solid lightgray",
-              width: "30%",
-              marginBottom: "20px"
+              borderBottom: "1px solid black",
+              width: "50%",
+              marginBottom: "20px",
+              background: "transparent",
+              fontSize: "20px"
             }}
           />
 

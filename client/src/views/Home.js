@@ -1,8 +1,11 @@
 import React from "react";
-import { withAuthorization } from "../components/Session";
 import Navigation from "../components/Navigation/index";
 import Map from "../components/Map/Map.jsx";
 import styled from "styled-components";
+
+const HomeBackground = styled.div`
+  background-image: url("/light_honeycomb.png");
+`;
 
 const HomeNavBar = styled.div`
   position: static;
@@ -19,12 +22,12 @@ const HomeNavBar = styled.div`
 
 const Home = ({ place }) => {
   return (
-    <div>
+    <HomeBackground>
       <HomeNavBar>
         <Navigation />
       </HomeNavBar>
       <Map place={place} />
-    </div>
+    </HomeBackground>
   );
 };
 
