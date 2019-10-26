@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 
+
 // IMPORT COMPONENTS
 import Tabs from "./Tabs";
 
@@ -31,6 +32,6 @@ export default props => (
         &times;
       </a>
     </Close>
-    <Tabs details={props.details} hours={props.hours} />
+    <Tabs close={props.close} details={props.details} hours={props.hours} />
   </StyleModal>
 );

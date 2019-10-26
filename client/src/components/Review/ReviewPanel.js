@@ -1,11 +1,16 @@
 // IMPORTS
-import React, { Component } from "react";
-import styled from "styled-components";
+
+import React, { Component } from 'react';
+import styled from 'styled-components'
+import axios from "axios";
 
 // COMPONENTS
 import TextArea from "../Review/TextArea";
 import Select from "../Review/Select";
 import Button from "../Review/Button";
+import { withFirebase } from '../../Firebase';
+
+
 
 // STYLES
 const buttonStyle = {
@@ -17,52 +22,51 @@ const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 10px;
-
   font-size: 12px;
 `;
 const Header = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-
   color: #fbd702;
-
   width: 100%;
   margin-bottom: 15px;
 `;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-
   padding: 15px;
   margin: 5px 0 5px 0;
-
   .buttonContainer {
     display: flex;
     justify-content: center;
   }
-
   border-radius: 10px 10px 10px 10px;
   background-color: white;
-`;
-// COMPONENT
-class ReviewPanel extends Component {
+
+// import Firebase from './firebase';
+const buttonStyle = {
+  margin: "10px 10px 10px 10px"
+};`
+
+
+class ReviewPanel1 extends Component {
   constructor(props) {
     super(props);
 
     // STATE
     this.state = {
       newUser: {
-        user_id: "",
-        rating: "",
-        internet_rating: "",
-        comments: ""
+        user_id: null,
+        rating: " ",
+        internet_rating: " ",
+        comments: ''
       },
-      user_id: ["8", "4", "2"],
       rating: ["1", "2", "3"],
-      internet_rating: ["1", "2", "3"]
+      internet_rating: ["1", "2", "3"],
+      uid: this.props.firebase.auth.currentUser.uid,
+      submitted: false
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -71,17 +75,45 @@ class ReviewPanel extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
+
+  // COMPONENT
+  componentDidMount() {
+
+    axios
+      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+      .then(user => {
+        let currentUserId = {
+          user_id: user.data[0].id,
+          rating: null,
+          internet_rating: null,
+          comments: ''
+        }
+        this.setState({
+          newUser: currentUserId
+        })
+      }
+
+      )
+      .catch(error => {
+        console.log(error);
+      })
+
+  }
+
   // METHODS
   handleInput(e) {
     let value = e.target.value;
     let name = e.target.name;
-    this.setState(prevState => ({
-      newUser: {
-        ...prevState.newUser,
-        [name]: value
-      }
-    }));
+    this.setState(
+      prevState => ({
+        newUser: {
+          ...prevState.newUser,
+          [name]: value
+        }
+      }),
+    );
   }
+
   handleTextArea(e) {
     let value = e.target.value;
     this.setState(prevState => ({
@@ -91,21 +123,31 @@ class ReviewPanel extends Component {
       }
     }));
   }
+
+
+
+
+
+
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
+    console.log(this.state.newUser);
+    axios
+      .post("https://wheretocode-master.herokuapp.com/reviews", userData)
+      .then(response => {
+        console.log("res", response)
+      })
+      .then(res => {
+        this.setState({ submitted: true })
+      })
 
-    fetch("https://wheretocode-master.herokuapp.com/reviews", {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {});
-    });
+      .catch(error => {
+        console.log(error);
+      })
   }
+
+
   handleClearForm(e) {
     e.preventDefault();
     this.setState({
@@ -118,65 +160,71 @@ class ReviewPanel extends Component {
     });
   }
 
-  // RENDER
+
+
+
   render() {
     return (
-      <StyleModal>
-        <Header> Leave a Review </Header>
-        {/* // -- // */}
-        <StyledForm onSubmit={this.handleFormSubmit}>
-          {/*User 
-            Do we need the user to enter their own ID here or can we get that off state? 
-          */}
-          {/* Rating */}
-          <Select
-            title={"Location Rating"}
-            name={"rating"}
-            options={this.state.rating}
-            value={this.state.newUser.rating}
-            placeholder={"Select Rating"}
-            handleChange={this.handleInput}
-          />
-          {/*Internet Rating */}
-          <Select
-            title={"Interet Rating"}
-            name={"internet_rating"}
-            options={this.state.internet_rating}
-            value={this.state.newUser.internet_rating}
-            placeholder={"Select Internet Rating"}
-            handleChange={this.handleInput}
-          />
-          {/*Comment */}
-          <TextArea
-            title={"Comments"}
-            rows={10}
-            value={this.state.newUser.comments}
-            name={"comment"}
-            handleChange={this.handleTextArea}
-            placeholder={"Leave a comment"}
-          />
-          {/*Submit */}
-          {/* // -- // */}
-          <div className="buttonContainer">
-            <Button
-              action={this.handleFormSubmit}
-              type={"primary"}
-              title={"Submit"}
-              style={buttonStyle}
-            />
-            {/* Clear form */}
-            <Button
-              action={this.handleClearForm}
-              type={"secondary"}
-              title={"Clear"}
-              style={buttonStyle}
-            />
-          </div>
-        </StyledForm>
-      </StyleModal>
+      <>
+        {(this.state.submitted ? <StyleModal><Header>Thank You For Submitting A Review</Header></StyleModal> :
+          <StyleModal>
+            <Header> Leave a Review </Header>
+
+            <StyledForm form onSubmit={this.handleFormSubmit}>
+
+
+              {/* Rating Required*/}
+              <Select
+                title={"Location Rating"}
+                name={'rating'}
+                options={this.state.rating}
+                value={this.state.newUser.rating}
+                placeholder={"Select Rating"}
+                handleChange={this.handleInput}
+              />
+              {/*Internet Rating */}
+              <Select
+                title={"Interet Rating"}
+                name={'internet_rating'}
+                options={this.state.internet_rating}
+                value={this.state.newUser.internet_rating}
+                placeholder={"Select Internet Rating"}
+                handleChange={this.handleInput}
+              />
+              {/*Comment */}
+              <TextArea
+                title={"Comments"}
+                rows={10}
+                value={this.state.newUser.comments}
+                name={'comment'}
+                handleChange={this.handleTextArea}
+                placeholder={"Leave a comment"}
+              />
+              {/*Submit */}
+              <div className='buttonContainer'>
+                <Button
+                  action={this.handleFormSubmit}
+                  type={"primary"}
+                  title={"Submit"}
+                  style={buttonStyle}
+                />
+                {/* Clear form */}
+                <Button
+                  action={this.handleClearForm}
+                  type={"secondary"}
+                  title={"Clear"}
+                  style={buttonStyle}
+                />
+              </div>
+            </StyledForm>
+          </StyleModal>
+        )}
+      </>
     );
   }
 }
 
-// EXPORT
-export default ReviewPanel;
+
+const ReviewPanel = withFirebase(ReviewPanel1);
+export { ReviewPanel };
+

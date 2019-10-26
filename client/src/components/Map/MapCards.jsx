@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
 import SingleMapCard from "./SingleMapCard";
-
 import styled from "styled-components";
 
 class MapCards extends Component {
@@ -16,6 +14,7 @@ class MapCards extends Component {
         {this.props.locations.map(location => {
           return (
             <div>
+
               <SingleMapCard
                 key={location.id}
                 location={location.name}
@@ -25,6 +24,7 @@ class MapCards extends Component {
                 id={location.id}
                 requestDetails={this.props.requestDetails}
               />
+
             </div>
           );
         })}

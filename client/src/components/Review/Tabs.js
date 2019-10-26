@@ -6,7 +6,10 @@ import styled from "styled-components";
 // COMPONENTS
 import DetailsPanel from "./DetailsPanel";
 import AllReviewsPanel from "./AllReviewsPanel";
-import ReviewPanel from "./ReviewPanel";
+
+import { ReviewPanel } from "./ReviewPanel";
+import Landing from "../../views/Landing";
+import { AuthUserContext } from "../Session/index";
 
 // STYLED COMPONENTS
 const StyledTabs = styled(Tabs)`
@@ -57,7 +60,9 @@ export default props => {
         <AllReviewsPanel />
       </TabPanel>
       <TabPanel>
-        <ReviewPanel />
+        <AuthUserContext.Consumer>
+          {authUser => (authUser ? <ReviewPanel close={props.close} /> : <Landing />)}
+        </AuthUserContext.Consumer>
       </TabPanel>
     </StyledTabs>
   );

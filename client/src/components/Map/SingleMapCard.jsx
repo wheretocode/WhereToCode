@@ -4,6 +4,7 @@ import Review from "../Review/Review";
 import styled from "styled-components";
 import StarRatings from "react-star-ratings";
 
+
 /*global google*/
 
 class SingleMapCard extends Component {
@@ -11,7 +12,8 @@ class SingleMapCard extends Component {
     super(props);
     this.state = {
       details: [],
-      hours: []
+      hours: [],
+      id: null
     };
   }
 
@@ -31,15 +33,18 @@ class SingleMapCard extends Component {
           details: [place.name, place.formatted_phone_number],
           hours: !place.opening_hours
             ? ["N/A"]
-            : place.opening_hours.weekday_text
+            : place.opening_hours.weekday_text,
+          id: id
         });
       }
     });
+
   };
 
   render() {
     return (
       <>
+
         {this.props.location !== "" ? (
           <SingleMapCardContainer>
             <img src={this.props.icon} alt="Icon of the location" />

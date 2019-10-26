@@ -26,21 +26,16 @@ const Header = styled.div`
 
 const Content = styled.div`
   display: flex;
-
   padding: 15px;
   margin: 5px 0 5px 0;
-
   border-radius: 10px 10px 10px 10px;
-  background-color: white;
-`
-// COMPONENT
+  background-color: white;`
+
 class AllReviewsPanel extends React.Component {
-  // STATE
   state = {
     reviews: []
   }
 
-  // METHODS
   componentDidMount() {
     axios.get(`https://wheretocode-master.herokuapp.com/reviews/`)
       .then(res => {
@@ -49,24 +44,24 @@ class AllReviewsPanel extends React.Component {
       })
   }
 
-  // RENDER
   render() {
     return (
       <StyleModal>
         <Header> Reviews </Header>
-        <Content>      
+        <Content>
+
           <ul className='ratingInfo'>
-            { this.state.reviews.map((review, index) =>
-              <li key={index}>
-                  Rating: {review.rating} -- Comments:{review.comments}
+
+            {this.state.reviews.map((review, index) =>
+              <li key={review.id}>
+                Rating: {review.rating} -- Comments:{review.comments}
               </li>)
             }
           </ul>
-        </Content>    
+        </Content>
       </StyleModal>
+
     )
   }
 }
-
-// EXPORT
 export default AllReviewsPanel;

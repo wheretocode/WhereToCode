@@ -89,20 +89,6 @@ const StyledInput = styled.input`
   width: 70%;
 `;
 
-//@@BLACK SIGNUP BUTTON
-// const SignUpButton = styled.button`
-// width: 70%;
-// border-radius: 10px;
-// background: black;
-// border: 1px solid gold;
-// color: white;
-// height: 10%;
-// text-align: center;
-// margin-top: 8%;
-// font-family: "Zilla Slab", serif;
-// font-size: 1.5rem;
-
-// `;
 
 //@@GOLD SIGNUP BUTTON
 const SignUpButton = styled.button`

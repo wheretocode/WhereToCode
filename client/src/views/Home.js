@@ -20,6 +20,7 @@ const HomeNavBar = styled.div`
   }
 `;
 
+
 const Home = ({ place }) => {
   return (
     <HomeBackground>
@@ -32,3 +33,4 @@ const Home = ({ place }) => {
 };
 
 export default Home;
+
