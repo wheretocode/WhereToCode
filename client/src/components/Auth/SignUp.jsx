@@ -8,19 +8,6 @@ import styled from "styled-components";
 
 import axios from "axios";
 
-import Modal from "styled-react-modal";
-
-// const StyledModal = Modal.styled`
-//   width: 20rem;
-//   height: 20rem;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   background-color: white;
-//   opacity: ${props => props.opacity};
-//   transition: opacity ease 500ms;
-// `;
-
 const FormContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -88,7 +75,6 @@ const StyledInput = styled.input`
   ::placeholder: gold;
   width: 70%;
 `;
-
 
 //@@GOLD SIGNUP BUTTON
 const SignUpButton = styled.button`
