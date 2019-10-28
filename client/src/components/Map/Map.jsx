@@ -237,6 +237,7 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
+  // Broken at the moment
   // filterResults = () => {
   //   this.state.locations.map(place => {
   //     if (place.rating < 4.0) {
@@ -278,6 +279,8 @@ class Map extends Component {
             style={{ width: "99.6%", height: "30px" }}
             placeholder="Enter location..."
           />
+          {/* <button onClick={this.filterResults}>Filter</button> */}
+          <button id="searchButton">Submit</button>
 
           <div
             id="map"
