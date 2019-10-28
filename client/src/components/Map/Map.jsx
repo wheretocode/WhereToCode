@@ -248,38 +248,6 @@ class Map extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}
-      >
-        <form onSubmit={this.preventFormDefault}>
-          <input
-            id="locationType"
-            style={{ width: "25%" }}
-            placeholder="What are you looking for..."
-            onChange={this.handleInputChange}
-            value={this.state.query}
-          />
-          <input
-            id="autocomplete"
-            style={{ width: "25%" }}
-            placeholder="Enter location..."
-          />
-          {/* <button onClick={this.filterResults}>Filter</button> */}
-          <button id="searchButton">Submit</button>
-        </form>
-
-        <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
-
-        {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
-        <div id="fakeMap"></div>
-        <MapCards locations={this.state.locations} />
-      </div>
-=======
       <HomeContainer>
         <div
           style={{
@@ -298,6 +266,14 @@ class Map extends Component {
           }}
         >
           <input
+            id="locationType"
+            style={{ width: "25%" }}
+            placeholder="What are you looking for..."
+            style={{ width: "99.6%", height: "30px" }}
+            onChange={this.handleInputChange}
+            value={this.state.query}
+          />
+          <input
             id="autocomplete"
             style={{ width: "99.6%", height: "30px" }}
             placeholder="Enter location..."
@@ -315,7 +291,6 @@ class Map extends Component {
           <div id="fakeMap"></div>
         </div>
       </HomeContainer>
->>>>>>> 429426ef2b501433bdea628c1944c14aed0de346
     );
   }
 }
