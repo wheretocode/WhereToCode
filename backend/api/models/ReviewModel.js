@@ -1,7 +1,6 @@
 const db = require("../../config/knexConfig");
 
 module.exports = {
-  getAll_reviews,
   getReviewById,
   getReviewsByUser,
   getReviewsByLocation,
@@ -9,15 +8,23 @@ module.exports = {
   remove,
   update,
   firstHighestRating,
-  getFirstReviewByLocation
+  getFirstReviewByLocation,
+  getAll_reviewsWithUser
 };
 
-function getAll_reviews() {
-  return db("reviews");
+
+
+function getAll_reviewsWithUser() {
+  return db("reviews as r")
+    .join("users as u", "r.user_id", "u.id")
+    .select("r.rating", "r.comments", "r.internet_rating", "r.upload_speed", "r.download_speed", "r.secure_wifi", "r.user_id", "r.location_id", "u.userName")
 }
 
 function getReviewById(id) {
-  return db("reviews").where({ id });
+  return db("reviews as r")
+    .join("users as u", "r.user_id", "u.id")
+    .select("r.rating", "r.comments", "r.internet_rating", "r.upload_speed", "r.download_speed", "r.secure_wifi", "r.user_id", "r.location_id", "u.userName")
+    .where("r.id", id);
 }
 
 //reviews of each user by location id
@@ -61,8 +68,11 @@ function firstHighestRating(id) {
 }
 
 
+
 function add(review) {
-  return db("reviews").insert(review).return(review);
+  return db("reviews")
+    .insert(review).return(review);
+
 }
 
 function remove(id) {

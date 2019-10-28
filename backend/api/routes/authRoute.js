@@ -14,6 +14,7 @@ router.post("/register", async (req, res) => {
     let user = req.body;
     try {
         const addedUser = await USERS_MODEL.add(user);
+        console.log(addedUser);
         return res.status(201).json({ message: "User added", addedUser });
     } catch (err) {
         console.log(err);

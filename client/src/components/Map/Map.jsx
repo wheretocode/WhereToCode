@@ -5,6 +5,8 @@ import React, { Component } from "react";
 // Import React Script Library to load Google object
 import MapCards from "./MapCards";
 
+import styled from "styled-components";
+
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -220,7 +222,7 @@ class Map extends Component {
                 icon: !place.photos // Loads an img if it has one, if not it uses default google icon
                   ? place.icon
                   : place.photos[0].getUrl({
-                      maxWidth: 100
+                      maxWidth: 300
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
@@ -246,6 +248,7 @@ class Map extends Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <div
         style={{
           display: "flex",
@@ -276,8 +279,53 @@ class Map extends Component {
         <div id="fakeMap"></div>
         <MapCards locations={this.state.locations} />
       </div>
+=======
+      <HomeContainer>
+        <div
+          style={{
+            width: this.state.locations.length !== 0 ? "49vw" : "0",
+            padding: "5% 0 0 0"
+          }}
+        >
+          <MapCards locations={this.state.locations} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "5% 0 0 0",
+            width: this.state.locations.length !== 0 ? "49vw" : "100%"
+          }}
+        >
+          <input
+            id="autocomplete"
+            style={{ width: "99.6%", height: "30px" }}
+            placeholder="Enter location..."
+          />
+
+          <div
+            id="map"
+            style={{
+              height: "82.85vh",
+              width: "100%"
+            }}
+          ></div>
+
+          {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
+          <div id="fakeMap"></div>
+        </div>
+      </HomeContainer>
+>>>>>>> 429426ef2b501433bdea628c1944c14aed0de346
     );
   }
 }
 
 export default Map;
+
+const HomeContainer = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1400px;
+  height: 94.2vh;
+`;
