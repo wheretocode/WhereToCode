@@ -235,14 +235,14 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
-  filterResults = () => {
-    this.state.locations.map(place => {
-      // let toggle = false;
-      if (place.rating < 4.0) {
-        document.querySelector(place.name).style.display = "none";
-      }
-    });
-  };
+  // filterResults = () => {
+  //   this.state.locations.map(place => {
+  //     if (place.rating < 4.0) {
+  //       console.log(document.querySelector(".card"));
+  //       // document.querySelector(".card").style.border = "1px solid red";
+  //     }
+  //   });
+  // };
 
   render() {
     return (
@@ -266,7 +266,7 @@ class Map extends Component {
             style={{ width: "25%" }}
             placeholder="Enter location..."
           />
-          <button onClick={this.filterResults}>Filter</button>
+          {/* <button onClick={this.filterResults}>Filter</button> */}
           <button id="searchButton">Submit</button>
         </form>
 
