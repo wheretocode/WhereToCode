@@ -79,16 +79,12 @@ class DetailsPanel extends React.Component {
 
   // METHODS
   componentDidMount() {
-
     axios
       .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
       .then(res => {
         const location_id = res.data[0];
-        this.setState({ location_id });
-
+        this.setState({ location_id: [location_id] });
       });
-
-
   }
 
   // RENDER
@@ -99,13 +95,11 @@ class DetailsPanel extends React.Component {
         {/* // -- // */}
         <Content>
           {" "}
-
           <h2>Name:</h2>
           <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
           <p>{this.props.details[1]}</p>
           <h2 className="hours">Hours:</h2>
-
           <ul>
             {this.props.hours.map((data, index) => {
               return (
@@ -132,7 +126,6 @@ class DetailsPanel extends React.Component {
               );
             })}
           </StyledFeatureReview>
-
         </Content>
         {/* // -- // */}
         <Actions>
