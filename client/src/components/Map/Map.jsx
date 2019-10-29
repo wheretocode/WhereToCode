@@ -271,7 +271,14 @@ class Map extends Component {
             id="locationType"
             style={{ width: "25%" }}
             placeholder="What are you looking for..."
-            style={{ width: "99.6%", height: "30px" }}
+            style={{
+              border: "none",
+              borderBottom: "1px solid black",
+              width: "50%",
+              marginBottom: "20px",
+              background: "transparent",
+              fontSize: "20px"
+            }}
             onChange={this.handleInputChange}
             value={this.state.query}
           />
