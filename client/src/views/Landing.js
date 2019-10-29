@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 /* global google */
 
+import Navigation from "../components/Navigation/index";
+
 import styled from "styled-components";
 
 import { withRouter, Link } from "react-router-dom";
@@ -34,6 +36,7 @@ const Landing = props => {
     ]);
     autocomplete.addListener("place_changed", () => {
       props.setPlace(autocomplete.getPlace());
+      console.log(autocomplete.getPlace());
     });
   }, []);
 
@@ -42,18 +45,21 @@ const Landing = props => {
   }, [number]);
 
   return (
-    <LandingPageContainer>
-      <SearchComponent>
-        <h2>
-          Find a place to <span>{currentActivity}</span> near you
-        </h2>
+    <>
+      <Navigation />
+      <LandingPageContainer>
+        <SearchComponent>
+          <h2>
+            Find a place to <span>{currentActivity}</span> near you
+          </h2>
 
-        <InputAndButtonContainer>
-          <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
-          <GoButton to={ROUTES.HOME}>Go</GoButton>
-        </InputAndButtonContainer>
-      </SearchComponent>
-    </LandingPageContainer>
+          <InputAndButtonContainer>
+            <Input id="exploreAutoComplete" placeholder="Explore" size="45" />
+            <GoButton to={ROUTES.HOME}>Go</GoButton>
+          </InputAndButtonContainer>
+        </SearchComponent>
+      </LandingPageContainer>
+    </>
   );
 };
 

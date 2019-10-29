@@ -1,4 +1,5 @@
 // IMPORTS
+
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from "axios";
@@ -13,7 +14,7 @@ import { withFirebase } from '../../Firebase';
 
 // STYLES
 const buttonStyle = {
-  margin: "10px 10px 10px 10px",
+  margin: "10px 10px 10px 10px"
 };
 
 // STYLED COMPONENTS
@@ -23,17 +24,16 @@ const StyleModal = styled.div`
   align-items: center;
   padding: 10px;
   font-size: 12px;
-`
+`;
 const Header = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  
-  color: #FBD702;
+  color: #fbd702;
   width: 100%;
   margin-bottom: 15px;
-`
-const STYLED_form = styled.form`
+`;
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -104,8 +104,6 @@ class ReviewPanel1 extends Component {
   handleInput(e) {
     let value = e.target.value;
     let name = e.target.name;
-
-
     this.setState(
       prevState => ({
         newUser: {
@@ -118,14 +116,12 @@ class ReviewPanel1 extends Component {
 
   handleTextArea(e) {
     let value = e.target.value;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          comments: value
-        }
-      }),
-    );
+    this.setState(prevState => ({
+      newUser: {
+        ...prevState.newUser,
+        comments: value
+      }
+    }));
   }
 
 
@@ -149,8 +145,6 @@ class ReviewPanel1 extends Component {
       .catch(error => {
         console.log(error);
       })
-
-
   }
 
 
@@ -158,10 +152,10 @@ class ReviewPanel1 extends Component {
     e.preventDefault();
     this.setState({
       newUser: {
-        user_id: '',
-        rating: '',
-        comments: '',
-        internet_rating: ''
+        user_id: "",
+        rating: "",
+        comments: "",
+        internet_rating: ""
       }
     });
   }
@@ -176,7 +170,7 @@ class ReviewPanel1 extends Component {
           <StyleModal>
             <Header> Leave a Review </Header>
 
-            <STYLED_form form onSubmit={this.handleFormSubmit}>
+            <StyledForm form onSubmit={this.handleFormSubmit}>
 
 
               {/* Rating Required*/}
@@ -222,14 +216,14 @@ class ReviewPanel1 extends Component {
                   style={buttonStyle}
                 />
               </div>
-            </STYLED_form>
+            </StyledForm>
           </StyleModal>
-
         )}
       </>
     );
   }
 }
+
 
 const ReviewPanel = withFirebase(ReviewPanel1);
 export { ReviewPanel };

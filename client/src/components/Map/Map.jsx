@@ -30,6 +30,8 @@ class Map extends Component {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
+            localStorage.setItem("lat", position.coords.latitude);
+            localStorage.setItem("lng", position.coords.longitude);
             this.setState({
               pos: {
                 lat: position.coords.latitude,
@@ -49,9 +51,6 @@ class Map extends Component {
         );
       } // To disable any eslint 'google not defined' errors
     }
-
-    // Initialize Google Autocomplete
-    /*global google*/
 
     this.autocomplete = new google.maps.places.Autocomplete(
       document.getElementById("autocomplete")
@@ -92,6 +91,7 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
+    console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
@@ -253,7 +253,7 @@ class Map extends Component {
         <div
           style={{
             width: this.state.locations.length !== 0 ? "49vw" : "0",
-            padding: "5% 0 0 0"
+            padding: "8% 0 0 0"
           }}
         >
           <MapCards locations={this.state.locations} />
@@ -263,7 +263,8 @@ class Map extends Component {
             display: "flex",
             flexDirection: "column",
             padding: "5% 0 0 0",
-            width: this.state.locations.length !== 0 ? "49vw" : "100%"
+            width: this.state.locations.length !== 0 ? "49vw" : "100%",
+            alignItems: "center"
           }}
         >
           <input
@@ -278,6 +279,14 @@ class Map extends Component {
             id="autocomplete"
             style={{ width: "99.6%", height: "30px" }}
             placeholder="Enter location..."
+            style={{
+              border: "none",
+              borderBottom: "1px solid black",
+              width: "50%",
+              marginBottom: "20px",
+              background: "transparent",
+              fontSize: "20px"
+            }}
           />
           {/* <button onClick={this.filterResults}>Filter</button> */}
           <button id="searchButton">Submit</button>
