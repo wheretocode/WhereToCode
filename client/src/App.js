@@ -4,16 +4,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 //@ components
 
-import Navigation from "./components/Navigation/index";
-import { SignUpForm } from "./components/Auth/SignUp.jsx";
-import SignInPage from "./components/Auth/SignIn.jsx";
 import PasswordForgetPage from "./components/Auth/PasswordForget.jsx";
 import { withAuthentication } from "./components/Session";
 import Footer from "./components/Footer/Footer.jsx";
 
 import { Grommet } from "grommet";
 import "./App.css";
-import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+
 
 //@ views
 import Landing from "./views/Landing";
@@ -40,7 +37,6 @@ const App = () => {
   return (
     <Grommet theme={theme}>
       <Router>
-        <Navigation />
         <Route
           exact
           path={ROUTES.LANDING}
@@ -54,6 +50,7 @@ const App = () => {
           path={ROUTES.HOME}
           render={props => <Home {...props} place={place} />}
         />
+
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.NETWORK} component={NetworkPage} />
         <Footer />

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import SingleMapCard from "./SingleMapCard";
-
-/*global google*/
+import styled from "styled-components";
 
 class MapCards extends Component {
   constructor(props) {
@@ -12,10 +10,11 @@ class MapCards extends Component {
 
   render() {
     return (
-      <>
+      <MapCardsContainer>
         {this.props.locations.map(location => {
           return (
             <div>
+
               <SingleMapCard
                 key={location.id}
                 location={location.name}
@@ -25,12 +24,26 @@ class MapCards extends Component {
                 id={location.id}
                 requestDetails={this.props.requestDetails}
               />
+
             </div>
           );
         })}
-      </>
+      </MapCardsContainer>
     );
   }
 }
 
 export default MapCards;
+
+const MapCardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;

@@ -1,5 +1,7 @@
+// IMPORTS
 import React from "react";
 
+// COMPONENT
 const TextArea = props => (
   <div>
     <label>{props.title}</label>
