@@ -125,15 +125,36 @@ class SignInFormBase extends Component {
     event.preventDefault();
     const { email, password } = this.state;
 
+    // V1
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
+
+      
+      // .then(() => {
+      //   this.setState({ ...INITIAL_STATE });
+      //   this.props.history.push(ROUTES.HOME);
+      // })
+      // .catch(error => {
+      //   this.setState({ error });
+      // });
+
+    // V2
+    .then(signInResult => {
+      // console.log(signInResult)
+
+      // Get user firebase token & save to local storage
+        this.props.firebase.doGetToken()
+        
+      // -- !! -- CHECK THIS -- !! -- //
+        // this.props.firebase.doVerifyIdToken('eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwYjQwY2NjYmQ0OWQxNmVkMjg2MGRiNzIyNmQ3NDZiNmZhZmRmYzAiLCJ0eXAiOiJKV1QifQ')
+      // Reset State
         this.setState({ ...INITIAL_STATE });
+      // Go to home route
         this.props.history.push(ROUTES.HOME);
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+    })
+    .catch( error => {
+      console.log(error)
+    })
   };
 
   onChange = event => {
