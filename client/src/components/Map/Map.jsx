@@ -237,6 +237,8 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
+  handleFocus = event => event.target.select();
+
   // Broken at the moment
   // filterResults = () => {
   //   this.state.locations.map(place => {
@@ -294,6 +296,7 @@ class Map extends Component {
               background: "transparent",
               fontSize: "20px"
             }}
+            onFocus={this.handleFocus}
           />
           {/* <button onClick={this.filterResults}>Filter</button> */}
           <button id="searchButton">Submit</button>
