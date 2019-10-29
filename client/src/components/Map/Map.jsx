@@ -158,10 +158,6 @@ class Map extends Component {
     this.setState({ query: e.target.value });
   };
 
-  preventFormDefault = e => {
-    e.preventDefault();
-  };
-
   handleMapChange = () => {
     // Get map object
     let map = new google.maps.Map(document.getElementById("map"), {
