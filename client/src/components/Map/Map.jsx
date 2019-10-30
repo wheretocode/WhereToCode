@@ -87,7 +87,7 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
-    console.log(this.state.initialPlace);
+    //console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
@@ -170,7 +170,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-    console.log('********************************', request.location)
+
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
