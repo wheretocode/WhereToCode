@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
 import SignOutButton from "../Auth/SignOut.jsx";
-import * as ROUTES from "../../Routes/routes";
+import { withRouter } from "react-router-dom";
 
 import { AuthUserContext } from "../Session";
 
-import { Box, Button, RoutedButton, Heading, Anchor } from "grommet";
+import { Box, Button, Heading } from "grommet";
 
 import { Link } from "react-router-dom";
 
@@ -143,28 +143,30 @@ function LoginButton() {
 }
 
 const Navigation = props => {
-  function displayNetwork() {
-    const url = window.location.href;
-
-    return url.includes('home');
-  }
-
+  const landingRedirect = () => {
+    props.history.push("/");
+  };
   return (
     <Navbar>
-    <Box direction="row" gap="small">
-      <Heading level="3" margin="none">
-        <i class="fas fa-wifi" style={{ color: "gold", margin: "0 20px" }}></i>
-        <Button label="HiveStack" color="white" path="/" plain="true" />
-      </Heading>
-    </Box>
-
-    <Box direction="row" gap="small">
-      <AuthUserContext.Consumer>  
+      <Box direction="row" gap="small">
+        <Heading level="3" margin="none">
+          <i
+            class="fas fa-wifi"
+            style={{ color: "gold", margin: "0 20px" }}
+          ></i>
+          <Button
+            onClick={landingRedirect}
+            label="HiveStack"
+            color="white"
+            plain="true"
+          />
+        </Heading>
+      </Box>
+      <AuthUserContext.Consumer>
         {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
       </AuthUserContext.Consumer>
-    </Box>
-  </Navbar>
-  )
+    </Navbar>
+  );
 };
 
 const NavigationAuth = () => (
@@ -189,4 +191,4 @@ const NavigationNonAuth = () => (
   </Box>
 );
 
-export default Navigation;
+export default withRouter(Navigation);

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import SingleMapCard from "./SingleMapCard";
 import styled from "styled-components";
 
-/*global google*/
-
 class MapCards extends Component {
   constructor(props) {
     super(props);
