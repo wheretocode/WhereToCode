@@ -17,7 +17,8 @@ class Map extends Component {
         lat: 0,
         lng: 0
       },
-      details: []
+      details: [],
+      locationCoords: []
     };
   }
 
@@ -90,6 +91,7 @@ class Map extends Component {
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
+    
     let request = {
       location: place.geometry.location,
       id: place.place_id,
@@ -99,7 +101,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-
+    
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
@@ -140,7 +142,7 @@ class Map extends Component {
                 address: place.formatted_address,
                 rating: place.rating
               }
-            ]
+            ],
           });
         });
       }
@@ -168,7 +170,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-
+    console.log('********************************', request.location)
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
@@ -207,9 +209,10 @@ class Map extends Component {
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                coords: [place.geometry.location.lat(), place.geometry.location.lng()]
               }
-            ]
+            ],
           });
         });
       }

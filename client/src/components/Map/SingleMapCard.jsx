@@ -70,6 +70,7 @@ class SingleMapCard extends Component {
                     onClick={this.requestDetails(this.props.id)}
                     details={this.state.details}
                     hours={this.state.hours}
+                    coords={this.props.coords}
                   />
                 )}
               </Popup>

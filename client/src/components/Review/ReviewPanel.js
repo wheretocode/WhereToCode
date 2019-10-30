@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from "axios";
+import { headingDistanceTo } from "geolocation-utils"
 
 // COMPONENTS
 import NetworkModal from '../NetworkSpeed/networkModal';
@@ -170,6 +171,11 @@ class ReviewPanel1 extends Component {
 
 
   render() {
+    //console.log(this.props.coords.lat(), this.props.coords.lng())
+    const locationCoords = [ ...this.props.coords ];
+    const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ]
+    console.log('*******',  userCoords, locationCoords, 'asd')
+    console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance * 0.000621}miles`)
     return (
       <>
         {(this.state.submitted ? <StyleModal><Header>Thank You For Submitting A Review</Header></StyleModal> :
