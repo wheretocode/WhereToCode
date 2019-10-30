@@ -10,6 +10,8 @@ import styled from "styled-components";
 class Map extends Component {
   constructor(props) {
     super(props);
+    this.submitButton = React.createRef();
+
     this.state = {
       initialPlace: this.props.place,
       locations: [],
@@ -69,9 +71,7 @@ class Map extends Component {
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener("place_changed", this.handleMapChange);
 
-    document
-      .getElementById("searchButton")
-      .addEventListener("click", this.handleMapChange);
+    this.submitButton.current.addEventListener("click", this.handleMapChange);
   }
 
   handleLocationError = (browserHasGeolocation = false) => {
@@ -294,7 +294,7 @@ class Map extends Component {
             onFocus={this.handleFocus}
           />
           {/* <button onClick={this.filterResults}>Filter</button> */}
-          <button id="searchButton">Submit</button>
+          <button ref={this.submitButton}>Submit</button>
 
           <div
             id="map"
