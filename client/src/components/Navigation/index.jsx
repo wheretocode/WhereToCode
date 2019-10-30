@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+
 import SignOutButton from "../Auth/SignOut.jsx";
 import * as ROUTES from "../../Routes/routes";
 
@@ -121,7 +122,6 @@ function LoginButton() {
       setTimeout(resolve, 200);
     });
   }
-
   return (
     <div>
       <LoginLink onClick={toggleModal}>Login</LoginLink>
@@ -142,19 +142,30 @@ function LoginButton() {
   );
 }
 
-const Navigation = () => (
-  <Navbar>
+const Navigation = props => {
+  function displayNetwork() {
+    const url = window.location.href;
+
+    return url.includes('home');
+  }
+
+  return (
+    <Navbar>
     <Box direction="row" gap="small">
       <Heading level="3" margin="none">
         <i class="fas fa-wifi" style={{ color: "gold", margin: "0 20px" }}></i>
         <Button label="HiveStack" color="white" path="/" plain="true" />
       </Heading>
     </Box>
-    <AuthUserContext.Consumer>
-      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
-    </AuthUserContext.Consumer>
+
+    <Box direction="row" gap="small">
+      <AuthUserContext.Consumer>  
+        {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+      </AuthUserContext.Consumer>
+    </Box>
   </Navbar>
-);
+  )
+};
 
 const NavigationAuth = () => (
   <Box direction="row" justify="right" gap="small">

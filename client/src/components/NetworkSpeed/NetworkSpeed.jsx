@@ -73,12 +73,13 @@ class NetworkSpeed extends React.Component {
                  justify='evenly'
                  pad='medium'
                  background='dark-2'
+                 maxWidth='300px'
             >
 
 
                 {
                     Object.keys(this.state.client).length > 0 ? <Box>
-                                                                    <Box direction='row'>
+                                                                    <Box direction='row' display="flex" direction="column">
                                                                         <NetworkTableGeneral data={this.state} />
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
@@ -90,13 +91,13 @@ class NetworkSpeed extends React.Component {
                                                                             onClick={this.runNetworkTest}
                                                                     /> */}
 
-                                                                    <RoutedButton label='More Info'
+                                                                    {/* <RoutedButton label='More Info'
                                                                                     path={ROUTES.NETWORK} 
                                                                                     color='gold' 
                                                                                     alignSelf='center' 
                                                                                     pad='large' 
                                                                                     onClick={this.runNetworkTest}
-                                                                    />
+                                                                    /> */}
                                                                 </Box>
                                                               
                                                               : <TriangleLoader/>

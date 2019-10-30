@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import axios from "axios";
 
 // COMPONENTS
+import NetworkModal from '../NetworkSpeed/networkModal';
+import NetworkSpeed from '../NetworkSpeed/NetworkSpeed';
+
 import TextArea from "../Review/TextArea";
 import Select from "../Review/Select";
 import Button from "../Review/Button";
@@ -66,7 +69,8 @@ class ReviewPanel1 extends Component {
       rating: ["1", "2", "3"],
       internet_rating: ["1", "2", "3"],
       uid: this.props.firebase.auth.currentUser.uid,
-      submitted: false
+      submitted: false,
+      network: false
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -128,11 +132,6 @@ class ReviewPanel1 extends Component {
     );
   }
 
-
-
-
-
-
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
@@ -149,10 +148,7 @@ class ReviewPanel1 extends Component {
       .catch(error => {
         console.log(error);
       })
-
-
   }
-
 
   handleClearForm(e) {
     e.preventDefault();
@@ -166,7 +162,11 @@ class ReviewPanel1 extends Component {
     });
   }
 
-
+  toggleNetworkTest = () => {
+    this.setState(prevState => {
+      return { ...prevState, network: !prevState.network }
+    })
+  }
 
 
   render() {
@@ -176,6 +176,7 @@ class ReviewPanel1 extends Component {
           <StyleModal>
             <Header> Leave a Review </Header>
 
+            <div style={{display: "flex"}}>
             <STYLED_form form onSubmit={this.handleFormSubmit}>
 
 
@@ -223,6 +224,15 @@ class ReviewPanel1 extends Component {
                 />
               </div>
             </STYLED_form>
+
+            {
+              this.state.network ? <NetworkSpeed /> 
+                                       : null
+            }
+            </div>
+            <NetworkModal handleNetwork={this.toggleNetworkTest}
+                          runTest={this.state.network}
+            />
           </StyleModal>
 
         )}
