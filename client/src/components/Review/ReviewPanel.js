@@ -171,11 +171,19 @@ class ReviewPanel1 extends Component {
 
 
   render() {
-    //console.log(this.props.coords.lat(), this.props.coords.lng())
-    const locationCoords = [ ...this.props.coords ];
-    const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ]
-    // console.log('*******',  userCoords, locationCoords, 'asd')
-    // console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance * 0.000621}miles`)
+    //Distance between user and review location, used for conditional render of button
+    let distanceFromLocation = 100;
+    console.log(this.props)
+    if(this.props.coords) {
+      //console.log(this.props.coords.lat(), this.props.coords.lng())
+      const locationCoords = [ ...this.props.coords ];
+      const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ];
+
+      console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance} meters`);
+      distanceFromLocation = Number(headingDistanceTo(userCoords, locationCoords).distance);
+    } 
+
+    
     return (
       <>
         {(this.state.submitted ? <StyleModal><Header>Thank You For Submitting A Review</Header></StyleModal> :
@@ -236,9 +244,16 @@ class ReviewPanel1 extends Component {
                                        : null
             }
             </div>
-            <NetworkModal handleNetwork={this.toggleNetworkTest}
-                          runTest={this.state.network}
-            />
+            
+
+            {
+              distanceFromLocation <= 10 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
+                                                         runTest={this.state.network}
+                                            />
+                                         : null
+            }
+            <p>{distanceFromLocation}</p>
+
           </StyleModal>
 
         )}
