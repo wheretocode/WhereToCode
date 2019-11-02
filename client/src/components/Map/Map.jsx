@@ -140,7 +140,8 @@ class Map extends Component {
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                geocoder: google.maps.Geocoder
               }
             ],
           });
@@ -196,7 +197,7 @@ class Map extends Component {
 
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
+          
           this.setState({
             locations: [
               ...this.state.locations,
@@ -210,7 +211,7 @@ class Map extends Component {
                 id: place.place_id,
                 address: place.formatted_address,
                 rating: place.rating,
-                coords: [place.geometry.location.lat(), place.geometry.location.lng()]
+                geocoder: google.maps.Geocoder
               }
             ],
           });
@@ -222,6 +223,7 @@ class Map extends Component {
   };
 
   render() {
+    
     return (
       <HomeContainer>
         <div

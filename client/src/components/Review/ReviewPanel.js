@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from "axios";
-import { headingDistanceTo } from "geolocation-utils"
+import { distanceTo } from "geolocation-utils"
+import geocoder from 'geocoder';
 
 // COMPONENTS
 import NetworkModal from '../NetworkSpeed/networkModal';
@@ -12,6 +13,8 @@ import TextArea from "../Review/TextArea";
 import Select from "../Review/Select";
 import Button from "../Review/Button";
 import { withFirebase } from '../../Firebase';
+
+/* global google */
 
 
 
@@ -71,7 +74,8 @@ class ReviewPanel1 extends Component {
       internet_rating: ["1", "2", "3"],
       uid: this.props.firebase.auth.currentUser.uid,
       submitted: false,
-      network: false
+      network: false,
+      distanceFromLocation: 100
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -102,6 +106,36 @@ class ReviewPanel1 extends Component {
       .catch(error => {
         console.log(error);
       })
+
+    //Distance between user and review location, used for conditional render of button
+    const geocoder = new google.maps.Geocoder();
+    let userCoords;
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log('!!!!!!', position)
+           userCoords = [position.coords.latitude, position.coords.longitude];
+           console.log('NAVIGATOR', userCoords);
+          });
+
+      
+    } else {
+      userCoords = [ -33.856, 151.215 ];
+    }
+
+   
+    geocoder.__proto__.geocode({"address": this.props.address}, (res, err) => {
+      const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
+      console.log(err);
+      console.log('GEOCODER', locationCoords);
+      console.log('NAVIGATOR2', userCoords);
+      console.log(`****** ${distanceTo(locationCoords, userCoords)} meters`);
+      this.setState(prevState => {
+         return {...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords)} 
+        });
+    });
+    
 
   }
 
@@ -171,17 +205,16 @@ class ReviewPanel1 extends Component {
 
 
   render() {
-    //Distance between user and review location, used for conditional render of button
-    let distanceFromLocation = 100;
-    console.log(this.props)
-    if(this.props.coords) {
-      //console.log(this.props.coords.lat(), this.props.coords.lng())
-      const locationCoords = [ ...this.props.coords ];
-      const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ];
+    
+                              
+    // if(this.props.address) {
+    //   //console.log(this.props.coords.lat(), this.props.coords.lng())
+    //   const locationCoords = [ ...this.props.coords ];
+    //   const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ];
 
-      console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance} meters`);
-      distanceFromLocation = Number(headingDistanceTo(userCoords, locationCoords).distance);
-    } 
+    //   console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance} meters`);
+    //   distanceFromLocation = Number(headingDistanceTo(userCoords, locationCoords).distance);
+    // } 
 
     
     return (
@@ -246,13 +279,27 @@ class ReviewPanel1 extends Component {
             </div>
             
 
-            {
-              distanceFromLocation <= 10 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
+            {/* {
+              this.state.distanceFromLocation <= 2000 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
                                                          runTest={this.state.network}
                                             />
                                          : null
             }
-            <p>{distanceFromLocation}</p>
+
+            {
+              this.state.distanceFromLocation <= 500 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
+                                                         runTest={this.state.network}
+                                            />
+                                         : null
+            } */}
+
+            {
+              this.state.distanceFromLocation <= 30.48 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
+                                                         runTest={this.state.network}
+                                            />
+                                         : null
+            }
+            <p>{this.state.distanceFromLocation}</p>
 
           </StyleModal>
 
