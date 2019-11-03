@@ -9,7 +9,9 @@ module.exports = {
   update,
   firstHighestRating,
   getFirstReviewByLocation,
-  getAll_reviewsWithUser
+  getAll_reviewsWithUser,
+  getReviewsByLocationUser,
+  getReviewsByGoogleLocation
 };
 
 
@@ -43,6 +45,24 @@ function getReviewsByLocation(id) {
     .join("locations as l", "r.location_id", "l.id")
     .select("r.id as ratingId", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
     .where("l.id", id);
+}
+
+//reviews by google location id 
+function getReviewsByGoogleLocation(id) {
+  return db("reviews as r")
+    .join("users as u", "u.id", "r.user_id")
+    .join("locations as l", "r.location_id", "l.id")
+    .select("r.id as ratingId", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .where("l.locationGoogleId", id);
+}
+
+//reviews by location id & user id 
+function getReviewsByLocationUser(id, userid) {
+  return db("reviews as r")
+    .join("users as u", "u.id", "r.user_id")
+    .join("locations as l", "r.location_id", "l.id")
+    .select("r.id as ratingId", "r.rating ", "r.comments", "r.internet_rating", "u.id", "u.userName")
+    .where({ "r.location_id": id, "r.user_id": userid });
 }
 
 //first review posted by location id 

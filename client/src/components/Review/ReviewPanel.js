@@ -61,12 +61,17 @@ class ReviewPanel1 extends Component {
         user_id: null,
         rating: " ",
         internet_rating: " ",
-        comments: ''
+        comments: '',
+        location_id: null
       },
       rating: ["1", "2", "3"],
       internet_rating: ["1", "2", "3"],
       uid: this.props.firebase.auth.currentUser.uid,
-      submitted: false
+      submitted: false,
+      newLocation: {
+        locationName: this.props.details[0],
+        locationGoogleId: this.props.locationId
+      }
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -78,25 +83,60 @@ class ReviewPanel1 extends Component {
 
   // COMPONENT
   componentDidMount() {
-
+    console.log("location", this.props.locationId);
+    console.log("state:", this.state.newUser);
+    console.log("details", this.props.details[0]);
     axios
-      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+      .get(`http://localhost:8080/users/${this.state.uid}`)
       .then(user => {
+        console.log(user);
         let currentUserId = {
           user_id: user.data[0].id,
           rating: null,
           internet_rating: null,
-          comments: ''
+          comments: '',
+          location_id: null
         }
         this.setState({
           newUser: currentUserId
         })
-      }
-
-      )
-      .catch(error => {
-        console.log(error);
+        console.log("state.newuser after get uid", this.state.newUser);
       })
+      .then(user => {
+        let newLocation = [{
+          locationName: this.props.details[0],
+          locationGoogleId: this.props.locationId
+        }]
+        console.log("newLocation", newLocation);
+        return axios
+          .post('http://localhost:8080/locations', newLocation)
+      })
+      .then(res => {
+        console.log("results from post", res);
+        console.log("location id", this.props.locationId);
+        let locationReq = this.props.locationId;
+        return axios
+          .get(`http://localhost:8080/locations/${locationReq}`)
+      })
+      .then(user => {
+        console.log("res.data.id", user);
+        let currentUser = {
+          user_id: this.state.newUser.user_id,
+          rating: " ",
+          internet_rating: " ",
+          comments: '',
+          location_id: user.data[0].id
+        }
+        console.log("get location", user.data[0].id);
+        console.log("CurrentUser", currentUser);
+        this.setState({
+          newUser: currentUser
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
 
   }
 
@@ -136,16 +176,16 @@ class ReviewPanel1 extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
-    console.log(this.state.newUser);
+    console.log("this.state.newUser", userData);
     axios
-      .post("https://wheretocode-master.herokuapp.com/reviews", userData)
+      // .post("https://wheretocode-master.herokuapp.com/reviews", userData)
+      .post("http://localhost:8080/reviews", userData)
       .then(response => {
         console.log("res", response)
       })
       .then(res => {
         this.setState({ submitted: true })
       })
-
       .catch(error => {
         console.log(error);
       })
@@ -159,7 +199,7 @@ class ReviewPanel1 extends Component {
     this.setState({
       newUser: {
         user_id: '',
-        rating: '',
+        rating: ' ',
         comments: '',
         internet_rating: ''
       }

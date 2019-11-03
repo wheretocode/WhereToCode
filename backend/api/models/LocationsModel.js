@@ -4,13 +4,20 @@ const getAll_locations = () => {
   return db("locations");
 };
 
-function add(location) {
-  return db("locations").insert(location).return(location);
+
+
+async function add(location) {
+  location.map(async loc => {
+
+    await db('locations').whereNot('locations.locoationGoogleId', loc.id).insert(loc).return(location);
+  })
 }
 
 
 
-const getLocationById = id => { };
+function getLocationByGoogleId(locationGoogleId) {
+  return db("locations").where({ locationGoogleId })
+};
 
 const updateLocation = () => { };
 
@@ -19,8 +26,8 @@ const deleteLocation = () => { };
 // EXPORTS
 module.exports = {
   getAll_locations,
-  getLocationById,
   updateLocation,
   deleteLocation,
-  add
+  add,
+  getLocationByGoogleId
 };

@@ -1,11 +1,11 @@
 // IMPORTS
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styled from 'styled-components'
 
 // COMPONENTS
 import DetailsPanel from "./DetailsPanel";
-import AllReviewsPanel from "./AllReviewsPanel";
+import { AllReviewsPanel } from "./AllReviewsPanel";
 import { ReviewPanel } from "./ReviewPanel";
 import Landing from "../../views/Landing";
 import { AuthUserContext } from "../Session/index";
@@ -43,6 +43,9 @@ const STYLED_tab = styled(Tab)`
 
 // COMPONENT & EXPORT
 export default props => {
+  const [user, setUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
+
   return (
     <STYLED_Tabs>
       <STYLED_TabList>
@@ -52,14 +55,18 @@ export default props => {
       </STYLED_TabList>
 
       <TabPanel>
-        <DetailsPanel details={props.details} hours={props.hours} />
-      </TabPanel>
-      <TabPanel>
-        <AllReviewsPanel />
+        <AuthUserContext.Consumer>
+          {authUser => (authUser ? <DetailsPanel details={props.details} hours={props.hours} locationId={props.locationId} /> : <Landing />)}
+        </AuthUserContext.Consumer>
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <ReviewPanel close={props.close} /> : <Landing />)}
+          {authUser => (authUser ? <AllReviewsPanel user={user} setUser={setUser} locationId={props.locationId} /> : <Landing />)}
+        </AuthUserContext.Consumer>
+      </TabPanel>
+      <TabPanel>
+        <AuthUserContext.Consumer>
+          {authUser => (authUser ? <ReviewPanel details={props.details} user={user} setUser={setUser} locationId={props.locationId} /> : <Landing />)}
         </AuthUserContext.Consumer>
       </TabPanel>
     </STYLED_Tabs>

@@ -83,6 +83,30 @@ router.get("/:id/location", async (req, res) => {
   }
 });
 
+// @route Get reviews/:id/location/:userid
+// @desc Gets all reviews for location ID
+// @access currently Public, needs to be protected
+
+router.get("/:id/location/:userid", async (req, res) => {
+  try {
+    let { id, userid } = req.params;
+    const reviewLocation = await REVIEW_MODEL.getReviewsByLocationUser(id, userid)
+    console.log("rl", reviewLocation);
+    if (reviewLocation.length > 0) {
+      res.status(200).json(reviewLocation);
+      console.log("RL", reviewLocation);
+    } else if (reviewLocation.length == 0) {
+      console.log("rl.length =0", reviewLocation)
+      res.status(400).send({ message: "Location from this review is not found", error });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching location", err });
+  }
+});
+
+
 // @route Get reviews/:id/feature
 // @desc Gets first highest rated review
 // @access currently Public, needs to be protected

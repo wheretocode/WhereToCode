@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
+import { withFirebase } from "../../Firebase";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
@@ -70,22 +71,57 @@ const Button = styled.button`
 `
 
 // COMPONENT
-class DetailsPanel extends React.Component {
+class DetailsPanel1 extends React.Component {
   // STATE
   state = {
-    location_id: []
+    review: [],
+    location_id: [],
+    uid: this.props.firebase.auth.currentUser.uid,
   };
 
   // METHODS
   componentDidMount() {
+    console.log("location", this.props.locationId)
+
 
     axios
-      .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
-      .then(res => {
-        const location_id = res.data[0];
-        this.setState({ location_id });
+      // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+      .get(`http://localhost:8080/users/${this.state.uid}`)
+      .then(user => {
+        console.log(user.data);
+        let userid = user.data[0].id;
 
-      });
+        this.setState({
+          u_id: userid
+        })
+      })
+      .then(res => {
+        let locationReq = this.props.locationId;
+        return axios.get(`http://localhost:8080/locations/${locationReq}`)
+      })
+      .then(res => {
+        console.log("get location id res", res.data[0].id);
+        let locationId = res.data[0].id;
+        return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
+      })
+      .then(res => {
+        console.log('res after get review by user & location', res);
+        let newReview = (res.data).slice(-1);
+        console.log("newreview", newReview);
+        this.setState({
+          review: [res.data]
+        })
+        console.log("newreview", newReview);
+        console.log("state review", this.state.review)
+        console.log("this.state review[0]", this.state.review[0]);
+        let thing = this.state.review[0];
+        console.log('thing', thing);
+        let map = thing.slice(-1);
+        console.log("map", map);
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
 
   }
@@ -113,20 +149,27 @@ class DetailsPanel extends React.Component {
             <STYLED_featuredReview>
               Latest Review
             </STYLED_featuredReview>
-            <ul key={this.state.location_id.id}>
-              <li>
-                {" "}
-                <p>User: {this.state.location_id.userName},</p>{" "}
-              </li>
-              <li>
-                {" "}
-                <p>Rating: {this.state.location_id.rating},</p>{" "}
-              </li>
-              <li>
-                {" "}
-                <p>Comments: {this.state.location_id.comments}</p>{" "}
-              </li>
-            </ul>
+            {/* {(this.state.review.length > 0 ? <div>
+              {(this.state.review[0].map((review, index) =>
+                <ul>
+
+                  <li >
+
+
+                    <p>User: {review[this.state.review.length - 1].userName},</p>
+
+                  </li>
+                  <li>
+
+                    <p>Rating: {review[this.state.review.length - 1].rating},</p>
+                  </li>
+                  <li>
+
+                    <p>Comments: {review[this.state.review.length - 1].comments}</p>
+                  </li>
+                </ul>
+              ))}</div> : <p>There Are No Reviews Currently</p>
+            )} */}
           </STYLED_featureReview>
           {/* })} */}
         </Content>
@@ -148,4 +191,5 @@ class DetailsPanel extends React.Component {
 }
 
 // EXPORT
+const DetailsPanel = withFirebase(DetailsPanel1);
 export default DetailsPanel;
