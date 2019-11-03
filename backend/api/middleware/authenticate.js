@@ -1,18 +1,30 @@
-// TODO: https://firebase.google.com/docs/auth/admin/verify-id-tokens
-// TODO: use third party package to verify token
+// IMPORTS
+    const JWT = require('jsonwebtoken')
+    
+// FUNCTION
+function authenticate (req,res,next)
 
-import { withFirebase } from "../../../client/src/Firebase";
-
-function authenticateMiddleware (req,res,next){
     const token = req.headers.authorization
-        console.log(token)
-    if (token){
-        this.props.firebase.doVerifyIdToken(eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwYjQwY2NjYmQ0OWQxNmVkMjg2MGRiNzIyNmQ3NDZiNmZhZmRmYzAiLCJ0eXAiOiJKV1QifQ)
+    const secret = process.env.JWT_Secret
+
+    if (token) {
+        JWT.verify(
+            token,
+            secret, (err, decodedToken) => {
+                if(err){
+                    //means token expired or is invalid
+                    res.status(401).json({ message: 'authorization token is not valid!'});
+                }
+                else {
+                    //means token is good
+                    console.log(decodedToken)                            
+                    req.user = {email: decodedToken.email};     
+                    next(); //move on to the requested endpoint                
+                }
+        })
+    } else {
+        res.status(401).json({ message: 'Please log in or sign up!'});
     }
-}
 
-const authenticate = compose(
-    withFirebase
-)(authenticateMiddleware)
-
-module.exports = authenticate
+// EXPORTS
+    module.exports = authenticate;
