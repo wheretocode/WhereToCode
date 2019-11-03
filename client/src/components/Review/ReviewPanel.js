@@ -114,9 +114,7 @@ class ReviewPanel1 extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
-          console.log('!!!!!!', position)
            userCoords = [position.coords.latitude, position.coords.longitude];
-           console.log('NAVIGATOR', userCoords);
           });
 
       
@@ -128,9 +126,6 @@ class ReviewPanel1 extends Component {
     geocoder.__proto__.geocode({"address": this.props.address}, (res, err) => {
       const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
       console.log(err);
-      console.log('GEOCODER', locationCoords);
-      console.log('NAVIGATOR2', userCoords);
-      console.log(`****** ${distanceTo(locationCoords, userCoords)} meters`);
       this.setState(prevState => {
          return {...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords)} 
         });
@@ -170,7 +165,7 @@ class ReviewPanel1 extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
-    console.log(this.state.newUser);
+
     axios
       .post("https://wheretocode-master.herokuapp.com/reviews", userData)
       .then(response => {
