@@ -21,11 +21,12 @@ const JWT = require('jsonwebtoken')
             console.log('Created Token',token)
         // Next Middleware
             if( token ) {
-                req.token = token
+                res.token = token
+                // req.token = token
                 next()
             } else {
-                // res.status(500).json( { error: 'unable to sign token'} )
-                req.status(500).json( { error: 'unable to sign token'} )
+                res.status(500).json( { error: 'unable to sign token'} )
+                // req.status(500).json( { error: 'unable to sign token'} )
             }
     }
 module.exports = sign_JWT
