@@ -11,7 +11,7 @@ const usersRoute = require("./routes/usersRoute.js");
 const reviewsRoute = require("./routes/reviewsRoute.js");
 const routes = require("./routes");
 
-const tokenRoute = require('./routes/tokenRoute.js')
+const tokenRoute = require('./routes/tokenRoute.js');
 // const signToken = require('./middleware/signToken.js')
 
 // SERVER

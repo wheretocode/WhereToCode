@@ -1,9 +1,9 @@
 // IMPORTS
-    const JWT = require('jsonwebtoken')
-    import sign_JWT from '../middleware/signToken.js'
+    const JWT = require('jsonwebtoken');
+    // import sign_JWT from '../middleware/signToken.js'
 
 // EXPRESS ROUTER
-    const router = require('express').Router()
+    const router = require('express').Router();
 
 // - GET - //
     // V2 // no middleware
