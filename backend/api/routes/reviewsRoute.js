@@ -4,6 +4,9 @@ const REVIEW_MODEL = require("../models/ReviewModel.js");
 // EXPRESS ROUTER
 const router = require("express").Router();
 
+// MIDDLEWARE
+const requireBody = require('../middleware/requireBody')
+
 
 
 // @route GET reviews/
