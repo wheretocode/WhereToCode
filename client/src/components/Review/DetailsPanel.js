@@ -80,49 +80,81 @@ class DetailsPanel1 extends React.Component {
     location: this.props.locationId
   };
 
+  componentDidUpdate(prevProps, nextState) {
+    if (this.props.locationId !== prevProps.locationId) {
+      console.log("in CDU");
+      return axios
+        // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+        .get(`http://localhost:8080/users/${this.state.uid}`)
+        .then(user => {
+          console.log(user.data);
+          let { id } = user.data[0];
+
+          this.setState({
+            uid: id
+          })
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(`http://localhost:8080/locations/${locationReq}`)
+        })
+        .then(res => {
+          console.log("res", res);
+          if (res.data.length === 0) {
+            let newLocation = [{
+              locationName: this.props.details[0],
+              locationGoogleId: this.props.locationId
+            }]
+            console.log("newLocation", newLocation);
+            return axios
+              .post('http://localhost:8080/locations', newLocation)
+          } else {
+            console.log('location does not need to be posted');
+          }
+        })
+        .then(res => {
+          console.log("get location id res", res);
+          let locationReq = this.props.locationId;
+          return axios.get(`http://localhost:8080/locations/${locationReq}`)
+
+        })
+        .then(res => {
+          console.log("res location", res);
+          console.log("data", res.data[0].id);
+          let locationId = res.data[0].id;
+          return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
+        })
+        .then(res => {
+          console.log('res after get review by user & location', res);
+          let newReview1 = (res.data).slice(-1);
+          console.log("newreview", newReview1);
+          let newReview = newReview1[0];
+          console.log('newReview[0]', newReview);
+          this.setState({
+            review: newReview
+          })
+          //console.log("newreview", newReview);
+          console.log("state review", this.state.review)
+
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
+
+    }
+  }
+
 
   // METHODS
   componentDidMount() {
+    console.log("inside CDM");
     console.log("location", this.props.locationId)
     console.log("location state", this.state.location);
     console.log('uid', this.state.uid);
-
-
-    axios
-      // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-      .get(`http://localhost:8080/users/${this.state.uid}`)
-      .then(user => {
-        console.log(user.data);
-        let userid = user.data[0].id;
-
-        this.setState({
-          u_id: userid
-        })
-      })
-      .then(res => {
-        let locationReq = this.props.locationId;
-        return axios.get(`http://localhost:8080/locations/${locationReq}`)
-      })
-      .then(res => {
-        console.log("res", res);
-        if (res.data.length === 0) {
-          let newLocation = [{
-            locationName: this.props.details[0],
-            locationGoogleId: this.props.locationId
-          }]
-          console.log("newLocation", newLocation);
-          return axios
-            .post('http://localhost:8080/locations', newLocation)
-        } else {
-          console.log('location does not need to be posted');
-        }
-      })
-      .then(res => {
-        console.log("get location id res", res);
-        let locationReq = this.props.locationId;
-        return axios.get(`http://localhost:8080/locations/${locationReq}`)
-
-      })
+    console.log('this is review', this.state.review);
+    let locationReq = this.props.locationId;
+    return axios.get(`http://localhost:8080/locations/${locationReq}`)
       .then(res => {
         console.log("res location", res);
         console.log("data", res.data[0].id);
@@ -146,12 +178,70 @@ class DetailsPanel1 extends React.Component {
         console.log(error);
       })
 
+    // axios
+    //   // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+    //   .get(`http://localhost:8080/users/${this.state.uid}`)
+    //   .then(user => {
+    //     console.log(user.data);
+    //     let { id } = user.data[0];
+
+    //     this.setState({
+    //       u_id: id
+    //     })
+    //   })
+    //   .then(res => {
+    //     let locationReq = this.props.locationId;
+    //     return axios.get(`http://localhost:8080/locations/${locationReq}`)
+    //   })
+    //   .then(res => {
+    //     console.log("res", res);
+    //     if (res.data.length === 0) {
+    //       let newLocation = [{
+    //         locationName: this.props.details[0],
+    //         locationGoogleId: this.props.locationId
+    //       }]
+    //       console.log("newLocation", newLocation);
+    //       return axios
+    //         .post('http://localhost:8080/locations', newLocation)
+    //     } else {
+    //       console.log('location does not need to be posted');
+    //     }
+    //   })
+    //   .then(res => {
+    //     console.log("get location id res", res);
+    //     let locationReq = this.props.locationId;
+    //     return axios.get(`http://localhost:8080/locations/${locationReq}`)
+
+    //   })
+    //   .then(res => {
+    //     console.log("res location", res);
+    //     console.log("data", res.data[0].id);
+    //     let locationId = res.data[0].id;
+    //     return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
+    //   })
+    //   .then(res => {
+    //     console.log('res after get review by user & location', res);
+    //     let newReview1 = (res.data).slice(-1);
+    //     console.log("newreview", newReview1);
+    //     let newReview = newReview1[0];
+    //     console.log('newReview[0]', newReview);
+    //     this.setState({
+    //       review: newReview
+    //     })
+    //     //console.log("newreview", newReview);
+    //     console.log("state review", this.state.review)
+
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
+
 
   }
 
   // RENDER
   render() {
-    debugger;
+
     return (
       <StyleModal>
         <Header> Details </Header>
