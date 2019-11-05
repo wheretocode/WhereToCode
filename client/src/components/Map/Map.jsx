@@ -17,7 +17,8 @@ class Map extends Component {
         lat: 0,
         lng: 0
       },
-      details: []
+      details: [],
+      locationCoords: []
     };
   }
 
@@ -86,10 +87,11 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
-    console.log(this.state.initialPlace);
+    //console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
+    
     let request = {
       location: place.geometry.location,
       id: place.place_id,
@@ -99,7 +101,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-
+    
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
@@ -138,9 +140,10 @@ class Map extends Component {
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                geocoder: google.maps.Geocoder
               }
-            ]
+            ],
           });
         });
       }
@@ -194,7 +197,7 @@ class Map extends Component {
 
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
+          
           this.setState({
             locations: [
               ...this.state.locations,
@@ -207,9 +210,10 @@ class Map extends Component {
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                geocoder: google.maps.Geocoder
               }
-            ]
+            ],
           });
         });
       }
@@ -219,6 +223,7 @@ class Map extends Component {
   };
 
   render() {
+    
     return (
       <HomeContainer>
         <div
