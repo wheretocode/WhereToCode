@@ -72,7 +72,7 @@ router.get("/:id/location", async (req, res) => {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
     console.log("rl", reviewLocation);
     if (reviewLocation.length == 0) {
-      res.status(404).send({ message: "Location from this review is not found" });
+      res.status(404).send({ message: "review for this location not found" });
 
     } else {
       res.status(200).json(reviewLocation);

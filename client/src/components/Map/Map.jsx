@@ -5,6 +5,8 @@ import React, { Component } from "react";
 // Import React Script Library to load Google object
 import MapCards from "./MapCards";
 
+import styled from "styled-components";
+
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +17,8 @@ class Map extends Component {
         lat: 0,
         lng: 0
       },
-      details: []
+      details: [],
+      locationCoords: []
     };
   }
 
@@ -27,6 +30,8 @@ class Map extends Component {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
+            localStorage.setItem("lat", position.coords.latitude);
+            localStorage.setItem("lng", position.coords.longitude);
             this.setState({
               pos: {
                 lat: position.coords.latitude,
@@ -46,9 +51,6 @@ class Map extends Component {
         );
       } // To disable any eslint 'google not defined' errors
     }
-
-    // Initialize Google Autocomplete
-    /*global google*/
 
     this.autocomplete = new google.maps.places.Autocomplete(
       document.getElementById("autocomplete")
@@ -85,9 +87,11 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
+    //console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
+    
     let request = {
       location: place.geometry.location,
       id: place.place_id,
@@ -97,7 +101,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-
+    
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
@@ -136,9 +140,10 @@ class Map extends Component {
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                geocoder: google.maps.Geocoder
               }
-            ]
+            ],
           });
         });
       }
@@ -192,7 +197,7 @@ class Map extends Component {
 
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
+          
           this.setState({
             locations: [
               ...this.state.locations,
@@ -201,13 +206,14 @@ class Map extends Component {
                 icon: !place.photos // Loads an img if it has one, if not it uses default google icon
                   ? place.icon
                   : place.photos[0].getUrl({
-                      maxWidth: 100
+                      maxWidth: 300
                     }),
                 id: place.place_id,
                 address: place.formatted_address,
-                rating: place.rating
+                rating: place.rating,
+                geocoder: google.maps.Geocoder
               }
-            ]
+            ],
           });
         });
       }
@@ -217,28 +223,62 @@ class Map extends Component {
   };
 
   render() {
+    
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}
-      >
-        <input
-          id="autocomplete"
-          style={{ width: "25%" }}
-          placeholder="Enter location..."
-        />
+      <HomeContainer>
+        <div
+          style={{
+            width: this.state.locations.length !== 0 ? "49vw" : "0",
+            padding: "8% 0 0 0"
+          }}
+        >
+          <MapCards locations={this.state.locations} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "5% 0 0 0",
+            width: this.state.locations.length !== 0 ? "49vw" : "100%",
+            alignItems: "center"
+          }}
+        >
+          <input
+            id="autocomplete"
+            style={{ width: "99.6%", height: "30px" }}
+            placeholder="Enter location..."
+            style={{
+              border: "none",
+              borderBottom: "1px solid black",
+              width: "50%",
+              marginBottom: "20px",
+              background: "transparent",
+              fontSize: "20px"
+            }}
+          />
 
-        <div id="map" style={{ height: 500, width: 500, margin: 10 }}></div>
+          <div
+            id="map"
+            style={{
+              height: "82.85vh",
+              width: "100%"
+            }}
+          ></div>
 
-        {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
-        <div id="fakeMap"></div>
-        <MapCards locations={this.state.locations} />
-      </div>
+          {/* I used an empty div for the map object in the requestDetails function, this is a strange work around. If I use the actual map it reloads and we lose the position and markers. */}
+          <div id="fakeMap"></div>
+        </div>
+      </HomeContainer>
     );
   }
 }
 
 export default Map;
+
+const HomeContainer = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1400px;
+  height: 94.2vh;
+`;

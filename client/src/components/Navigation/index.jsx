@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+
 import SignOutButton from "../Auth/SignOut.jsx";
-import * as ROUTES from "../../Routes/routes";
+import { withRouter } from "react-router-dom";
 
 import { AuthUserContext } from "../Session";
 
-import { Box, Button, RoutedButton, Heading, Anchor } from "grommet";
+import { Box, Button, Heading } from "grommet";
 
 import { Link } from "react-router-dom";
-
 
 import { SignUpForm } from "../Auth/SignUp.jsx";
 import { SignInForm } from "../Auth/SignIn.jsx";
 
 import styled from "styled-components";
-
 
 //styled modal is css for pop up
 const StyledModal = Modal.styled`
@@ -28,8 +27,6 @@ const StyledModal = Modal.styled`
   transition: opacity ease 1000ms;
   border-radius: 30px;
 `;
-
-
 
 const RegisterLink = styled(Link)`
   text-decoration: none;
@@ -54,8 +51,6 @@ const Navbar = styled.div`
   padding-top: 20px;
 `;
 
-
-
 const LoginLink = styled(Link)`
   text-decoration: none;
   color: white;
@@ -65,7 +60,6 @@ const LoginLink = styled(Link)`
   font-family: "Zilla Slab", serif;
   border-radius: 5px;
 `;
-
 
 function SignUpButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +81,6 @@ function SignUpButton() {
       setTimeout(resolve, 200);
     });
   }
-
 
   return (
     <div>
@@ -129,8 +122,6 @@ function LoginButton() {
       setTimeout(resolve, 200);
     });
   }
-
-
   return (
     <div>
       <LoginLink onClick={toggleModal}>Login</LoginLink>
@@ -151,19 +142,32 @@ function LoginButton() {
   );
 }
 
-const Navigation = () => (
-  <Navbar>
-    <Box direction="row" gap="small">
-      <Heading level="3" margin="none">
-        <i class="fas fa-wifi" style={{ color: "gold", margin: "0 20px" }}></i>
-        <Button label="HiveStack" color="white" path="/" plain="true" />
-      </Heading>
-    </Box>
-    <AuthUserContext.Consumer>
-      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
-    </AuthUserContext.Consumer>
-  </Navbar>
-);
+const Navigation = props => {
+  const landingRedirect = () => {
+    props.history.push("/");
+  };
+  return (
+    <Navbar>
+      <Box direction="row" gap="small">
+        <Heading level="3" margin="none">
+          <i
+            class="fas fa-wifi"
+            style={{ color: "gold", margin: "0 20px" }}
+          ></i>
+          <Button
+            onClick={landingRedirect}
+            label="HiveStack"
+            color="white"
+            plain="true"
+          />
+        </Heading>
+      </Box>
+      <AuthUserContext.Consumer>
+        {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+      </AuthUserContext.Consumer>
+    </Navbar>
+  );
+};
 
 const NavigationAuth = () => (
   <Box direction="row" justify="right" gap="small">
@@ -171,25 +175,20 @@ const NavigationAuth = () => (
   </Box>
 );
 
-
 const FadingBackground = styled(BaseModalBackground)`
-opacity: ${props => props.opacity};
-transition: opacity ease 1000ms;
+  opacity: ${props => props.opacity};
+  transition: opacity ease 1000ms;
 `;
 
 const NavigationNonAuth = () => (
-
   <Box direction="row" justify="right" gap="small">
-  
     <ModalProvider backgroundComponent={FadingBackground}>
       <LoginButton />
     </ModalProvider>
     <ModalProvider backgroundComponent={FadingBackground}>
       <SignUpButton />
     </ModalProvider>
-
   </Box>
 );
 
-export default Navigation;
-
+export default withRouter(Navigation);

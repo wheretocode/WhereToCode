@@ -1,28 +1,37 @@
 import React from "react";
-import { withAuthorization } from "../components/Session";
-import NetworkSpeed from "../components/NetworkSpeed/NetworkSpeed";
 
+import Navigation from "../components/Navigation/index";
 import Map from "../components/Map/Map.jsx";
+import styled from "styled-components";
+
+const HomeBackground = styled.div`
+  background-image: url("/light_honeycomb.png");
+`;
+
+const HomeNavBar = styled.div`
+  position: static;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  button {
+    color: black;
+  }
+  a {
+    color: black;
+  }
+`;
 
 
 const Home = ({ place }) => {
   return (
-
-    <div>
-
-      <p>Home Page accessed by authorized user</p>
-      <NetworkSpeed />
+    <HomeBackground>
+      <HomeNavBar>
+        <Navigation />
+      </HomeNavBar>
       <Map place={place} />
-
-
-
-
-    </div>
-
+    </HomeBackground>
   );
 };
 
-const condition = authUser => !!authUser;
+export default Home;
 
-
-export default withAuthorization(condition)(Home);

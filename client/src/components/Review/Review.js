@@ -1,8 +1,6 @@
 // IMPORTS
 import React from "react";
-import Popup from "reactjs-popup";
 import styled from "styled-components";
-import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
 
 // IMPORT COMPONENTS
@@ -34,6 +32,6 @@ export default props => (
         &times;
       </a>
     </Close>
-    <Tabs locationId={props.locationId} close={props.close} details={props.details} hours={props.hours} />
+    <Tabs address={props.address} geocoder={props.geocoder} close={props.close} details={props.details} hours={props.hours} locationId={props.locationId} />
   </StyleModal>
 );

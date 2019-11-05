@@ -9,6 +9,7 @@ class MapCards extends Component {
   }
 
   render() {
+    
     return (
       <MapCardsContainer>
         {this.props.locations.map(location => {
@@ -23,6 +24,7 @@ class MapCards extends Component {
                 icon={location.icon}
                 id={location.id}
                 requestDetails={this.props.requestDetails}
+                geocoder={location.geocoder}
               />
 
             </div>
