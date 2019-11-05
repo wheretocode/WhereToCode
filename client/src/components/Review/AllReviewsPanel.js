@@ -63,7 +63,7 @@ class AllReviewsPanel1 extends React.Component {
         console.log("get location id res", res.data[0].id);
 
         let locationId = res.data[0].id;
-        return axios.get(`http://localhost:8080/reviews/${locationId}/location/${this.state.u_id}`)
+        return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
       })
       .then(res => {
         if (res) {
@@ -73,8 +73,8 @@ class AllReviewsPanel1 extends React.Component {
           })
 
           console.log("state review", this.state.reviews)
-          let map = Object.entries(this.state.reviews[0]).map((review, i) => {
-            return review[i].userName;
+          let map = this.state.reviews[0].map((review, i) => {
+            return review.comments;
           })
           console.log("map", map);
         } else {
@@ -101,7 +101,7 @@ class AllReviewsPanel1 extends React.Component {
             <Header> Reviews </Header>
             <Content>
               <ul className='ratingInfo'>
-                {Object.entries(this.state.reviews[0]).map((review, i) =>
+                {this.state.reviews[0].map((review, i) =>
                   <li key={review.ratingId}>
                     Username:{review.userName} -- Rating: {review.rating} -- Comments:{review.comments}
                   </li>

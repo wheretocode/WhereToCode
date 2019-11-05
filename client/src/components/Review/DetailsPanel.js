@@ -77,11 +77,15 @@ class DetailsPanel1 extends React.Component {
     review: [],
     location_id: [],
     uid: this.props.firebase.auth.currentUser.uid,
+    location: this.props.locationId
   };
+
 
   // METHODS
   componentDidMount() {
     console.log("location", this.props.locationId)
+    console.log("location state", this.state.location);
+    console.log('uid', this.state.uid);
 
 
     axios
@@ -100,24 +104,43 @@ class DetailsPanel1 extends React.Component {
         return axios.get(`http://localhost:8080/locations/${locationReq}`)
       })
       .then(res => {
-        console.log("get location id res", res.data[0].id);
+        console.log("res", res);
+        if (res.data.length === 0) {
+          let newLocation = [{
+            locationName: this.props.details[0],
+            locationGoogleId: this.props.locationId
+          }]
+          console.log("newLocation", newLocation);
+          return axios
+            .post('http://localhost:8080/locations', newLocation)
+        } else {
+          console.log('location does not need to be posted');
+        }
+      })
+      .then(res => {
+        console.log("get location id res", res);
+        let locationReq = this.props.locationId;
+        return axios.get(`http://localhost:8080/locations/${locationReq}`)
+
+      })
+      .then(res => {
+        console.log("res location", res);
+        console.log("data", res.data[0].id);
         let locationId = res.data[0].id;
         return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
       })
       .then(res => {
         console.log('res after get review by user & location', res);
-        let newReview = (res.data).slice(-1);
-        console.log("newreview", newReview);
+        let newReview1 = (res.data).slice(-1);
+        console.log("newreview", newReview1);
+        let newReview = newReview1[0];
+        console.log('newReview[0]', newReview);
         this.setState({
-          review: [res.data]
+          review: newReview
         })
-        console.log("newreview", newReview);
+        //console.log("newreview", newReview);
         console.log("state review", this.state.review)
-        console.log("this.state review[0]", this.state.review[0]);
-        let thing = this.state.review[0];
-        console.log('thing', thing);
-        let map = thing.slice(-1);
-        console.log("map", map);
+
       })
       .catch(error => {
         console.log(error);
@@ -128,6 +151,7 @@ class DetailsPanel1 extends React.Component {
 
   // RENDER
   render() {
+    debugger;
     return (
       <StyleModal>
         <Header> Details </Header>
@@ -149,27 +173,27 @@ class DetailsPanel1 extends React.Component {
             <STYLED_featuredReview>
               Latest Review
             </STYLED_featuredReview>
-            {/* {(this.state.review.length > 0 ? <div>
-              {(this.state.review[0].map((review, index) =>
-                <ul>
+            {(Object.keys(this.state.review).length > 0 ? <div>
 
-                  <li >
+              <ul>
+
+                <li >
 
 
-                    <p>User: {review[this.state.review.length - 1].userName},</p>
+                  <p>User: {this.state.review.userName},</p>
 
-                  </li>
-                  <li>
+                </li>
+                <li>
 
-                    <p>Rating: {review[this.state.review.length - 1].rating},</p>
-                  </li>
-                  <li>
+                  <p>Rating: {this.state.review.rating},</p>
+                </li>
+                <li>
 
-                    <p>Comments: {review[this.state.review.length - 1].comments}</p>
-                  </li>
-                </ul>
-              ))}</div> : <p>There Are No Reviews Currently</p>
-            )} */}
+                  <p>Comments: {this.state.review.comments}</p>
+                </li>
+              </ul>
+            </div> : <p>There Are No Reviews Currently</p>
+            )}
           </STYLED_featureReview>
           {/* })} */}
         </Content>

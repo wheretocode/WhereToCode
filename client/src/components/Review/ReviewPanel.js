@@ -92,8 +92,8 @@ class ReviewPanel1 extends Component {
         console.log(user);
         let currentUserId = {
           user_id: user.data[0].id,
-          rating: null,
-          internet_rating: null,
+          rating: '',
+          internet_rating: '',
           comments: '',
           location_id: null
         }
@@ -102,14 +102,26 @@ class ReviewPanel1 extends Component {
         })
         console.log("state.newuser after get uid", this.state.newUser);
       })
-      .then(user => {
-        let newLocation = [{
-          locationName: this.props.details[0],
-          locationGoogleId: this.props.locationId
-        }]
-        console.log("newLocation", newLocation);
+      .then(res => {
+        let locationReq = this.props.locationId;
         return axios
-          .post('http://localhost:8080/locations', newLocation)
+          .get(`http://localhost:8080/locations/${locationReq}`)
+
+      })
+      .then(res => {
+        console.log("get location by googleid", res);
+        if (!res) {
+          let newLocation = [{
+            locationName: this.props.details[0],
+            locationGoogleId: this.props.locationId
+          }]
+          console.log("newLocation", newLocation);
+          let locationReq = this.props.locationId;
+          return axios
+            .post('http://localhost:8080/locations', newLocation)
+        } else {
+          console.log('location does not need to be posted');
+        }
       })
       .then(res => {
         console.log("results from post", res);
@@ -122,8 +134,8 @@ class ReviewPanel1 extends Component {
         console.log("res.data.id", user);
         let currentUser = {
           user_id: this.state.newUser.user_id,
-          rating: " ",
-          internet_rating: " ",
+          rating: '',
+          internet_rating: '',
           comments: '',
           location_id: user.data[0].id
         }

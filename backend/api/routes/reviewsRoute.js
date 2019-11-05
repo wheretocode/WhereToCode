@@ -47,6 +47,7 @@ router.get("/:id/user", async (req, res) => {
   try {
 
     const reviewUser = await REVIEW_MODEL.getReviewsByUser(req.params.id)
+    console.log("user", reviewUser);
     if (reviewUser) {
 
       res.status(200).json(reviewUser);
@@ -70,11 +71,12 @@ router.get("/:id/location", async (req, res) => {
   try {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
     console.log("rl", reviewLocation);
-    if (reviewLocation.length > 0) {
+    if (reviewLocation.length == 0) {
+      res.status(404).send({ message: "Location from this review is not found" });
+
+    } else {
       res.status(200).json(reviewLocation);
       console.log("RL", reviewLocation);
-    } else {
-      res.status(400).send({ message: "Location from this review is not found", error });
     }
   } catch (err) {
     res

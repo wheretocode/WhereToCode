@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import SingleMapCard from "./SingleMapCard";
-
-import axios from 'axios';
-
-/*global google*/
+import styled from "styled-components";
 
 class MapCards extends Component {
   constructor(props) {
@@ -11,36 +8,9 @@ class MapCards extends Component {
     this.state = {};
   }
 
-
-  componentDidUpdate() {
-    console.log(this.props.locations);
-    let req = this.props.locations;
-    // let locArr = req.map(req => {
-    //   return { locationName: req.name, locationGoogleId: req.id };
-    // })
-    // console.log("locArr", locArr);
-    // if (locArr.length > 0) {
-    //   axios.post('http://localhost:8080/locations', locArr)
-    //     .then(res => {
-    //       console.log('res.data post call', res);
-    //     })
-    //     .then(res => {
-    //       axios.get('http://localhost:8080/locations')
-    //     })
-    //     .then(res => {
-    //       console.log("res.data get call", res);
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //     })
-    // } else {
-    //   console.log("nothing to post");
-    // }
-
-  }
   render() {
     return (
-      <>
+      <MapCardsContainer>
         {this.props.locations.map(location => {
           return (
             <div>
@@ -58,9 +28,22 @@ class MapCards extends Component {
             </div>
           );
         })}
-      </>
+      </MapCardsContainer>
     );
   }
 }
 
 export default MapCards;
+
+const MapCardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;

@@ -4,6 +4,11 @@ const getAll_locations = () => {
   return db("locations");
 };
 
+const getLocationsById = (id) => {
+  return db("locations").where({ id })
+};
+
+
 
 
 async function add(location) {
@@ -29,5 +34,6 @@ module.exports = {
   updateLocation,
   deleteLocation,
   add,
-  getLocationByGoogleId
+  getLocationByGoogleId,
+  getLocationsById
 };
