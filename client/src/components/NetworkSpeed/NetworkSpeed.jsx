@@ -44,25 +44,24 @@ class NetworkSpeed extends React.Component {
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(position => {
-            const { latitude, longitude } = position.coords;
+        const latitude = localStorage.getItem('lat');
+        const longitude = localStorage.getItem('lng');
 
-            axios.get(`//api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
-                .then(res => {
-                    const parser = new DOMParser()
+        axios.get(`//api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
+            .then(res => {
+                const parser = new DOMParser()
 
-                    const XMLres =  parser.parseFromString(res.data, "text/xml")
+                const XMLres =  parser.parseFromString(res.data, "text/xml")
 
-                    const JSONres = xmlToJson(XMLres);
+                const JSONres = xmlToJson(XMLres);
 
-                    const US_state = JSONres.geonames.address.adminName1["#text"];
-         
-                    this.runNetworkTest(US_state);
-                })
-                .catch(err => {
-                    console.log(err)
-                });
-        });
+                const US_state = JSONres.geonames.address.adminName1["#text"];
+        
+                this.runNetworkTest(US_state);
+            })
+            .catch(err => {
+                console.log(err)
+            });
 
         this.runNetworkTest();
     }
@@ -73,12 +72,13 @@ class NetworkSpeed extends React.Component {
                  justify='evenly'
                  pad='medium'
                  background='dark-2'
+                 maxWidth='300px'
             >
 
 
                 {
                     Object.keys(this.state.client).length > 0 ? <Box>
-                                                                    <Box direction='row'>
+                                                                    <Box direction='row' display="flex" direction="column">
                                                                         <NetworkTableGeneral data={this.state} />
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
@@ -90,13 +90,13 @@ class NetworkSpeed extends React.Component {
                                                                             onClick={this.runNetworkTest}
                                                                     /> */}
 
-                                                                    <RoutedButton label='More Info'
+                                                                    {/* <RoutedButton label='More Info'
                                                                                     path={ROUTES.NETWORK} 
                                                                                     color='gold' 
                                                                                     alignSelf='center' 
                                                                                     pad='large' 
                                                                                     onClick={this.runNetworkTest}
-                                                                    />
+                                                                    /> */}
                                                                 </Box>
                                                               
                                                               : <TriangleLoader/>
