@@ -23,8 +23,10 @@ class NetworkSpeed extends React.Component {
     }
 
     runNetworkTest = US_state => {
+        // Reset the state to trigger loading animation
         this.resetState();
-        // https://wheretocode-staging-3.herokuapp.com/api/network
+
+        // Test the network speed against a server in the user's state
         axios.get('https://wheretocode-master.herokuapp.com/api/network', {
                 params: {
                     state: US_state
@@ -44,17 +46,22 @@ class NetworkSpeed extends React.Component {
     }
 
     componentDidMount() {
+        // Pull the users lat and long from local storage
         const latitude = localStorage.getItem('lat');
         const longitude = localStorage.getItem('lng');
 
+        // Get the neareset address to the user coordinates 
         axios.get(`//api.geonames.org/findNearestAddress?lat=${latitude}&lng=${longitude}&username=trip1701`)
             .then(res => {
                 const parser = new DOMParser()
 
+                // Get XML response
                 const XMLres =  parser.parseFromString(res.data, "text/xml")
 
+                // Convert XML to JSON
                 const JSONres = xmlToJson(XMLres);
 
+                // Get the user's state 
                 const US_state = JSONres.geonames.address.adminName1["#text"];
         
                 this.runNetworkTest(US_state);
@@ -83,12 +90,17 @@ class NetworkSpeed extends React.Component {
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
 
+                                                                    {/* 
+                                                                        Below Components are incomplete mocks for future releases 
+                                                                    */}
+
                                                                     {/* <Button label='Run Test' 
                                                                             color='gold' 
                                                                             alignSelf='center' 
                                                                             pad='large' 
                                                                             onClick={this.runNetworkTest}
-                                                                    /> */}
+                                                                        /> 
+                                                                    */}
 
                                                                     {/* <RoutedButton label='More Info'
                                                                                     path={ROUTES.NETWORK} 
@@ -96,7 +108,8 @@ class NetworkSpeed extends React.Component {
                                                                                     alignSelf='center' 
                                                                                     pad='large' 
                                                                                     onClick={this.runNetworkTest}
-                                                                    /> */}
+                                                                        /> 
+                                                                    */}
                                                                 </Box>
                                                               
                                                               : <TriangleLoader/>

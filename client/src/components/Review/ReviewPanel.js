@@ -303,6 +303,9 @@ class ReviewPanel1 extends Component {
                                                                     />
                                                        : null
             }
+            <NetworkModal handleNetwork={this.toggleNetworkTest}
+                                                                       runTest={this.state.network}
+                                                                    />
             <NetworkTextStyle>
               {
                 this.state.distanceFromLocation > 30.48
