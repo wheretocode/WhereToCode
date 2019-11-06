@@ -6,15 +6,18 @@ import React, { Component } from "react";
 import MapCards from "./MapCards";
 
 import styled from "styled-components";
+import FilteredMapCards from "./FilteredMapCards";
 
 class Map extends Component {
   constructor(props) {
     super(props);
-    this.submitButton = React.createRef();
+    this.searchButton = React.createRef();
 
     this.state = {
       initialPlace: this.props.place,
       locations: [],
+      locationsFilter: [],
+      filterBool: false,
       pos: {
         lat: 0,
         lng: 0
@@ -71,7 +74,7 @@ class Map extends Component {
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener("place_changed", this.handleMapChange);
 
-    this.submitButton.current.addEventListener("click", this.handleMapChange);
+    this.searchButton.current.addEventListener("click", this.handleMapChange);
   }
 
   handleLocationError = (browserHasGeolocation = false) => {
@@ -113,7 +116,7 @@ class Map extends Component {
 
     // Resets state when a new location is clicked
     if (this.state.locations.name !== "") {
-      this.setState({ locations: [] });
+      this.setState({ locations: [], locationsFilter: [] });
     }
 
     // cb function that returns place results
@@ -186,7 +189,7 @@ class Map extends Component {
 
     // Resets state when a new location is clicked
     if (this.state.locations.name !== "") {
-      this.setState({ locations: [] });
+      this.setState({ locations: [], locationsFilter: [] });
     }
 
     // cb function that returns place results
@@ -234,15 +237,25 @@ class Map extends Component {
 
   handleFocus = event => event.target.select();
 
-  // Broken at the moment
-  // filterResults = () => {
-  //   this.state.locations.map(place => {
-  //     if (place.rating < 4.0) {
-  //       console.log(document.querySelector(".card"));
-  //       // document.querySelector(".card").style.border = "1px solid red";
-  //     }
-  //   });
-  // };
+  filterResults = () => {
+    if (this.state.filterBool === true) {
+      this.setState({ filterBool: false });
+    } else {
+      this.setState({ filterBool: true });
+    }
+
+    if (this.state.locationsFilter.length > 0) {
+      return;
+    } else {
+      this.state.locations.map(place => {
+        if (place.rating > 4) {
+          this.setState(prevState => ({
+            locationsFilter: [...prevState.locationsFilter, place]
+          }));
+        }
+      });
+    }
+  };
 
   render() {
     return (
@@ -253,7 +266,12 @@ class Map extends Component {
             padding: "8% 0 0 0"
           }}
         >
-          <MapCards locations={this.state.locations} />
+          <Button onClick={this.filterResults}>Highest Rated</Button>
+          {!this.state.filterBool ? (
+            <MapCards locations={this.state.locations} />
+          ) : (
+            <FilteredMapCards locationsFilter={this.state.locationsFilter} />
+          )}
         </div>
         <div
           style={{
@@ -293,8 +311,7 @@ class Map extends Component {
             }}
             onFocus={this.handleFocus}
           />
-          {/* <button onClick={this.filterResults}>Filter</button> */}
-          <button ref={this.submitButton}>Submit</button>
+          <Button ref={this.searchButton}>Search</Button>
 
           <div
             id="map"
@@ -320,4 +337,21 @@ const HomeContainer = styled.div`
   margin: 0 auto;
   max-width: 1400px;
   height: 94.2vh;
+`;
+
+const Button = styled.button`
+  align-self: center;
+  border-radius: 10px;
+  border: 2px solid gold;
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+  padding: 10px 56px;
+  margin: 35px 0 10px;
+  background: white;
+  &:hover {
+    box-shadow: 0px 5px 5px 0px rgba(176, 170, 176, 1);
+    transform: translateY(-2px);
+    transition: 0.2s;
+  }
 `;
