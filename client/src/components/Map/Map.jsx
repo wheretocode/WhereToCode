@@ -266,7 +266,10 @@ class Map extends Component {
             padding: "8% 0 0 0"
           }}
         >
-          <Button onClick={this.filterResults}>Highest Rated</Button>
+          {this.state.locations.length > 0 ? (
+            <Button onClick={this.filterResults}>Highest Rated</Button>
+          ) : null}
+
           {!this.state.filterBool ? (
             <MapCards locations={this.state.locations} />
           ) : (
