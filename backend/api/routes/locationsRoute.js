@@ -18,6 +18,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:fbid", async (req, res) => {
+  const { fbid } = req.params;
+  try {
+    let result = await LOCATIONS_MODEL.getLocationByGoogleId(fbid);
+    console.log(result);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: err });
+  }
+});
+
 router.post("/", requireBody, async (req, res) => {
   let location = req.body;
   try {
