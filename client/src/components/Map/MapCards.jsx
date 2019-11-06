@@ -14,9 +14,7 @@ class MapCards extends Component {
         {this.props.locations.map(location => {
           return (
             <div>
-
               <SingleMapCard
-                class="card"
                 key={location.id}
                 location={location.name}
                 address={location.address}
@@ -25,7 +23,6 @@ class MapCards extends Component {
                 id={location.id}
                 requestDetails={this.props.requestDetails}
               />
-
             </div>
           );
         })}
