@@ -1,5 +1,6 @@
 // IMPORTS
 const LOCATIONS_MODEL = require("../models/LocationsModel.js");
+const authenticate = require('../middleware/authenticate.js')
 
 // EXPRESS ROUTER
 const router = require("express").Router();
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", requireBody, async (req, res) => {
+router.post("/", authenticate, requireBody, async (req, res) => {
   let location = req.body;
   try {
     const addedLocation = await LOCATIONS_MODEL.add(location);
