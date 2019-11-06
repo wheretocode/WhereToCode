@@ -7,10 +7,9 @@ import styled from "styled-components";
 
 import { withRouter, Link } from "react-router-dom";
 
-import * as ROUTES from "../Routes/routes";
+import mockup from '../assets/mockup.png';
 
-import AppExamples from '../components/Landing/AppExamples';
-import Info from '../components/Landing/Info';
+import * as ROUTES from "../Routes/routes";
 
 const Landing = props => {
   const [currentActivity, setCurrentActivity] = useState("code");
@@ -49,6 +48,7 @@ const Landing = props => {
 
   return (
     <LandingPageContainer>
+      <Navigation />
       <LandingScreen>
       <SearchComponent>
         <h2>
@@ -61,11 +61,36 @@ const Landing = props => {
         </InputAndButtonContainer>
       </SearchComponent>
       </LandingScreen>
-      <LearnMore>
-        <p>Learn More ↓</p>
-      </LearnMore>
-      <AppExamples />
-      <Info />
+      <FeaturesInfo>
+        <InfoBox>
+          <h3>Marketing Blurb Here</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium nemo, voluptas culpa, alias libero dolor eveniet distinctio reiciendis, necessitatibus cumque ut optio. Delectus, sunt!</p>
+          <ExploreButton to={ROUTES.HOME}>Explore →</ExploreButton>
+        </InfoBox>
+        <FeatureBox>
+          <Placeholder></Placeholder>
+          <h3>Feature 1</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+        </FeatureBox>
+        <FeatureBox>
+          <Placeholder></Placeholder>
+          <h3>Feature 2</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+        </FeatureBox>
+        <FeatureBox>
+          <Placeholder></Placeholder>
+          <h3>Feature 3</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+        </FeatureBox>
+      </FeaturesInfo>
+      <MockupContainer>
+        <div>
+          <Mockup src={mockup} />
+        </div>
+        <div>
+
+        </div>
+      </MockupContainer>
     </LandingPageContainer>
   );
 };
@@ -109,7 +134,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 width: 100%;
-height: 92.2vh;
+height: 100vh;
 
 @media(max-width: 500px){
   height: 98vh;
@@ -152,14 +177,54 @@ const InputAndButtonContainer = styled.div`
   display: flex;
 `;
 
-const LearnMore = styled.div`
-  width: 100%;
-  border: 1px solid gold;
-  background: gold;
-  text-align: center;
-  p {
-    margin: 8px;
-    font-size: 14px;
+const FeaturesInfo = styled.div`
+  margin: 125px 2% 20px 2%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const InfoBox = styled.div`
+  width: 25%;
+  padding: 0 10px;
+  h3 {
+    font-size: 32px;
+    font-family: "Zilla Slab", serif;
     font-weight: bold;
+    margin-top: 0;
   }
-`;
+  p {
+    font-size: 18px;
+    color: #636363
+  }
+`
+
+const FeatureBox = styled(InfoBox)`
+  h3 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 14px;
+  }
+`
+const Placeholder = styled.div`
+  width: 225px;
+  height: 175px;
+  border: 3px solid black;
+`
+
+const MockupContainer = styled.div`
+
+`
+
+const Mockup = styled.img`
+  width: 45%;
+  margin: 5%;
+`
+const ExploreButton = styled(GoButton)`
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border-left: 1px solid gold;
+  font-weight: bold;
+  width: 125px;
+  padding: 10px;
+`

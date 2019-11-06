@@ -1,9 +1,9 @@
 // IMPORTS
 import React, { Component } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import axios from "axios";
-import { distanceTo } from "geolocation-utils"
-import geocoder from 'geocoder';
+import { distanceTo } from "geolocation-utils";
+import geocode from 'geocoder';
 
 // COMPONENTS
 import NetworkModal from '../NetworkSpeed/networkModal';
