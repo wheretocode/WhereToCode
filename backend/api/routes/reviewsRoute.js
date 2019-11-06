@@ -5,6 +5,9 @@ const authenticate = require('../middleware/authenticate.js')
 // EXPRESS ROUTER
 const router = require("express").Router();
 
+// MIDDLEWARE
+const requireBody = require('../middleware/requireBody')
+
 
 
 // @route GET reviews/

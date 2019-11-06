@@ -13,7 +13,7 @@ function authenticate (req,res,next)
             secret, (err, decodedToken) => {
                 if(err){
                     //means token expired or is invalid
-                    res.status(401).json({ message: 'authorization not valid!'});
+                    res.status(401).json({ message: 'authorization not valid!'})
                 }
                 else {
                     //means token is good
