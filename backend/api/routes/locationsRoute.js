@@ -1,5 +1,6 @@
 // IMPORTS
 const LOCATIONS_MODEL = require("../models/LocationsModel.js");
+const authenticate = require('../middleware/authenticate.js')
 
 // EXPRESS ROUTER
 const router = require("express").Router();
@@ -17,6 +18,7 @@ router.get("/", async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
 
 router.get("/:fbid", async (req, res) => {
   const { fbid } = req.params;

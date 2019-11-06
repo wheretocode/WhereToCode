@@ -31,6 +31,21 @@ class Firebase {
 
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
+
+    doGetToken = () => {
+        this.auth.currentUser.getIdToken(/* forceRefresh */ true)
+            .then(token => {
+                console.log(token)
+                window.localStorage.setItem('token', token)
+            })
+    }
+
+    doVerifyIdToken = (token) => {
+        this.auth.verifyIdToken(token)
+            .then(verifyResult => {
+                console.log(verifyResult)
+            })
+    }
 }
 
 export default Firebase;

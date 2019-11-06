@@ -72,86 +72,91 @@ class DetailsPanel1 extends React.Component {
           let { id } = user.data[0];
           this.setState({
             uid: id
-          })
+          });
         })
         .then(res => {
           let locationReq = this.props.locationId;
-          return axios.get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+          );
         })
         .then(res => {
           if (res.data.length === 0) {
-            let newLocation = [{
-              locationName: this.props.details[0],
-              locationGoogleId: this.props.locationId
-            }]
-            return axios
-              .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
+            let newLocation = [
+              {
+                locationName: this.props.details[0],
+                locationGoogleId: this.props.locationId
+              }
+            ];
+            return axios.post(
+              "https://wheretocode-master.herokuapp.com/locations",
+              newLocation
+            );
           } else {
-            console.log('location does not need to be posted');
+            console.log("location does not need to be posted");
           }
         })
         .then(res => {
           let locationReq = this.props.locationId;
-          return axios.get(`https://wheretocode-master.herokuapp.com/${locationReq}`)
-
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/${locationReq}`
+          );
         })
         .then(res => {
           let locationId = res.data[0].id;
-          return axios.get(`https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`)
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+          );
         })
         .then(res => {
-          let newReview1 = (res.data).slice(-1);
+          let newReview1 = res.data.slice(-1);
           let newReview = newReview1[0];
           this.setState({
             review: newReview
-          })
+          });
         })
         .catch(error => {
           console.log(error);
-        })
-
-
+        });
     }
   }
-
 
   // METHODS
   componentDidMount() {
     let locationReq = this.props.locationId;
-    return axios.get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+    return axios
+      .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       .then(res => {
         let locationId = res.data[0].id;
-        return axios.get(`https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`)
+        return axios.get(
+          `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+        );
       })
       .then(res => {
-        let newReview1 = (res.data).slice(-1);
+        let newReview1 = res.data.slice(-1);
         let newReview = newReview1[0];
         this.setState({
           review: newReview
-        })
+        });
       })
       .catch(error => {
         console.log(error);
-      })
-
+      });
   }
 
   // RENDER
   render() {
-
     return (
       <StyleModal>
         <Header> Details </Header>
         {/* // -- // */}
         <Content>
           {" "}
-
           <h2>Name:</h2>
           <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
           <p>{this.props.details[1]}</p>
           <h2 className="hours">Hours:</h2>
-
           <ul>
             {this.props.hours.map((data, index) => {
               return (
@@ -162,29 +167,23 @@ class DetailsPanel1 extends React.Component {
             })}
           </ul>
           <StyledFeatureReview>
-            <StyledFeaturedReview>
-              Latest Review
-            </StyledFeaturedReview>
-            {(Object.keys(this.state.review).length > 0 ? <div>
-
-              <ul>
-
-                <li >
-
-
-                  <p>User: {this.state.review.userName},</p>
-
-                </li>
-                <li>
-
-                  <p>Rating: {this.state.review.rating},</p>
-                </li>
-                <li>
-
-                  <p>Comments: {this.state.review.comments}</p>
-                </li>
-              </ul>
-            </div> : <p>There Are No Reviews Currently</p>
+            <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
+            {Object.keys(this.state.review).length > 0 ? (
+              <div>
+                <ul>
+                  <li>
+                    <p>User: {this.state.review.userName},</p>
+                  </li>
+                  <li>
+                    <p>Rating: {this.state.review.rating},</p>
+                  </li>
+                  <li>
+                    <p>Comments: {this.state.review.comments}</p>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <p>There Are No Reviews Currently</p>
             )}
           </StyledFeatureReview>
           {/* })} */}
