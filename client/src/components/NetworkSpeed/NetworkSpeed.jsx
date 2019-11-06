@@ -86,7 +86,7 @@ class NetworkSpeed extends React.Component {
                 {
                     Object.keys(this.state.client).length > 0 ? <Box>
                                                                     <Box direction='row' display="flex" direction="column">
-                                                                        <NetworkTableGeneral data={this.state} />
+                                                                        {/* <NetworkTableGeneral data={this.state} /> */}
                                                                         <NetworkTableSpeeds data={this.state} />
                                                                     </Box>
 
