@@ -10,7 +10,7 @@ const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 10px 10px 0 10px;
+  padding: 10px;
 
   font-size: 12px;
 `;
@@ -52,23 +52,6 @@ const Content = styled.div`
 const StyledFeatureReview = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Actions = styled.div`
-  width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
-`;
-const Button = styled.button`
-  background: ${props => (props.primary ? "palevioletred" : "white")};
-  color: ${props => (props.primary ? "white" : "palevioletred")};
-
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
 `;
 
 // COMPONENT
@@ -206,18 +189,6 @@ class DetailsPanel1 extends React.Component {
           {/* })} */}
         </Content>
         {/* // -- // */}
-        <Actions>
-          <Popup
-            trigger={<Button> View Internet Speed </Button>}
-            position="top center"
-            closeOnDocumentClick
-          >
-            <span>
-              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or
-              DEFAULT w/ NO INFO
-            </span>
-          </Popup>
-        </Actions>
       </StyleModal>
     );
   }
