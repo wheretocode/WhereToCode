@@ -116,8 +116,8 @@ const SignUpFormBase = props => {
         //send FB authenticated user UID, username and email to wheretocode Database
         axios
           .post(
-            // "https://wheretocode-master.herokuapp.com/auth/register",
-            'http://localhost:8080/auth/register',
+            "https://wheretocode-master.herokuapp.com/auth/register",
+
             newUser
           )
           .then(res => {
