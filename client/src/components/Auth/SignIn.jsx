@@ -8,6 +8,7 @@ import { withFirebase } from "../../Firebase";
 import * as ROUTES from "../../Routes/routes";
 
 import { Box, Heading } from "grommet";
+import axios from 'axios';
 
 import styled from "styled-components";
 
@@ -128,33 +129,23 @@ class SignInFormBase extends Component {
     // V1
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
-
       
-      // .then(() => {
-      //   this.setState({ ...INITIAL_STATE });
-      //   this.props.history.push(ROUTES.HOME);
-      // })
-      // .catch(error => {
-      //   this.setState({ error });
-      // });
-
-    // V2
-    .then(signInResult => {
-      // console.log(signInResult)
-
-      // Get user firebase token & save to local storage
-        this.props.firebase.doGetToken()
-        
-      // -- !! -- CHECK THIS -- !! -- //
-        // this.props.firebase.doVerifyIdToken('eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwYjQwY2NjYmQ0OWQxNmVkMjg2MGRiNzIyNmQ3NDZiNmZhZmRmYzAiLCJ0eXAiOiJKV1QifQ')
-      // Reset State
-        this.setState({ ...INITIAL_STATE });
-      // Go to home route
-        this.props.history.push(ROUTES.HOME);
-    })
-    .catch( error => {
-      console.log(error)
-    })
+        .then(signInResult => {
+        // console.log(signInResult)
+          // Ping Token Route
+            axios.get(`https://wheretocode-master.herokuapp.com/tokenRoute`)
+            .then(token => {
+              console.log(token)
+              window.localStorage.setItem('JWT', token)
+            })
+          // Reset State
+            this.setState({ ...INITIAL_STATE });
+          // Go to home route
+            this.props.history.push(ROUTES.HOME);
+        })
+        .catch( error => {
+          console.log(error)
+        })
   };
 
   onChange = event => {
