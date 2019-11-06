@@ -85,7 +85,6 @@ class DetailsPanel extends React.Component {
       .then(res => {
         const location_id = res.data[0];
         this.setState({ location_id });
-
       });
 
 
@@ -117,7 +116,7 @@ class DetailsPanel extends React.Component {
           </ul>
           <StyledFeatureReview>
             <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
-            {this.state.location_id.map(location => {
+            {this.state.location_id.length && this.state.location_id.map(location => {
               return (
                 <ul key={location.id}>
                   <li>
