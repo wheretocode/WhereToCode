@@ -41,42 +41,31 @@ class AllReviewsPanel1 extends React.Component {
   }
 
   componentDidMount() {
-    console.log("location & firebase", this.props.locationId, this.state.uid);
 
-
-    axios
-      // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-      .get(`http://localhost:8080/users/${this.state.uid}`)
+    return axios
+      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
       .then(user => {
-        console.log(user.data);
         let userid = user.data[0].id;
-
         this.setState({
           u_id: userid
         })
       })
       .then(res => {
         let locationReq = this.props.locationId;
-        return axios.get(`http://localhost:8080/locations/${locationReq}`)
+        return axios.get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       })
       .then(res => {
-        console.log("get location id res", res.data[0].id);
-
         let locationId = res.data[0].id;
-        return axios.get(`http://localhost:8080/reviews/${locationId}/location`)
+        return axios.get(`https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`)
       })
       .then(res => {
         if (res) {
-          console.log('res after get review by user & location', res);
           this.setState({
             reviews: [...this.state.reviews, res.data]
           })
-
-          console.log("state review", this.state.reviews)
           let map = this.state.reviews[0].map((review, i) => {
             return review.comments;
           })
-          console.log("map", map);
         } else {
           console.log("no response for get by userLocation", res);
         }

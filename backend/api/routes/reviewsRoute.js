@@ -76,7 +76,6 @@ router.get("/:id/location", async (req, res) => {
 
     } else {
       res.status(200).json(reviewLocation);
-      console.log("RL", reviewLocation);
     }
   } catch (err) {
     res

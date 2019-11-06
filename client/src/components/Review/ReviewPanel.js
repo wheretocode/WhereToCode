@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from "axios";
 import { distanceTo } from "geolocation-utils"
-import geocoder from 'geocoder';
 
 // COMPONENTS
 import NetworkModal from '../NetworkSpeed/networkModal';
@@ -77,10 +76,7 @@ class ReviewPanel1 extends Component {
       submitted: false,
       network: false,
       distanceFromLocation: 100,
-      newLocation: {
-        locationName: this.props.details[0],
-        locationGoogleId: this.props.locationId
-      }
+
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -89,126 +85,45 @@ class ReviewPanel1 extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.locationId !== prevProps.locationId) {
-  //     console.log("inside CDU");
-  //     return axios
-  //       .get(`http://localhost:8080/users/${this.state.uid}`)
-  //       .then(user => {
-  //         console.log(user);
-  //         let currentUserId = {
-  //           user_id: user.data[0].id,
-  //           rating: '',
-  //           internet_rating: '',
-  //           comments: '',
-  //           location_id: null
-  //         }
-  //         this.setState({
-  //           newUser: currentUserId
-  //         })
-  //         console.log("state.newuser after get uid", this.state.newUser);
-  //       })
-  //       .then(res => {
-  //         let locationReq = this.props.locationId;
-  //         return axios
-  //           .get(`http://localhost:8080/locations/${locationReq}`)
-
-  //       })
-  //       .then(res => {
-  //         console.log("get location by googleid", res);
-  //         if (!res) {
-  //           let newLocation = [{
-  //             locationName: this.props.details[0],
-  //             locationGoogleId: this.props.locationId
-  //           }]
-  //           console.log("newLocation", newLocation);
-  //           let locationReq = this.props.locationId;
-  //           return axios
-  //             .post('http://localhost:8080/locations', newLocation)
-  //         } else {
-  //           console.log('location does not need to be posted');
-  //         }
-  //       })
-  //       .then(res => {
-  //         console.log("results from post", res);
-  //         console.log("location id", this.props.locationId);
-  //         let locationReq = this.props.locationId;
-  //         return axios
-  //           .get(`http://localhost:8080/locations/${locationReq}`)
-  //       })
-  //       .then(user => {
-  //         console.log("res.data.id", user);
-  //         let currentUser = {
-  //           user_id: this.state.newUser.user_id,
-  //           rating: '',
-  //           internet_rating: '',
-  //           comments: '',
-  //           location_id: user.data[0].id
-  //         }
-  //         console.log("get location", user.data[0].id);
-  //         console.log("CurrentUser", currentUser);
-  //         this.setState({
-  //           newUser: currentUser
-  //         })
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }
-
   // COMPONENT
   componentDidMount() {
-    console.log("inside CDM");
-    console.log("location", this.props.locationId);
-    console.log("this.state.uid", this.state.uid);
-    console.log("state:", this.state.newUser);
-    console.log("details", this.props.details[0]);
-
 
     return axios
-    // .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-    .get(`http://localhost:8080/users/${this.state.uid}`)
-    .then(user => {
-      let currentUserId = {
-        user_id: user.data[0].id,
-        rating: null,
-        internet_rating: null,
-        comments: ''
-      }
-      this.setState({
-        newUser: currentUserId
+      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+      .then(user => {
+        let currentUserId = {
+          user_id: user.data[0].id,
+          rating: null,
+          internet_rating: null,
+          comments: ''
+        }
+        this.setState({
+          newUser: currentUserId
+        })
       })
-    })
-.then(res=> {
-    let locationReq = this.props.locationId;
-    return axios
-      .get(`http://localhost:8080/locations/${locationReq}`)
-    })
       .then(res => {
-        console.log("get location by googleid", res);
+        let locationReq = this.props.locationId;
+        return axios
+          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+      })
+      .then(res => {
         if (!res) {
           let newLocation = [{
             locationName: this.props.details[0],
             locationGoogleId: this.props.locationId
           }]
-          console.log("newLocation", newLocation);
-          let locationReq = this.props.locationId;
           return axios
-            .post('http://localhost:8080/locations', newLocation)
+            .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
         } else {
           console.log('location does not need to be posted');
         }
       })
       .then(res => {
-        console.log("results from post", res);
-        console.log("location id", this.props.locationId);
         let locationReq = this.props.locationId;
         return axios
-          .get(`http://localhost:8080/locations/${locationReq}`)
+          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       })
       .then(user => {
-        console.log("res.data.id", user);
         let currentUser = {
           user_id: this.state.newUser.user_id,
           rating: '',
@@ -216,8 +131,6 @@ class ReviewPanel1 extends Component {
           comments: '',
           location_id: user.data[0].id
         }
-        console.log("get location", user.data[0].id);
-        console.log("CurrentUser", currentUser);
         this.setState({
           newUser: currentUser
         })
@@ -228,28 +141,28 @@ class ReviewPanel1 extends Component {
 
     //Distance between user and review location, used for conditional render of button
     console.log("outside axios");
-    // const geocoder = new google.maps.Geocoder();
-    // let userCoords;
+    const geocoder = new google.maps.Geocoder();
+    let userCoords;
 
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(
-    //     position => {
-    //        userCoords = [position.coords.latitude, position.coords.longitude];
-    //       });
-
-
-    // } else {
-    //   userCoords = [ -33.856, 151.215 ];
-    // }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          userCoords = [position.coords.latitude, position.coords.longitude];
+        });
 
 
-    // geocoder.__proto__.geocode({"address": this.props.address}, (res, err) => {
-    //   const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
-    //   console.log(err);
-    //   this.setState(prevState => {
-    //      return {...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords)} 
-    //     });
-    // });
+    } else {
+      userCoords = [-33.856, 151.215];
+    }
+
+
+    geocoder.__proto__.geocode({ "address": this.props.address }, (res, err) => {
+      const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
+      console.log(err);
+      this.setState(prevState => {
+        return { ...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords) }
+      });
+    });
 
 
   }
@@ -287,8 +200,7 @@ class ReviewPanel1 extends Component {
     let userData = this.state.newUser;
     console.log("userdata", userData);
     axios
-      // .post("https://wheretocode-master.herokuapp.com/reviews", userData)
-      .post("http://localhost:8080/reviews", userData)
+      .post("https://wheretocode-master.herokuapp.com/reviews", userData)
       .then(response => {
         console.log("res", response)
       })
@@ -320,17 +232,6 @@ class ReviewPanel1 extends Component {
 
 
   render() {
-
-
-    // if(this.props.address) {
-    //   //console.log(this.props.coords.lat(), this.props.coords.lng())
-    //   const locationCoords = [ ...this.props.coords ];
-    //   const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ];
-
-    //   console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance} meters`);
-    //   distanceFromLocation = Number(headingDistanceTo(userCoords, locationCoords).distance);
-    // } 
-
 
     return (
       <>
@@ -392,21 +293,6 @@ class ReviewPanel1 extends Component {
                   : null
               }
             </div>
-
-
-            {/* {
-              this.state.distanceFromLocation <= 2000 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                                                         runTest={this.state.network}
-                                            />
-                                         : null
-            }
-
-            {
-              this.state.distanceFromLocation <= 500 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                                                         runTest={this.state.network}
-                                            />
-                                         : null
-            } */}
 
             {
               this.state.distanceFromLocation <= 30.48 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
