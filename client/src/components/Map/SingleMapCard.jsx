@@ -72,6 +72,7 @@ class SingleMapCard extends Component {
                     hours={this.state.hours}
                     address={this.props.address}
                     geocoder={this.props.geocoder}
+                    locationId={this.state.id}
                   />
                 )}
               </Popup>

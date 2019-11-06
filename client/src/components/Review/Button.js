@@ -3,7 +3,7 @@ import React from "react";
 
 // BUTTON
 const Button = props => {
-  console.log(props.style);
+  // console.log(props.style);
   return (
     <button
       style={props.style}
