@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from "axios";
 import { distanceTo } from "geolocation-utils"
-import geocoder from 'geocoder';
 
 // COMPONENTS
 import NetworkModal from '../NetworkSpeed/networkModal';
@@ -68,14 +67,16 @@ class ReviewPanel1 extends Component {
         user_id: null,
         rating: " ",
         internet_rating: " ",
-        comments: ''
+        comments: '',
+        location_id: null
       },
       rating: ["1", "2", "3"],
       internet_rating: ["1", "2", "3"],
       uid: this.props.firebase.auth.currentUser.uid,
       submitted: false,
       network: false,
-      distanceFromLocation: 100
+      distanceFromLocation: 100,
+
     };
 
     this.handleTextArea = this.handleTextArea.bind(this);
@@ -84,11 +85,10 @@ class ReviewPanel1 extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
-
   // COMPONENT
   componentDidMount() {
 
-    axios
+    return axios
       .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
       .then(user => {
         let currentUserId = {
@@ -100,37 +100,70 @@ class ReviewPanel1 extends Component {
         this.setState({
           newUser: currentUserId
         })
-      }
-
-      )
-      .catch(error => {
-        console.log(error);
+      })
+      .then(res => {
+        let locationReq = this.props.locationId;
+        return axios
+          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+      })
+      .then(res => {
+        if (!res) {
+          let newLocation = [{
+            locationName: this.props.details[0],
+            locationGoogleId: this.props.locationId
+          }]
+          return axios
+            .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
+        } else {
+          console.log('location does not need to be posted');
+        }
+      })
+      .then(res => {
+        let locationReq = this.props.locationId;
+        return axios
+          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+      })
+      .then(user => {
+        let currentUser = {
+          user_id: this.state.newUser.user_id,
+          rating: '',
+          internet_rating: '',
+          comments: '',
+          location_id: user.data[0].id
+        }
+        this.setState({
+          newUser: currentUser
+        })
+      })
+      .catch(err => {
+        console.log(err);
       })
 
     //Distance between user and review location, used for conditional render of button
+    console.log("outside axios");
     const geocoder = new google.maps.Geocoder();
     let userCoords;
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
-           userCoords = [position.coords.latitude, position.coords.longitude];
-          });
+          userCoords = [position.coords.latitude, position.coords.longitude];
+        });
 
-      
+
     } else {
-      userCoords = [ -33.856, 151.215 ];
+      userCoords = [-33.856, 151.215];
     }
 
-   
-    geocoder.__proto__.geocode({"address": this.props.address}, (res, err) => {
+
+    geocoder.__proto__.geocode({ "address": this.props.address }, (res, err) => {
       const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
       console.log(err);
       this.setState(prevState => {
-         return {...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords)} 
-        });
+        return { ...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords) }
+      });
     });
-    
+
 
   }
 
@@ -165,7 +198,7 @@ class ReviewPanel1 extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
-
+    console.log("userdata", userData);
     axios
       .post("https://wheretocode-master.herokuapp.com/reviews", userData)
       .then(response => {
@@ -174,7 +207,6 @@ class ReviewPanel1 extends Component {
       .then(res => {
         this.setState({ submitted: true })
       })
-
       .catch(error => {
         console.log(error);
       })
@@ -185,7 +217,7 @@ class ReviewPanel1 extends Component {
     this.setState({
       newUser: {
         user_id: '',
-        rating: '',
+        rating: ' ',
         comments: '',
         internet_rating: ''
       }
@@ -200,99 +232,73 @@ class ReviewPanel1 extends Component {
 
 
   render() {
-    
-                              
-    // if(this.props.address) {
-    //   //console.log(this.props.coords.lat(), this.props.coords.lng())
-    //   const locationCoords = [ ...this.props.coords ];
-    //   const userCoords = [ Number(localStorage.getItem('lat')), Number(localStorage.getItem('lng')) ];
 
-    //   console.log(`****** ${headingDistanceTo(userCoords, locationCoords).distance} meters`);
-    //   distanceFromLocation = Number(headingDistanceTo(userCoords, locationCoords).distance);
-    // } 
-
-    
     return (
       <>
         {(this.state.submitted ? <StyleModal><Header>Thank You For Submitting A Review</Header></StyleModal> :
           <StyleModal>
             <Header> Leave a Review </Header>
 
-            <div style={{display: "flex"}}>
-            <STYLED_form form onSubmit={this.handleFormSubmit}>
+            <div style={{ display: "flex" }}>
+              <STYLED_form form onSubmit={this.handleFormSubmit}>
 
 
-              {/* Rating Required*/}
-              <Select
-                title={"Location Rating"}
-                name={'rating'}
-                options={this.state.rating}
-                value={this.state.newUser.rating}
-                placeholder={"Select Rating"}
-                handleChange={this.handleInput}
-              />
-              {/*Internet Rating */}
-              <Select
-                title={"Interet Rating"}
-                name={'internet_rating'}
-                options={this.state.internet_rating}
-                value={this.state.newUser.internet_rating}
-                placeholder={"Select Internet Rating"}
-                handleChange={this.handleInput}
-              />
-              {/*Comment */}
-              <TextArea
-                title={"Comments"}
-                rows={10}
-                value={this.state.newUser.comments}
-                name={'comment'}
-                handleChange={this.handleTextArea}
-                placeholder={"Leave a comment"}
-              />
-              {/*Submit */}
-              <div className='buttonContainer'>
-                <Button
-                  action={this.handleFormSubmit}
-                  type={"primary"}
-                  title={"Submit"}
-                  style={buttonStyle}
+                {/* Rating Required*/}
+                <Select
+                  title={"Location Rating"}
+                  name={'rating'}
+                  options={this.state.rating}
+                  value={this.state.newUser.rating}
+                  placeholder={"Select Rating"}
+                  handleChange={this.handleInput}
                 />
-                {/* Clear form */}
-                <Button
-                  action={this.handleClearForm}
-                  type={"secondary"}
-                  title={"Clear"}
-                  style={buttonStyle}
+                {/*Internet Rating */}
+                <Select
+                  title={"Interet Rating"}
+                  name={'internet_rating'}
+                  options={this.state.internet_rating}
+                  value={this.state.newUser.internet_rating}
+                  placeholder={"Select Internet Rating"}
+                  handleChange={this.handleInput}
                 />
-              </div>
-            </STYLED_form>
+                {/*Comment */}
+                <TextArea
+                  title={"Comments"}
+                  rows={10}
+                  value={this.state.newUser.comments}
+                  name={'comment'}
+                  handleChange={this.handleTextArea}
+                  placeholder={"Leave a comment"}
+                />
+                {/*Submit */}
+                <div className='buttonContainer'>
+                  <Button
+                    action={this.handleFormSubmit}
+                    type={"primary"}
+                    title={"Submit"}
+                    style={buttonStyle}
+                  />
+                  {/* Clear form */}
+                  <Button
+                    action={this.handleClearForm}
+                    type={"secondary"}
+                    title={"Clear"}
+                    style={buttonStyle}
+                  />
+                </div>
+              </STYLED_form>
 
-            {
-              this.state.network ? <NetworkSpeed /> 
-                                       : null
-            }
+              {
+                this.state.network ? <NetworkSpeed />
+                  : null
+              }
             </div>
-            
-
-            {/* {
-              this.state.distanceFromLocation <= 2000 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                                                         runTest={this.state.network}
-                                            />
-                                         : null
-            }
-
-            {
-              this.state.distanceFromLocation <= 500 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                                                         runTest={this.state.network}
-                                            />
-                                         : null
-            } */}
 
             {
               this.state.distanceFromLocation <= 30.48 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                                                         runTest={this.state.network}
-                                            />
-                                         : null
+                runTest={this.state.network}
+              />
+                : null
             }
             <p>{this.state.distanceFromLocation}</p>
 

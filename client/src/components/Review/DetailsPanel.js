@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
+import { withFirebase } from "../../Firebase";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
@@ -71,27 +72,90 @@ const Button = styled.button`
 `;
 
 // COMPONENT
-class DetailsPanel extends React.Component {
+class DetailsPanel1 extends React.Component {
   // STATE
   state = {
-    location_id: []
+    review: [],
+    location_id: [],
+    uid: this.props.firebase.auth.currentUser.uid,
+    location: this.props.locationId
   };
+
+  componentDidUpdate(prevProps, nextState) {
+    if (this.props.locationId !== prevProps.locationId) {
+      return axios
+        .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+        .then(user => {
+          let { id } = user.data[0];
+          this.setState({
+            uid: id
+          })
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+        })
+        .then(res => {
+          if (res.data.length === 0) {
+            let newLocation = [{
+              locationName: this.props.details[0],
+              locationGoogleId: this.props.locationId
+            }]
+            return axios
+              .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
+          } else {
+            console.log('location does not need to be posted');
+          }
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(`https://wheretocode-master.herokuapp.com/${locationReq}`)
+
+        })
+        .then(res => {
+          let locationId = res.data[0].id;
+          return axios.get(`https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`)
+        })
+        .then(res => {
+          let newReview1 = (res.data).slice(-1);
+          let newReview = newReview1[0];
+          this.setState({
+            review: newReview
+          })
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
+
+    }
+  }
+
 
   // METHODS
   componentDidMount() {
-
-    axios
-      .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
+    let locationReq = this.props.locationId;
+    return axios.get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       .then(res => {
-        const location_id = res.data[0];
-        this.setState({ location_id });
-      });
-
+        let locationId = res.data[0].id;
+        return axios.get(`https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`)
+      })
+      .then(res => {
+        let newReview1 = (res.data).slice(-1);
+        let newReview = newReview1[0];
+        this.setState({
+          review: newReview
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
   }
 
   // RENDER
   render() {
+
     return (
       <StyleModal>
         <Header> Details </Header>
@@ -115,23 +179,32 @@ class DetailsPanel extends React.Component {
             })}
           </ul>
           <StyledFeatureReview>
-            <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
-            {this.state.location_id.length && this.state.location_id.map(location => {
-              return (
-                <ul key={location.id}>
-                  <li>
-                    {" "}
-                    <p>Rating: {location.rating},</p>{" "}
-                  </li>
-                  <li>
-                    {" "}
-                    <p>Comments: {location.comment}</p>{" "}
-                  </li>
-                </ul>
-              );
-            })}
-          </StyledFeatureReview>
+            <StyledFeaturedReview>
+              Latest Review
+            </StyledFeaturedReview>
+            {(Object.keys(this.state.review).length > 0 ? <div>
 
+              <ul>
+
+                <li >
+
+
+                  <p>User: {this.state.review.userName},</p>
+
+                </li>
+                <li>
+
+                  <p>Rating: {this.state.review.rating},</p>
+                </li>
+                <li>
+
+                  <p>Comments: {this.state.review.comments}</p>
+                </li>
+              </ul>
+            </div> : <p>There Are No Reviews Currently</p>
+            )}
+          </StyledFeatureReview>
+          {/* })} */}
         </Content>
         {/* // -- // */}
         <Actions>
@@ -151,4 +224,5 @@ class DetailsPanel extends React.Component {
   }
 }
 // EXPORT
+const DetailsPanel = withFirebase(DetailsPanel1);
 export default DetailsPanel;
