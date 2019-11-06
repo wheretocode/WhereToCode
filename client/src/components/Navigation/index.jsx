@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+
 import SignOutButton from "../Auth/SignOut.jsx";
 import { withRouter } from "react-router-dom";
 
@@ -121,7 +122,6 @@ function LoginButton() {
       setTimeout(resolve, 200);
     });
   }
-
   return (
     <div>
       <LoginLink onClick={toggleModal}>Login</LoginLink>
