@@ -16,7 +16,6 @@ import { withFirebase } from '../../Firebase';
 /* global google */
 
 
-
 // STYLES
 const buttonStyle = {
   margin: "10px 10px 10px 10px",
@@ -56,6 +55,13 @@ const buttonStyle = {
   margin: "10px 10px 10px 10px"
 };`
 
+const NetworkTextStyle = styled.p`
+  font-size: 20px;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 3px;
+`
+
 
 class ReviewPanel1 extends Component {
   constructor(props) {
@@ -85,85 +91,81 @@ class ReviewPanel1 extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  // COMPONENT
   componentDidMount() {
+  //Distance between user and review location, used for conditional render of button
+  const geocoder = new google.maps.Geocoder();
+  
+  //Default to Sydney, Australia to match map default
+  let userCoords =  [-33.856, 151.215];
 
-    return axios
-      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-      .then(user => {
-        let currentUserId = {
-          user_id: user.data[0].id,
-          rating: null,
-          internet_rating: null,
-          comments: ''
-        }
-        this.setState({
-          newUser: currentUserId
-        })
-      })
-      .then(res => {
-        let locationReq = this.props.locationId;
-        return axios
-          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
-      })
-      .then(res => {
-        if (!res) {
-          let newLocation = [{
-            locationName: this.props.details[0],
-            locationGoogleId: this.props.locationId
-          }]
-          return axios
-            .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
-        } else {
-          console.log('location does not need to be posted');
-        }
-      })
-      .then(res => {
-        let locationReq = this.props.locationId;
-        return axios
-          .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
-      })
-      .then(user => {
-        let currentUser = {
-          user_id: this.state.newUser.user_id,
-          rating: '',
-          internet_rating: '',
-          comments: '',
-          location_id: user.data[0].id
-        }
-        this.setState({
-          newUser: currentUser
-        })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  //Check if user allowed location sharing
+  if (navigator.geolocation) {
 
-    //Distance between user and review location, used for conditional render of button
-    console.log("outside axios");
-    const geocoder = new google.maps.Geocoder();
-    let userCoords;
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        userCoords = [position.coords.latitude, position.coords.longitude];
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          userCoords = [position.coords.latitude, position.coords.longitude];
+        geocoder.__proto__.geocode({ "address": this.props.address }, (res, err) => {
+          const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
+
+          this.setState(prevState => {
+            return { ...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords) }
+          });
         });
+      }
+    );
+  } 
 
-
-    } else {
-      userCoords = [-33.856, 151.215];
-    }
-
-
-    geocoder.__proto__.geocode({ "address": this.props.address }, (res, err) => {
-      const locationCoords = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
+  return axios
+    .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+    .then(user => {
+      let currentUserId = {
+        user_id: user.data[0].id,
+        rating: null,
+        internet_rating: null,
+        comments: ''
+      }
+      this.setState({
+        newUser: currentUserId
+      })
+    })
+    .then(res => {
+      let locationReq = this.props.locationId;
+      return axios
+        .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+    })
+    .then(res => {
+      if (!res) {
+        let newLocation = [{
+          locationName: this.props.details[0],
+          locationGoogleId: this.props.locationId
+        }]
+        return axios
+          .post('https://wheretocode-master.herokuapp.com/locations', newLocation)
+      } else {
+        console.log('location does not need to be posted');
+      }
+    })
+    .then(res => {
+      let locationReq = this.props.locationId;
+      return axios
+        .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+    })
+    .then(user => {
+      let currentUser = {
+        user_id: this.state.newUser.user_id,
+        rating: '',
+        internet_rating: '',
+        comments: '',
+        location_id: user.data[0].id
+      }
+      this.setState({
+        newUser: currentUser
+      })
+    })
+    .catch(err => {
       console.log(err);
-      this.setState(prevState => {
-        return { ...prevState, distanceFromLocation: distanceTo(userCoords, locationCoords) }
-      });
-    });
-
+    })
 
   }
 
@@ -290,17 +292,24 @@ class ReviewPanel1 extends Component {
 
               {
                 this.state.network ? <NetworkSpeed />
-                  : null
+                                   : null
               }
             </div>
 
             {
+              // Only render network test option if user is within 100ft (30.48m) of location
               this.state.distanceFromLocation <= 30.48 ? <NetworkModal handleNetwork={this.toggleNetworkTest}
-                runTest={this.state.network}
-              />
-                : null
+                                                                       runTest={this.state.network}
+                                                                    />
+                                                       : null
             }
-            <p>{this.state.distanceFromLocation}</p>
+            <NetworkTextStyle>
+              {
+                this.state.distanceFromLocation > 30.48
+                ? `Must be ${(this.state.distanceFromLocation - 30.48).toFixed(2)}m closer to test network` 
+                : null 
+              }                               
+            </NetworkTextStyle>
 
           </StyleModal>
 

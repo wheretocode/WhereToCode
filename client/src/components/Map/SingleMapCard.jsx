@@ -71,7 +71,6 @@ class SingleMapCard extends Component {
                     details={this.state.details}
                     hours={this.state.hours}
                     address={this.props.address}
-                    geocoder={this.props.geocoder}
                     locationId={this.state.id}
                   />
                 )}

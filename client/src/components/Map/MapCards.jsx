@@ -24,7 +24,6 @@ class MapCards extends Component {
                 icon={location.icon}
                 id={location.id}
                 requestDetails={this.props.requestDetails}
-                geocoder={location.geocoder}
               />
 
             </div>

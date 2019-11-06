@@ -66,7 +66,7 @@ export default props => {
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <ReviewPanel details={props.details} locationId={props.locationId} /> : <Landing />)}
+          {authUser => (authUser ? <ReviewPanel details={props.details} address={props.address} locationId={props.locationId} /> : <Landing />)}
         </AuthUserContext.Consumer>
       </TabPanel>
     </StyledTabs>
