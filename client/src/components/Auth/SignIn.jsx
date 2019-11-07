@@ -8,6 +8,7 @@ import { withFirebase } from "../../Firebase";
 import * as ROUTES from "../../Routes/routes";
 
 import { Box, Heading } from "grommet";
+import axios from "axios";
 
 import styled from "styled-components";
 
@@ -125,14 +126,24 @@ class SignInFormBase extends Component {
     event.preventDefault();
     const { email, password } = this.state;
 
+    // V1
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
+
+      .then(signInResult => {
+        // Ping Token Route
+        axios
+          .get(`https://wheretocode-master.herokuapp.com/tokenRoute`)
+          .then(token => {
+            window.localStorage.setItem("JWT", token.data);
+          });
+        // Reset State
         this.setState({ ...INITIAL_STATE });
+        // Go to home route
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        console.log(error);
       });
   };
 

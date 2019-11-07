@@ -115,10 +115,13 @@ The benefits are relying on Firebase to provide security, and having a simplifie
 **What services, APIs, or platforms will you use to implement this feature?**  
 - APIs
     - speedtest-net
+    - Google Map API
+    - geonames
 
 **What are the costs and benefits of using this solution?** 
 - Cost
     - slow return speed for network test results, offest via `child_process` in Node
+    - User must allow location for functionality
 - Benefits
     - Easily implemented for access to network information
     - Customizable return object of results

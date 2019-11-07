@@ -4,13 +4,14 @@ import axios from "axios";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
 import { withFirebase } from "../../Firebase";
+import axiosWithAuth from "../../Helpers/axiosWithAuth";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 10px 10px 0 10px;
+  padding: 10px;
 
   font-size: 12px;
 `;
@@ -54,23 +55,6 @@ const StyledFeatureReview = styled.div`
   flex-direction: column;
 `;
 
-const Actions = styled.div`
-  width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
-`;
-const Button = styled.button`
-  background: ${props => (props.primary ? "palevioletred" : "white")};
-  color: ${props => (props.primary ? "white" : "palevioletred")};
-
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`;
-
 // COMPONENT
 class DetailsPanel1 extends React.Component {
   // STATE
@@ -83,67 +67,80 @@ class DetailsPanel1 extends React.Component {
 
   componentDidUpdate(prevProps, nextState) {
     if (this.props.locationId !== prevProps.locationId) {
-      return axios
-        .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-        .then(user => {
-          let { id } = user.data[0];
-          this.setState({
-            uid: id
-          });
-        })
-        .then(res => {
-          let locationReq = this.props.locationId;
-          return axios.get(
-            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
-          );
-        })
-        .then(res => {
-          if (res.data.length === 0) {
-            let newLocation = [
-              {
-                locationName: this.props.details[0],
-                locationGoogleId: this.props.locationId
-              }
-            ];
-            return axios.post(
-              "https://wheretocode-master.herokuapp.com/locations",
-              newLocation
+      return (
+        axiosWithAuth()
+          .get(
+            `https://wheretocode-master.herokuapp.com/users/${this.state.uid}`
+          )
+          // .get(`localhost:8080/users/${this.state.uid}`)
+          .then(user => {
+            console.log("user on line 77", user);
+            let { id } = user.data[0];
+            this.setState({
+              uid: id
+            });
+          })
+          .then(res => {
+            console.log("res on line 84", res);
+            let locationReq = this.props.locationId;
+            return axios.get(
+              `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
             );
-          } else {
-            console.log("location does not need to be posted");
-          }
-        })
-        .then(res => {
-          let locationReq = this.props.locationId;
-          return axios.get(
-            `https://wheretocode-master.herokuapp.com/${locationReq}`
-          );
-        })
-        .then(res => {
-          let locationId = res.data[0].id;
-          return axios.get(
-            `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
-          );
-        })
-        .then(res => {
-          let newReview1 = res.data.slice(-1);
-          let newReview = newReview1[0];
-          this.setState({
-            review: newReview
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          })
+          .then(res => {
+            console.log("res on line 91", res);
+            if (res.data.length === 0) {
+              let newLocation = [
+                {
+                  locationName: this.props.details[0],
+                  locationGoogleId: this.props.locationId
+                }
+              ];
+              return axios.post(
+                "https://wheretocode-master.herokuapp.com/locations",
+                newLocation
+              );
+            } else {
+              console.log("location does not need to be posted");
+            }
+          })
+          .then(res => {
+            console.log("res on line 108", res);
+            let locationReq = this.props.locationId;
+            return axios.get(
+              `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+            );
+          })
+          .then(res => {
+            console.log("res on line 115", res);
+            let locationId = res.data[0].id;
+            return axios.get(
+              `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+            );
+          })
+          .then(res => {
+            console.log("res on line 122", res);
+            let newReview1 = res.data.slice(-1);
+            let newReview = newReview1[0];
+            this.setState({
+              review: newReview
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      );
     }
   }
 
   // METHODS
   componentDidMount() {
     let locationReq = this.props.locationId;
+    console.log(locationReq);
     return axios
       .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       .then(res => {
+        console.log(res);
         let locationId = res.data[0].id;
         return axios.get(
           `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
@@ -206,18 +203,6 @@ class DetailsPanel1 extends React.Component {
           {/* })} */}
         </Content>
         {/* // -- // */}
-        <Actions>
-          <Popup
-            trigger={<Button> View Internet Speed </Button>}
-            position="top center"
-            closeOnDocumentClick
-          >
-            <span>
-              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or
-              DEFAULT w/ NO INFO
-            </span>
-          </Popup>
-        </Actions>
       </StyleModal>
     );
   }

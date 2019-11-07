@@ -52,6 +52,7 @@ const abbrState = (input, to) => {
         ['Wyoming', 'WY'],
     ];
 
+    // Converts full name to abbreviation
     if (to == 'abbr'){
         input = input.replace( /\w\S*/g, 
                                txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
@@ -62,7 +63,7 @@ const abbrState = (input, to) => {
                 return(states[i][1]);
             }
         }    
-
+    // Converst abbreviation to full name
     } else if (to == 'name'){
         
         input = input.toUpperCase();
