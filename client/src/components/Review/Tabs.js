@@ -14,9 +14,7 @@ import { AuthUserContext } from "../Session/index";
 const StyledTabs = styled(Tabs)`
   display: flex;
   flex-direction: column;
-
   background-color: #555555;
-
   border-radius: 10px;
 `;
 const StyledTabList = styled(TabList)`
@@ -24,39 +22,41 @@ const StyledTabList = styled(TabList)`
   justify-content: space-around;
   align-items: center;
   flex-wrap: flex;
-
   font-size: 20px;
   font-weight: bold;
   color: white;
   background-color: #555555;
-
+  p:hover {
+    opacity: 0.35;
+  }
+  cursor:pointer;
   padding: 0;
-
   list-style: none;
 `;
 const StyledTab = styled(Tab)`
   display: flex;
   justify-content: center;
-
   text-align: center;
   width: 20%;
+  outline: none;
 `;
 
 // COMPONENT & EXPORT
+
 export default props => {
 
 
   return (
     <StyledTabs>
       <StyledTabList>
-        <StyledTab>Details</StyledTab>
-        <StyledTab>All Reviews</StyledTab>
-        <StyledTab>Leave a Review</StyledTab>
+        <StyledTab> <p>Details</p></StyledTab>
+        <StyledTab> <p>All Reviews</p></StyledTab>
+        <StyledTab><p>Leave a Review</p></StyledTab>
       </StyledTabList>
 
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <DetailsPanel details={props.details} hours={props.hours} locationId={props.locationId} /> : <Landing />)}
+          {authUser => (authUser ? <DetailsPanel details={props.details} hours={props.hours} locationId={props.locationId} icon={props.icon}/> : <Landing />)}
         </AuthUserContext.Consumer>
       </TabPanel>
       <TabPanel>
@@ -66,7 +66,7 @@ export default props => {
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <ReviewPanel details={props.details} address={props.address} locationId={props.locationId} /> : <Landing />)}
+          {authUser => (authUser ? <ReviewPanel details={props.details} locationId={props.locationId} /> : <Landing />)}
         </AuthUserContext.Consumer>
       </TabPanel>
     </StyledTabs>
