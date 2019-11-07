@@ -81,7 +81,7 @@ const Landing = props => {
         </FeatureBox>
         <FeatureBox>
           <FeaturePic src={reviews} />
-          <h3>Find the Best One</h3>
+          <h3>Pick the Best One</h3>
           <p>Read reviews from remote workers like you! Read about the speed and reliability of the internet, the noise level, and other important factors.</p>
         </FeatureBox>
       </FeaturesInfo>
