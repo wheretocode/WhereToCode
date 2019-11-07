@@ -71,7 +71,10 @@ export default props => {
                 icon={props.icon}
               />
             ) : (
-              <Landing />
+              <h2>
+                You do not have access to the Details panel. Please login to
+                gain access.
+              </h2>
             )
           }
         </AuthUserContext.Consumer>
@@ -82,7 +85,10 @@ export default props => {
             authUser ? (
               <AllReviewsPanel locationId={props.locationId} />
             ) : (
-              <Landing />
+              <h2>
+                You do not have access to the All Reviews panel. Please login to
+                gain access.
+              </h2>
             )
           }
         </AuthUserContext.Consumer>
@@ -97,7 +103,10 @@ export default props => {
                 locationId={props.locationId}
               />
             ) : (
-              <Landing />
+              <h2>
+                You do not have access to Review panel. Please login to gain
+                access.
+              </h2>
             )
           }
         </AuthUserContext.Consumer>
