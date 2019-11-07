@@ -4,7 +4,6 @@ import Review from "../Review/Review";
 import styled from "styled-components";
 import StarRatings from "react-star-ratings";
 
-
 /*global google*/
 
 class SingleMapCard extends Component {
@@ -38,13 +37,11 @@ class SingleMapCard extends Component {
         });
       }
     });
-
   };
 
   render() {
     return (
       <>
-
         {this.props.location !== "" ? (
           <SingleMapCardContainer>
             <img src={this.props.icon} alt="Icon of the location" />
@@ -71,7 +68,7 @@ class SingleMapCard extends Component {
                     details={this.state.details}
                     hours={this.state.hours}
                     address={this.props.address}
-                    geocoder={this.props.geocoder}
+                    locationId={this.state.id}
                   />
                 )}
               </Popup>

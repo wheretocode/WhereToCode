@@ -3,13 +3,14 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
+import { withFirebase } from "../../Firebase";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 10px 10px 0 10px;
+  padding: 10px;
 
   font-size: 12px;
 `;
@@ -53,41 +54,94 @@ const StyledFeatureReview = styled.div`
   flex-direction: column;
 `;
 
-const Actions = styled.div`
-  width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
-`;
-const Button = styled.button`
-  background: ${props => (props.primary ? "palevioletred" : "white")};
-  color: ${props => (props.primary ? "white" : "palevioletred")};
-
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`;
-
 // COMPONENT
-class DetailsPanel extends React.Component {
+class DetailsPanel1 extends React.Component {
   // STATE
   state = {
-    location_id: []
+    review: [],
+    location_id: [],
+    uid: this.props.firebase.auth.currentUser.uid,
+    location: this.props.locationId
   };
+
+  componentDidUpdate(prevProps, nextState) {
+    if (this.props.locationId !== prevProps.locationId) {
+      return axios
+        .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+        .then(user => {
+          let { id } = user.data[0];
+          this.setState({
+            uid: id
+          });
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+          );
+        })
+        .then(res => {
+          if (res.data.length === 0) {
+            let newLocation = [
+              {
+                locationName: this.props.details[0],
+                locationGoogleId: this.props.locationId
+              }
+            ];
+            return axios.post(
+              "https://wheretocode-master.herokuapp.com/locations",
+              newLocation
+            );
+          } else {
+            console.log("location does not need to be posted");
+          }
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/${locationReq}`
+          );
+        })
+        .then(res => {
+          let locationId = res.data[0].id;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+          );
+        })
+        .then(res => {
+          let newReview1 = res.data.slice(-1);
+          let newReview = newReview1[0];
+          this.setState({
+            review: newReview
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 
   // METHODS
   componentDidMount() {
-
-    axios
-      .get(`https://wheretocode-master.herokuapp.com/reviews/1`)
+    let locationReq = this.props.locationId;
+    return axios
+      .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       .then(res => {
-        const location_id = res.data[0];
-        this.setState({ location_id });
+        let locationId = res.data[0].id;
+        return axios.get(
+          `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+        );
+      })
+      .then(res => {
+        let newReview1 = res.data.slice(-1);
+        let newReview = newReview1[0];
+        this.setState({
+          review: newReview
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-
-
   }
 
   // RENDER
@@ -98,13 +152,11 @@ class DetailsPanel extends React.Component {
         {/* // -- // */}
         <Content>
           {" "}
-
           <h2>Name:</h2>
           <p>{this.props.details[0]}</p>
           <h2>Phone:</h2>
           <p>{this.props.details[1]}</p>
           <h2 className="hours">Hours:</h2>
-
           <ul>
             {this.props.hours.map((data, index) => {
               return (
@@ -116,39 +168,31 @@ class DetailsPanel extends React.Component {
           </ul>
           <StyledFeatureReview>
             <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
-            {this.state.location_id.length && this.state.location_id.map(location => {
-              return (
-                <ul key={location.id}>
+            {Object.keys(this.state.review).length > 0 ? (
+              <div>
+                <ul>
                   <li>
-                    {" "}
-                    <p>Rating: {location.rating},</p>{" "}
+                    <p>User: {this.state.review.userName},</p>
                   </li>
                   <li>
-                    {" "}
-                    <p>Comments: {location.comment}</p>{" "}
+                    <p>Rating: {this.state.review.rating},</p>
+                  </li>
+                  <li>
+                    <p>Comments: {this.state.review.comments}</p>
                   </li>
                 </ul>
-              );
-            })}
+              </div>
+            ) : (
+              <p>There Are No Reviews Currently</p>
+            )}
           </StyledFeatureReview>
-
+          {/* })} */}
         </Content>
         {/* // -- // */}
-        <Actions>
-          <Popup
-            trigger={<Button> View Internet Speed </Button>}
-            position="top center"
-            closeOnDocumentClick
-          >
-            <span>
-              MAKE THIS ITS OWN COMPONENT AND BUILD OUT SPECIFIC AGGREGATION or
-              DEFAULT w/ NO INFO
-            </span>
-          </Popup>
-        </Actions>
       </StyleModal>
     );
   }
 }
 // EXPORT
+const DetailsPanel = withFirebase(DetailsPanel1);
 export default DetailsPanel;

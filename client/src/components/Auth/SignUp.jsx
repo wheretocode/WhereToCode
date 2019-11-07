@@ -94,7 +94,7 @@ const SignUpButton = styled.button`
 `;
 
 const SignUpFormBase = props => {
-  //Hooks to update state
+  //Hooks to update state 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [passwordOne, setPasswordOne] = useState("");
@@ -102,19 +102,22 @@ const SignUpFormBase = props => {
   const [error, setError] = useState(null);
 
   const onSubmit = event => {
+
     //send email & pw values form to firebase for authentication
     props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(user => {
         const newUser = {
-          firebase_user_id: user.uid,
+          firebase_user_id: user.user.uid,
           userName: username,
           email: email
         };
+        console.log("new user:", newUser);
         //send FB authenticated user UID, username and email to wheretocode Database
         axios
           .post(
             "https://wheretocode-master.herokuapp.com/auth/register",
+
             newUser
           )
           .then(res => {
@@ -140,19 +143,16 @@ const SignUpFormBase = props => {
     email === "" ||
     username === "";
 
+
+
   return (
+
+
     <FormContainer>
       <StyledHeader>
-        <i
-          class="fas fa-wifi fa-2x"
-          style={{ color: "gold", marginRight: "14px" }}
-        ></i>
-        <h1>HiveStack</h1>
-        <StyledSvg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 100"
-          preserveAspectRatio="none"
-        >
+        <i class="fas fa-wifi fa-2x" style={{ color: "gold", marginRight: "14px" }}></i>
+        <h1 >HiveStack</h1>
+        <StyledSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" preserveAspectRatio="none">
           <circle fill="white" cx="0" cy="100" r="100" />
           <circle fill="white" cx="200" cy="100" r="100" />
         </StyledSvg>
@@ -178,6 +178,7 @@ const SignUpFormBase = props => {
           onChange={e => setPasswordOne(e.target.value)}
           type="password"
           placeholder="Password"
+
         />
         <StyledInput
           name="passwordTwo"
@@ -186,18 +187,12 @@ const SignUpFormBase = props => {
           type="password"
           placeholder="Confirm Password"
         />
-      </StyledForm>
-      <SignUpButton
-        disabled={isInvalid}
-        onClick={onSubmit}
-        primary
-        label="Sign Up"
-      >
-        Sign Up
-      </SignUpButton>
 
-      {/* <button onClick={props.toggleModal}>Close</button> */}
-    </FormContainer>
+      </StyledForm>
+      <SignUpButton disabled={isInvalid} onClick={onSubmit} primary label="Sign Up" >Sign Up</SignUpButton>
+    </FormContainer >
+
+
   );
 };
 

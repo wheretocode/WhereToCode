@@ -32,6 +32,6 @@ export default props => (
         &times;
       </a>
     </Close>
-    <Tabs address={props.address} geocoder={props.geocoder} close={props.close} details={props.details} hours={props.hours} />
+    <Tabs address={props.address} close={props.close} details={props.details} hours={props.hours} locationId={props.locationId} />
   </StyleModal>
 );

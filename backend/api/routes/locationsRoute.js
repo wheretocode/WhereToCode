@@ -1,5 +1,6 @@
 // IMPORTS
 const LOCATIONS_MODEL = require("../models/LocationsModel.js");
+const authenticate = require('../middleware/authenticate.js')
 
 // EXPRESS ROUTER
 const router = require("express").Router();
@@ -15,6 +16,19 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
+  }
+});
+
+
+router.get("/:fbid", async (req, res) => {
+  const { fbid } = req.params;
+  try {
+    let result = await LOCATIONS_MODEL.getLocationByGoogleId(fbid);
+    console.log(result);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: err });
   }
 });
 

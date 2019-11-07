@@ -1,8 +1,12 @@
 // IMPORTS
 const REVIEW_MODEL = require("../models/ReviewModel.js");
+const authenticate = require('../middleware/authenticate.js')
 
 // EXPRESS ROUTER
 const router = require("express").Router();
+
+// MIDDLEWARE
+const requireBody = require('../middleware/requireBody')
 
 
 
@@ -43,10 +47,11 @@ router.get("/:id", async (req, res) => {
 // @desc Gets all reviews for Location ID by Users
 // @access currently Public, needs to be protected
 
-router.get("/:id/user", async (req, res) => {
+router.get("/:id/user", authenticate, async (req, res) => {
   try {
 
     const reviewUser = await REVIEW_MODEL.getReviewsByUser(req.params.id)
+    console.log("user", reviewUser);
     if (reviewUser) {
 
       res.status(200).json(reviewUser);
@@ -70,10 +75,33 @@ router.get("/:id/location", async (req, res) => {
   try {
     const reviewLocation = await REVIEW_MODEL.getReviewsByLocation(req.params.id)
     console.log("rl", reviewLocation);
+    if (reviewLocation.length == 0) {
+      res.status(404).send({ message: "review for this location not found" });
+
+    } else {
+      res.status(200).json(reviewLocation);
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching location", err });
+  }
+});
+
+// @route Get reviews/:id/location/:userid
+// @desc Gets all reviews for location ID
+// @access currently Public, needs to be protected
+
+router.get("/:id/location/:userid", async (req, res) => {
+  try {
+    let { id, userid } = req.params;
+    const reviewLocation = await REVIEW_MODEL.getReviewsByLocationUser(id, userid)
+    console.log("rl", reviewLocation);
     if (reviewLocation.length > 0) {
       res.status(200).json(reviewLocation);
       console.log("RL", reviewLocation);
-    } else {
+    } else if (reviewLocation.length == 0) {
+      console.log("rl.length =0", reviewLocation)
       res.status(400).send({ message: "Location from this review is not found", error });
     }
   } catch (err) {
@@ -82,6 +110,7 @@ router.get("/:id/location", async (req, res) => {
       .json({ message: "Error fetching location", err });
   }
 });
+
 
 // @route Get reviews/:id/feature
 // @desc Gets first highest rated review
@@ -147,7 +176,7 @@ router.post("/", requireBody, async (req, res) => {
 // @route PUT reviews/
 // @desc Edits a review
 // @access currently Public, needs to be protected
-router.put("/:id", requireBody, async (req, res) => {
+router.put("/:id", authenticate, requireBody, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
     return res.status(200).json({ message: "Review updated", updated })
@@ -160,7 +189,7 @@ router.put("/:id", requireBody, async (req, res) => {
 // @desc Deletes a review
 // Will be adding ID validation middleware
 // @access currently Public, needs to be protected
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
     const deleted = await REVIEW_MODEL.remove(req.params.id)
     return res.status(200).json({ message: "Successful delete", deleted })
@@ -168,17 +197,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(err.message)
   }
 })
-
-
-// Middleware - checks that there is a request body
-function requireBody(req, res, next) {
-  if (req.body && Object.keys(req.body).length) {
-    next();
-  } else {
-    res.status(500).json({ message: "Please include request body" });
-  }
-}
-
 
 
 // EXPORTS
