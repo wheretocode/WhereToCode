@@ -39,7 +39,7 @@ const MapCardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 86%;
+  height: 100%;
   justify-content: center;
   overflow: scroll;
   margin-right: -50px;
