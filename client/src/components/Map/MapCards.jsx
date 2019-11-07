@@ -7,12 +7,13 @@ class MapCards extends Component {
     super(props);
     this.state = {};
   }
-
   render() {
-    
+    // {console.log(this.props)}
+
     return (
       <MapCardsContainer>
         {this.props.locations.map(location => {
+          // {console.log(location)}
           return (
             <div>
               <SingleMapCard
@@ -38,7 +39,7 @@ const MapCardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 100%;
+  height: 86%;
   justify-content: center;
   overflow: scroll;
   overflow-x: hidden;

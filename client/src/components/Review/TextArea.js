@@ -1,9 +1,20 @@
 // IMPORTS
 import React from "react";
+import styled from 'styled-components'
+
+// STYLED COMPONENTS
+
+const Text = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+font-size: 14px;
+`
+
 
 // COMPONENT
 const TextArea = props => (
-  <div>
+  <Text>
     <label>{props.title}</label>
     <textarea
       name={props.name}
@@ -13,7 +24,7 @@ const TextArea = props => (
       onChange={props.handleChange}
       placeholder={props.placeholder}
     />
-  </div>
+  </Text>
 );
 
 export default TextArea;
