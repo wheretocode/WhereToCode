@@ -40,6 +40,8 @@ const MapCardsContainer = styled.div`
   height: 100%;
   justify-content: center;
   overflow: scroll;
+  margin-right: -50px;
+  padding-right: 50px;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     display: none;
