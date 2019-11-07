@@ -7,6 +7,8 @@ function authenticate(req, res, next) {
   const secret = process.env.JWT_Secret;
 
   if (token) {
+    console.log("token", token);
+    console.log("secret", secret);
     JWT.verify(token, secret, (err, decodedToken) => {
       if (err) {
         //means token expired or is invalid
