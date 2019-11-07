@@ -267,7 +267,9 @@ class Map extends Component {
         <div
           style={{
             width: this.state.locations.length !== 0 ? "49vw" : "0",
-            padding: "8% 0 0 0"
+            padding: "8% 0 0 0",
+            overflow: "hidden",
+            marginTop: "29px"
           }}
         >
           {this.state.locations.length > 0 ? (
