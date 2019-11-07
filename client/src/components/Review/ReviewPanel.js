@@ -28,35 +28,35 @@ const StyleModal = styled.div`
   align-items: center;
   padding: 10px;
   font-size: 12px;
-`;
+  max-height: 550px;
+  `
 const Header = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-
-  color: #fbd702;
+  color: #FBD702;
   width: 100%;
   margin-bottom: 15px;
-`;
-const STYLED_form = styled.form`
+`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 15px;
   margin: 5px 0 5px 0;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 10px 6px 10px 6px rgba(0,0,0,0.2);
   .buttonContainer {
     display: flex;
     justify-content: center;
-  }
+    }
   border-radius: 10px 10px 10px 10px;
   background-color: white;
-
-  // import Firebase from './firebase';
   const buttonStyle = {
-    margin: "10px 10px 10px 10px";
-  }
-`;
+    margin: "10px 10px 10px 10px"
+  };`
 
-const NetworkTextStyle = styled.p`
+  const NetworkTextStyle = styled.p`
   font-size: 20px;
   color: white;
   font-weight: 500;
@@ -66,7 +66,6 @@ const NetworkTextStyle = styled.p`
 class ReviewPanel1 extends Component {
   constructor(props) {
     super(props);
-
     // STATE
     this.state = {
       newUser: {
@@ -90,6 +89,7 @@ class ReviewPanel1 extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
+  // COMPONENT
   componentDidMount() {
     //Distance between user and review location, used for conditional render of button
     const geocoder = new google.maps.Geocoder();
@@ -124,7 +124,6 @@ class ReviewPanel1 extends Component {
     return (
       axiosWithAuth()
         .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-        // .get(`http://localhost:8080/users/${this.state.uid}`)
         .then(user => {
           let currentUserId = {
             user_id: user.data[0].id,
@@ -249,7 +248,9 @@ class ReviewPanel1 extends Component {
             <Header> Leave a Review </Header>
 
             <div style={{ display: "flex" }}>
-              <STYLED_form form onSubmit={this.handleFormSubmit}>
+              <StyledForm form onSubmit={this.handleFormSubmit}>
+
+
                 {/* Rating Required*/}
                 <Select
                   title={"Location Rating"}
@@ -261,8 +262,8 @@ class ReviewPanel1 extends Component {
                 />
                 {/*Internet Rating */}
                 <Select
-                  title={"Interet Rating"}
-                  name={"internet_rating"}
+                  title={"Internet Rating"}
+                  name={'internet_rating'}
                   options={this.state.internet_rating}
                   value={this.state.newUser.internet_rating}
                   placeholder={"Select Internet Rating"}
@@ -272,6 +273,7 @@ class ReviewPanel1 extends Component {
                 <TextArea
                   title={"Comments"}
                   rows={10}
+                  cols={50}
                   value={this.state.newUser.comments}
                   name={"comment"}
                   handleChange={this.handleTextArea}
@@ -293,7 +295,7 @@ class ReviewPanel1 extends Component {
                     style={buttonStyle}
                   />
                 </div>
-              </STYLED_form>
+              </StyledForm>
 
               {this.state.network ? <NetworkSpeed /> : null}
             </div>
