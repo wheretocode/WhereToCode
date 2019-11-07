@@ -20,7 +20,7 @@ module.exports = {
     seeds: { directory: "./backend/seeds" }
   },
   testing: {
-    client: 'postgresql',
+    client: "postgresql",
     connection: {
       database: "postgres",
       user: "postgres",
@@ -28,22 +28,21 @@ module.exports = {
     },
 
     migrations: {
-
       database: "Postgres",
       user: "postgres",
       password: process.env.DB_Password
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './backend/migrations',
+      directory: "./backend/migrations"
     },
     seeds: {
-      directory: './backend/seeds',
-    },
+      directory: "./backend/seeds"
+    }
   },
   production: {
     client: "pg",
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL, //postgres://ropszhiypaokds:cc788a1aba301f3bc8bdcf2d4fc56280f1158a2f8b02d566ba5a852793c96786@ec2-23-21-156-171.compute-1.amazonaws.com:5432/dccmt8le0mj9t5
     // ssl: true,
     migrations: {
       directory: "./backend/migrations",
