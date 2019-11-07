@@ -2,17 +2,16 @@ import React, { Component } from "react";
 import SingleMapCard from "./SingleMapCard";
 import styled from "styled-components";
 
-class MapCards extends Component {
+class FilteredMapCards extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    
     return (
       <MapCardsContainer>
-        {this.props.locations.map(location => {
+        {this.props.locationsFilter.map(location => {
           return (
             <div>
               <SingleMapCard
@@ -32,7 +31,7 @@ class MapCards extends Component {
   }
 }
 
-export default MapCards;
+export default FilteredMapCards;
 
 const MapCardsContainer = styled.div`
   display: flex;

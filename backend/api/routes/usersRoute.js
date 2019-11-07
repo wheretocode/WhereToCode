@@ -1,5 +1,6 @@
 // IMPORTS
 const USERS_MODEL = require("../models/UsersModel");
+const authenticate = require("../middleware/authenticate.js");
 
 // EXPRESS ROUTER
 const router = require("express").Router();
