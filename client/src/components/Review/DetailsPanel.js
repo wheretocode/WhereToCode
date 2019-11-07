@@ -74,18 +74,21 @@ class DetailsPanel1 extends React.Component {
           )
           // .get(`localhost:8080/users/${this.state.uid}`)
           .then(user => {
+            console.log("user on line 77", user);
             let { id } = user.data[0];
             this.setState({
               uid: id
             });
           })
           .then(res => {
+            console.log("res on line 84", res);
             let locationReq = this.props.locationId;
             return axios.get(
               `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
             );
           })
           .then(res => {
+            console.log("res on line 91", res);
             if (res.data.length === 0) {
               let newLocation = [
                 {
@@ -102,18 +105,21 @@ class DetailsPanel1 extends React.Component {
             }
           })
           .then(res => {
+            console.log("res on line 108", res);
             let locationReq = this.props.locationId;
             return axios.get(
-              `https://wheretocode-master.herokuapp.com/${locationReq}`
+              `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
             );
           })
           .then(res => {
+            console.log("res on line 115", res);
             let locationId = res.data[0].id;
             return axios.get(
               `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
             );
           })
           .then(res => {
+            console.log("res on line 122", res);
             let newReview1 = res.data.slice(-1);
             let newReview = newReview1[0];
             this.setState({
@@ -130,9 +136,11 @@ class DetailsPanel1 extends React.Component {
   // METHODS
   componentDidMount() {
     let locationReq = this.props.locationId;
+    console.log(locationReq);
     return axios
       .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
       .then(res => {
+        console.log(res);
         let locationId = res.data[0].id;
         return axios.get(
           `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
