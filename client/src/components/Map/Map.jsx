@@ -6,18 +6,24 @@ import React, { Component } from "react";
 import MapCards from "./MapCards";
 
 import styled from "styled-components";
+import FilteredMapCards from "./FilteredMapCards";
 
 class Map extends Component {
   constructor(props) {
     super(props);
+    this.searchButton = React.createRef();
+
     this.state = {
       initialPlace: this.props.place,
       locations: [],
+      locationsFilter: [],
+      filterBool: false,
       pos: {
         lat: 0,
         lng: 0
       },
       details: [],
+      query: "",
       locationCoords: []
     };
   }
@@ -41,7 +47,7 @@ class Map extends Component {
             // Loads map
             let map = new google.maps.Map(document.getElementById("map"), {
               center: this.state.pos,
-              zoom: 13
+              zoom: 15
             });
           },
           () => {
@@ -68,6 +74,8 @@ class Map extends Component {
 
     // When a new place is selected the map will be forced to update
     this.autocomplete.addListener("place_changed", this.handleMapChange);
+
+    this.searchButton.current.addEventListener("click", this.handleMapChange);
   }
 
   handleLocationError = (browserHasGeolocation = false) => {
@@ -87,11 +95,10 @@ class Map extends Component {
     });
 
     // Gets new place when auto complete search is clicked
-    //console.log(this.state.initialPlace);
     let place = this.state.initialPlace;
 
     // request object sets search query, search radius, and coordinates
-    
+
     let request = {
       location: place.geometry.location,
       id: place.place_id,
@@ -101,7 +108,7 @@ class Map extends Component {
       radius: "500",
       query: "Cafe"
     };
-    
+
     // requests use of PlaceService
     let service = new google.maps.places.PlacesService(map);
 
@@ -111,7 +118,7 @@ class Map extends Component {
 
     // Resets state when a new location is clicked
     if (this.state.locations.name !== "") {
-      this.setState({ locations: [] });
+      this.setState({ locations: [], locationsFilter: [] });
     }
 
     // cb function that returns place results
@@ -143,13 +150,17 @@ class Map extends Component {
                 rating: place.rating,
                 geocoder: google.maps.Geocoder
               }
-            ],
+            ]
           });
         });
       }
     };
     // PlaceService has the `textSearch` method
     service.textSearch(request, callback);
+  };
+
+  handleInputChange = e => {
+    this.setState({ query: e.target.value });
   };
 
   handleMapChange = () => {
@@ -169,7 +180,7 @@ class Map extends Component {
       icon: place.icon,
       photos: place.photos,
       radius: "500",
-      query: "Cafe"
+      query: this.state.query || "cafe"
     };
 
     // requests use of PlaceService
@@ -181,12 +192,14 @@ class Map extends Component {
 
     // Resets state when a new location is clicked
     if (this.state.locations.name !== "") {
-      this.setState({ locations: [] });
+      this.setState({ locations: [], locationsFilter: [] });
     }
 
     // cb function that returns place results
     let callback = (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        let bounds = new google.maps.LatLngBounds();
+
         results.map(place => {
           // Adds map markers to nearby locations
           let marker = new google.maps.Marker({
@@ -195,9 +208,13 @@ class Map extends Component {
             title: place.name
           });
 
+          bounds.extend(marker.getPosition());
+
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-          
+          map.fitBounds(bounds);
+          map.setCenter(bounds.getCenter());
+
           this.setState({
             locations: [
               ...this.state.locations,
@@ -213,7 +230,7 @@ class Map extends Component {
                 rating: place.rating,
                 geocoder: google.maps.Geocoder
               }
-            ],
+            ]
           });
         });
       }
@@ -222,8 +239,29 @@ class Map extends Component {
     service.textSearch(request, callback);
   };
 
+  handleFocus = event => event.target.select();
+
+  filterResults = () => {
+    if (this.state.filterBool === true) {
+      this.setState({ filterBool: false });
+    } else {
+      this.setState({ filterBool: true });
+    }
+
+    if (this.state.locationsFilter.length > 0) {
+      return;
+    } else {
+      this.state.locations.map(place => {
+        if (place.rating > 4) {
+          this.setState(prevState => ({
+            locationsFilter: [...prevState.locationsFilter, place]
+          }));
+        }
+      });
+    }
+  };
+
   render() {
-    
     return (
       <HomeContainer>
         <div
@@ -232,7 +270,15 @@ class Map extends Component {
             padding: "8% 0 0 0"
           }}
         >
-          <MapCards locations={this.state.locations} />
+          {this.state.locations.length > 0 ? (
+            <Button onClick={this.filterResults}>Highest Rated</Button>
+          ) : null}
+
+          {!this.state.filterBool ? (
+            <MapCards locations={this.state.locations} />
+          ) : (
+            <FilteredMapCards locationsFilter={this.state.locationsFilter} />
+          )}
         </div>
         <div
           style={{
@@ -243,6 +289,21 @@ class Map extends Component {
             alignItems: "center"
           }}
         >
+          <input
+            id="locationType"
+            style={{ width: "25%" }}
+            placeholder="What are you looking for..."
+            style={{
+              border: "none",
+              borderBottom: "1px solid black",
+              width: "50%",
+              marginBottom: "20px",
+              background: "transparent",
+              fontSize: "20px"
+            }}
+            onChange={this.handleInputChange}
+            value={this.state.query}
+          />
           <input
             id="autocomplete"
             style={{ width: "99.6%", height: "30px" }}
@@ -255,7 +316,9 @@ class Map extends Component {
               background: "transparent",
               fontSize: "20px"
             }}
+            onFocus={this.handleFocus}
           />
+          <Button ref={this.searchButton}>Search</Button>
 
           <div
             id="map"
@@ -281,4 +344,21 @@ const HomeContainer = styled.div`
   margin: 0 auto;
   max-width: 1400px;
   height: 94.2vh;
+`;
+
+const Button = styled.button`
+  align-self: center;
+  border-radius: 10px;
+  border: 2px solid gold;
+  font-size: 18px;
+  cursor: pointer;
+  width: 200px;
+  padding: 10px 56px;
+  margin: 35px 0 10px;
+  background: white;
+  &:hover {
+    box-shadow: 0px 5px 5px 0px rgba(176, 170, 176, 1);
+    transform: translateY(-2px);
+    transition: 0.2s;
+  }
 `;

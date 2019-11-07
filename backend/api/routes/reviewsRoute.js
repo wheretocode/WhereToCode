@@ -1,8 +1,12 @@
 // IMPORTS
 const REVIEW_MODEL = require("../models/ReviewModel.js");
+const authenticate = require('../middleware/authenticate.js')
 
 // EXPRESS ROUTER
 const router = require("express").Router();
+
+// MIDDLEWARE
+const requireBody = require('../middleware/requireBody')
 
 
 
@@ -43,7 +47,7 @@ router.get("/:id", async (req, res) => {
 // @desc Gets all reviews for Location ID by Users
 // @access currently Public, needs to be protected
 
-router.get("/:id/user", async (req, res) => {
+router.get("/:id/user", authenticate, async (req, res) => {
   try {
 
     const reviewUser = await REVIEW_MODEL.getReviewsByUser(req.params.id)
@@ -172,7 +176,7 @@ router.post("/", requireBody, async (req, res) => {
 // @route PUT reviews/
 // @desc Edits a review
 // @access currently Public, needs to be protected
-router.put("/:id", requireBody, async (req, res) => {
+router.put("/:id", authenticate, requireBody, async (req, res) => {
   try {
     const updated = await REVIEW_MODEL.update(req.params.id, req.body);
     return res.status(200).json({ message: "Review updated", updated })
@@ -185,7 +189,7 @@ router.put("/:id", requireBody, async (req, res) => {
 // @desc Deletes a review
 // Will be adding ID validation middleware
 // @access currently Public, needs to be protected
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
     const deleted = await REVIEW_MODEL.remove(req.params.id)
     return res.status(200).json({ message: "Successful delete", deleted })
@@ -193,17 +197,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(err.message)
   }
 })
-
-
-// Middleware - checks that there is a request body
-function requireBody(req, res, next) {
-  if (req.body && Object.keys(req.body).length) {
-    next();
-  } else {
-    res.status(500).json({ message: "Please include request body" });
-  }
-}
-
 
 
 // EXPORTS
