@@ -131,12 +131,10 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
 
       .then(signInResult => {
-        console.log(signInResult);
         // Ping Token Route
         axios
           .get(`https://wheretocode-master.herokuapp.com/tokenRoute`)
           .then(token => {
-            console.log(token);
             window.localStorage.setItem("JWT", token.data);
           });
         // Reset State
