@@ -26,12 +26,14 @@ const Close = styled.div`
 `;
 
 export default props => (
+
   <StyleModal>
+    {console.log(props)}
     <Close>
       <a Close onClick={props.close}>
         &times;
       </a>
     </Close>
-    <Tabs address={props.address} close={props.close} details={props.details} hours={props.hours} locationId={props.locationId} />
+    <Tabs address={props.address} close={props.close} details={props.details} hours={props.hours} locationId={props.locationId} icon={props.icon} />
   </StyleModal>
 );
