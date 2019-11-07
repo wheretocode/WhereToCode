@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { distanceTo } from "geolocation-utils";
+import axiosWithAuth from "../../Helpers/axiosWithAuth";
 
 // COMPONENTS
 import NetworkModal from "../NetworkSpeed/networkModal";
@@ -120,62 +121,65 @@ class ReviewPanel1 extends Component {
       });
     }
 
-    return axios
-      .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-      .then(user => {
-        let currentUserId = {
-          user_id: user.data[0].id,
-          rating: null,
-          internet_rating: null,
-          comments: ""
-        };
-        this.setState({
-          newUser: currentUserId
-        });
-      })
-      .then(res => {
-        let locationReq = this.props.locationId;
-        return axios.get(
-          `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
-        );
-      })
-      .then(res => {
-        if (!res) {
-          let newLocation = [
-            {
-              locationName: this.props.details[0],
-              locationGoogleId: this.props.locationId
-            }
-          ];
-          return axios.post(
-            "https://wheretocode-master.herokuapp.com/locations",
-            newLocation
+    return (
+      axiosWithAuth()
+        .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
+        // .get(`http://localhost:8080/users/${this.state.uid}`)
+        .then(user => {
+          let currentUserId = {
+            user_id: user.data[0].id,
+            rating: null,
+            internet_rating: null,
+            comments: ""
+          };
+          this.setState({
+            newUser: currentUserId
+          });
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
           );
-        } else {
-          console.log("location does not need to be posted");
-        }
-      })
-      .then(res => {
-        let locationReq = this.props.locationId;
-        return axios.get(
-          `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
-        );
-      })
-      .then(user => {
-        let currentUser = {
-          user_id: this.state.newUser.user_id,
-          rating: "",
-          internet_rating: "",
-          comments: "",
-          location_id: user.data[0].id
-        };
-        this.setState({
-          newUser: currentUser
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        })
+        .then(res => {
+          if (!res) {
+            let newLocation = [
+              {
+                locationName: this.props.details[0],
+                locationGoogleId: this.props.locationId
+              }
+            ];
+            return axios.post(
+              "https://wheretocode-master.herokuapp.com/locations",
+              newLocation
+            );
+          } else {
+            console.log("location does not need to be posted");
+          }
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+          );
+        })
+        .then(user => {
+          let currentUser = {
+            user_id: this.state.newUser.user_id,
+            rating: "",
+            internet_rating: "",
+            comments: "",
+            location_id: user.data[0].id
+          };
+          this.setState({
+            newUser: currentUser
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    );
   }
 
   // METHODS
@@ -204,8 +208,9 @@ class ReviewPanel1 extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let userData = this.state.newUser;
-    axios
+    axiosWithAuth()
       .post("https://wheretocode-master.herokuapp.com/reviews", userData)
+      // .post(`http://localhost:8080/reviews`, userData)
       .then(res => {
         this.setState({ submitted: true });
       })
