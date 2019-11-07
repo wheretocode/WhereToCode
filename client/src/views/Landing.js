@@ -8,6 +8,9 @@ import styled from "styled-components";
 import { withRouter, Link } from "react-router-dom";
 
 import mockup from '../assets/mockup.png';
+import hours from '../assets/hours.jpg';
+import explore from '../assets/explore.jpg';
+import reviews from '../assets/reviews.jpg';
 
 import * as ROUTES from "../Routes/routes";
 
@@ -63,33 +66,37 @@ const Landing = props => {
       </LandingScreen>
       <FeaturesInfo>
         <InfoBox>
-          <h3>Marketing Blurb Here</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium nemo, voluptas culpa, alias libero dolor eveniet distinctio reiciendis, necessitatibus cumque ut optio. Delectus, sunt!</p>
+          <h3>Work Easier</h3>
+          <p>Finding a place to work away form the home or office doesn't need to be a hassle. Find locations that meet your needs no matter where you are!</p>
           <ExploreButton to={ROUTES.HOME}>Explore →</ExploreButton>
         </InfoBox>
         <FeatureBox>
-          <Placeholder></Placeholder>
-          <h3>Feature 1</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+          <FeaturePic src={explore} />
+          <h3>Find New Places</h3>
+          <p>Whether you're traveling or looking to get out of the house in your own home, we've got you covered.</p>
         </FeatureBox>
         <FeatureBox>
-          <Placeholder></Placeholder>
-          <h3>Feature 2</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+          <FeaturePic src={hours} />
+          <h3>Get Info</h3>
+          <p>Find the location's available hours, address, phone number, and more.</p>
         </FeatureBox>
         <FeatureBox>
-          <Placeholder></Placeholder>
-          <h3>Feature 3</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, porro.</p>
+          <FeaturePic src={reviews} />
+          <h3>Find the Best One</h3>
+          <p>Read reviews from remote workers like you! Read about the speed and reliability of the internet, the noise level, and other important factors.</p>
         </FeatureBox>
       </FeaturesInfo>
       <MockupContainer>
-        <div>
           <Mockup src={mockup} />
-        </div>
-        <div>
-
-        </div>
+        <LargeMarketing>
+          <h3>Find Great Locations</h3>
+          <p>Whether you're looking for some free wifi to work while you're traveling or you're just wanting to get away from the house or office for a change of scenery, The HiveStack is built to help you find the best place to work.</p>
+          <Bullets>
+            <div><i class="fa fa-coffee fa-2x"></i><p>Find coffee shops and cafes</p></div>
+            <div><i class="fas fa-wifi fa-2x"></i><p>Check wifi speeds and reliability</p></div>
+            <div><i class="fas fa-laptop fa-2x"></i><p>Sit down and get some work done</p></div>
+          </Bullets>
+        </LargeMarketing>
       </MockupContainer>
     </LandingPageContainer>
   );
@@ -181,24 +188,34 @@ const FeaturesInfo = styled.div`
   margin: 125px 2% 20px 2%;
   display: flex;
   justify-content: space-between;
+  @media(max-width: 500px){
+    flex-direction: column;
+  }
 `
 
 const InfoBox = styled.div`
-  width: 25%;
-  padding: 0 10px;
+  width: 23%;
+  margin: 0 1%;
   h3 {
     font-size: 32px;
     font-family: "Zilla Slab", serif;
     font-weight: bold;
     margin-top: 0;
+    padding-left: 10px;
   }
   p {
     font-size: 18px;
     color: #636363
+    padding-left: 10px
+  }
+  @media(max-width: 500px){
+    width: 95%;
+    margin-bottom: 20px;
   }
 `
 
 const FeatureBox = styled(InfoBox)`
+  border: 1px solid #ECECEC;
   h3 {
     font-size: 20px;
   }
@@ -206,19 +223,25 @@ const FeatureBox = styled(InfoBox)`
     font-size: 14px;
   }
 `
-const Placeholder = styled.div`
-  width: 225px;
-  height: 175px;
-  border: 3px solid black;
+const FeaturePic = styled.img`
+  width: 100%;
+  height: 185px;
 `
 
 const MockupContainer = styled.div`
-
+  display: flex;
+  justify-content: space-around;
+  @media(max-width: 500px){
+    flex-direction: column;
+  }
 `
 
 const Mockup = styled.img`
   width: 45%;
-  margin: 5%;
+  margin: 50px 0;
+  @media(max-width: 500px){
+    width: 90%;
+  }
 `
 const ExploreButton = styled(GoButton)`
   font-size: 1.1rem;
@@ -227,4 +250,28 @@ const ExploreButton = styled(GoButton)`
   font-weight: bold;
   width: 125px;
   padding: 10px;
+`
+
+const LargeMarketing = styled(InfoBox)`
+  width: 40%;
+  margin-top: 80px;
+`
+
+const Bullets = styled.div`
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  div {
+    display: flex;
+    align-content: center;
+    margin-bottom: 10px;
+    i {
+      padding-right: 20px;
+    }
+    p{
+      margin-top: 0;
+      color: black;
+      font-size: 16px;
+    }
+  }
 `
