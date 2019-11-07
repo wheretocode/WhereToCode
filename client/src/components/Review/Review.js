@@ -2,7 +2,6 @@
 import React from "react";
 import styled from "styled-components";
 
-
 // IMPORT COMPONENTS
 import Tabs from "./Tabs";
 
@@ -26,14 +25,19 @@ const Close = styled.div`
 `;
 
 export default props => (
-
   <StyleModal>
-    {console.log(props)}
     <Close>
       <a Close onClick={props.close}>
         &times;
       </a>
     </Close>
-    <Tabs address={props.address} close={props.close} details={props.details} hours={props.hours} locationId={props.locationId} icon={props.icon} />
+    <Tabs
+      address={props.address}
+      close={props.close}
+      details={props.details}
+      hours={props.hours}
+      locationId={props.locationId}
+      icon={props.icon}
+    />
   </StyleModal>
 );

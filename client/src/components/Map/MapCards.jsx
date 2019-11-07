@@ -8,12 +8,9 @@ class MapCards extends Component {
     this.state = {};
   }
   render() {
-    // {console.log(this.props)}
-
     return (
       <MapCardsContainer>
         {this.props.locations.map(location => {
-          // {console.log(location)}
           return (
             <div>
               <SingleMapCard
