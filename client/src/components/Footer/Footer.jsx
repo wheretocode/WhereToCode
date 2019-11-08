@@ -4,10 +4,10 @@ import styled from "styled-components";
 const Footer = () => {
   return (
     <FooterContainer>
-      <h3><i
-            class="fas fa-wifi"
-            style={{ color: "gold", margin: "0 5px" }}
-          ></i> HiveStack</h3>
+      <h3>
+        <i class="fas fa-wifi" style={{ color: "gold", margin: "0 5px" }}></i>{" "}
+        HiveStack
+      </h3>
     </FooterContainer>
   );
 };
@@ -15,11 +15,11 @@ const Footer = () => {
 export default Footer;
 
 const FooterContainer = styled.div`
-  border: 1px solid #F6F6F6;
-  background: #F6F6F6;
+  border: 1px solid #f6f6f6;
+  background: #f6f6f6;
   text-align: right;
   h3 {
-    margin: 30px 40px 30px 0;
+    margin: 20px 40px 0px 0;
     font-size: 20px;
   }
 `;

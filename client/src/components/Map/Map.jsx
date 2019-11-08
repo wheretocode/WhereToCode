@@ -252,7 +252,7 @@ class Map extends Component {
       return;
     } else {
       this.state.locations.map(place => {
-        if (place.rating > 4) {
+        if (place.rating >= 4) {
           this.setState(prevState => ({
             locationsFilter: [...prevState.locationsFilter, place]
           }));
@@ -275,7 +275,7 @@ class Map extends Component {
           <div
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "space-evenly",
               fontSize: "20px"
             }}
@@ -309,7 +309,7 @@ class Map extends Component {
           <input
             id="locationType"
             style={{ width: "25%" }}
-            placeholder="What are you looking for..."
+            placeholder="What are you looking for...ex: cafe"
             style={{
               border: "none",
               borderBottom: "1px solid black",
@@ -360,7 +360,7 @@ const HomeContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1400px;
-  height: 94.2vh;
+  height: 93.2vh;
 `;
 
 const Button = styled.button`

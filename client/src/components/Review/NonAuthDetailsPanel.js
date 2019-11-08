@@ -101,24 +101,16 @@ class DetailsPanel1 extends React.Component {
   state = {
     review: [],
     location_id: [],
-    uid: this.props.firebase.auth.currentUser.uid,
     location: this.props.locationId
   };
 
   componentDidUpdate(prevProps, nextState) {
     if (this.props.locationId !== prevProps.locationId) {
+      let locationReq = this.props.locationId;
       return axiosWithAuth()
-        .get(`https://wheretocode-master.herokuapp.com/users/${this.state.uid}`)
-        .then(user => {
-          let { id } = user.data[0];
-          this.setState({
-            uid: id
-          });
-          let locationReq = this.props.locationId;
-          return axios.get(
-            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
-          );
-        })
+        .get(
+          `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+        )
         .then(res => {
           if (res.data.length === 0) {
             let newLocation = [
@@ -232,10 +224,10 @@ class DetailsPanel1 extends React.Component {
                   </ul>
                 </div>
               ) : (
-                  <StyledFeaturedReview1>
-                    <p>There Are No Reviews Currently</p>
-                  </StyledFeaturedReview1>
-                )}
+                <StyledFeaturedReview1>
+                  <p>There Are No Reviews Currently</p>
+                </StyledFeaturedReview1>
+              )}
             </StyledFeatureReview>
           </ContentLeft>
           <ContentRight>
@@ -263,7 +255,5 @@ class DetailsPanel1 extends React.Component {
   }
 }
 // EXPORT
-const DetailsPanel = withFirebase(DetailsPanel1);
-export default DetailsPanel;
-
-
+const NonAuthDetailsPanel = withFirebase(DetailsPanel1);
+export default NonAuthDetailsPanel;
