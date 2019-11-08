@@ -29,7 +29,7 @@ const StyledTabList = styled(TabList)`
   p:hover {
     opacity: 0.35;
   }
-  cursor:pointer;
+  cursor: pointer;
   padding: 0;
   list-style: none;
 `;
@@ -44,29 +44,71 @@ const StyledTab = styled(Tab)`
 // COMPONENT & EXPORT
 
 export default props => {
-
-
   return (
     <StyledTabs>
       <StyledTabList>
-        <StyledTab> <p>Details</p></StyledTab>
-        <StyledTab> <p>All Reviews</p></StyledTab>
-        <StyledTab><p>Leave a Review</p></StyledTab>
+        <StyledTab>
+          {" "}
+          <p>Details</p>
+        </StyledTab>
+        <StyledTab>
+          {" "}
+          <p>All Reviews</p>
+        </StyledTab>
+        <StyledTab>
+          <p>Leave a Review</p>
+        </StyledTab>
       </StyledTabList>
 
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <DetailsPanel details={props.details} hours={props.hours} locationId={props.locationId} icon={props.icon}/> : <Landing />)}
+          {authUser =>
+            authUser ? (
+              <DetailsPanel
+                details={props.details}
+                hours={props.hours}
+                locationId={props.locationId}
+                icon={props.icon}
+              />
+            ) : (
+              <h2>
+                You do not have access to the Details panel. Please login to
+                gain access.
+              </h2>
+            )
+          }
         </AuthUserContext.Consumer>
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <AllReviewsPanel locationId={props.locationId} /> : <Landing />)}
+          {authUser =>
+            authUser ? (
+              <AllReviewsPanel locationId={props.locationId} />
+            ) : (
+              <h2>
+                You do not have access to the All Reviews panel. Please login to
+                gain access.
+              </h2>
+            )
+          }
         </AuthUserContext.Consumer>
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
-          {authUser => (authUser ? <ReviewPanel details={props.details} locationId={props.locationId} /> : <Landing />)}
+          {authUser =>
+            authUser ? (
+              <ReviewPanel
+                details={props.details}
+                address={props.address}
+                locationId={props.locationId}
+              />
+            ) : (
+              <h2>
+                You do not have access to Review panel. Please login to gain
+                access.
+              </h2>
+            )
+          }
         </AuthUserContext.Consumer>
       </TabPanel>
     </StyledTabs>
