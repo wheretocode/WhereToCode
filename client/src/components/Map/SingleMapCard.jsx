@@ -95,6 +95,7 @@ const SingleMapCardContainer = styled.div`
   background: white;
   img {
     margin-right: 10px;
+    margin-left: 30px;
     height: 300px;
     width: 225px;
     overflow: hidden;
