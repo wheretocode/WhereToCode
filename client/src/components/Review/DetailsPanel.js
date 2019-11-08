@@ -240,9 +240,9 @@ class DetailsPanel1 extends React.Component {
           </ContentLeft>
           <ContentRight>
             <h2 className="name">Name:</h2>
-            <p>{this.props.details[0]}</p>
+            <p style={{ fontSize: "20px" }}>{this.props.details[0]}</p>
             <h2>Phone:</h2>
-            <p>{this.props.details[1]}</p>
+            <p style={{ fontSize: "20px" }}>{this.props.details[1]}</p>
             <h2 className="hours">Hours:</h2>
             <ul>
               <p>
