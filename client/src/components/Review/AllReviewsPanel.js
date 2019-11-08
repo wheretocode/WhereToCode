@@ -147,7 +147,7 @@ class AllReviewsPanel1 extends React.Component {
                 {this.state.reviews[0].map((review, i) => (
                   <li key={review.ratingId}>
                     <a href="#">
-                      Username:{review.userName} -- Rating: {review.rating} --
+                      Username:{review.userName} -- Overall Rating: {review.rating} -- Internet Rating: {review.internet_rating}  --
                       Comments:{review.comments}{" "}
                     </a>
                   </li>
