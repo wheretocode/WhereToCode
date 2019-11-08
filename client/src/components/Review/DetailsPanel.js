@@ -200,7 +200,10 @@ class DetailsPanel1 extends React.Component {
                       <p>User: {this.state.review.userName},</p>
                     </li>
                     <li>
-                      <p>Rating: {this.state.review.rating},</p>
+                      <p>Overall Rating: {this.state.review.rating},</p>
+                    </li>
+                    <li>
+                      <p>Internet Rating: {this.state.review.internet_rating},</p>
                     </li>
                     <li>
                       <p>Comments: {this.state.review.comments}</p>
