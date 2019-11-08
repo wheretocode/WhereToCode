@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { withFirebase } from "../../Firebase";
 import axiosWithAuth from "../../Helpers/axiosWithAuth";
+import StarRatings from "react-star-ratings";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
@@ -200,11 +201,29 @@ class DetailsPanel1 extends React.Component {
                       <p>User: {this.state.review.userName},</p>
                     </li>
                     <li>
-                      <p>Overall Rating: {this.state.review.rating},</p>
+                      <p>
+                        Overall Rating:
+                        <StarRatings
+                          rating={this.state.review.rating}
+                          starRatedColor="gold"
+                          numberOfStars={3}
+                          name="rating"
+                          starDimension="15px"
+                          starSpacing="0px"
+                        />
+                      </p>
                     </li>
                     <li>
                       <p>
-                        Internet Rating: {this.state.review.internet_rating},
+                        Internet Rating:
+                        <StarRatings
+                          rating={this.state.review.internet_rating}
+                          starRatedColor="gold"
+                          numberOfStars={3}
+                          name="rating"
+                          starDimension="15px"
+                          starSpacing="0px"
+                        />
                       </p>
                     </li>
                     <li>

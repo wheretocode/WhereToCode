@@ -252,7 +252,7 @@ class Map extends Component {
       return;
     } else {
       this.state.locations.map(place => {
-        if (place.rating > 4) {
+        if (place.rating >= 4) {
           this.setState(prevState => ({
             locationsFilter: [...prevState.locationsFilter, place]
           }));
