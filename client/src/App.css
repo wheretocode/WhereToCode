@@ -1,20 +1,24 @@
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .btn {
-    border-radius: 5px;
-    padding: 5px;
-    font-weight: bold;
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: bold;
 }
 
 .btn-primary {
-    background-color: #FBD702;
-    color: black;
+  background-color: #fbd702;
+  color: black;
 }
 .btn-secondary {
-    background-color: red;
-    color: black;
+  background-color: red;
+  color: black;
 }
 
-@import './components/Loaders/TriangleLoader.css';
+.pac-item {
+  cursor: pointer;
+}
+
+@import "./components/Loaders/TriangleLoader.css";
