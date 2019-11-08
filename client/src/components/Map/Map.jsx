@@ -345,7 +345,7 @@ const HomeContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1400px;
-  height: 94.2vh;
+  height: 93.2vh;
 `;
 
 const Button = styled.button`
