@@ -307,9 +307,12 @@ class ReviewPanel1 extends Component {
 
             <NetworkTextStyle>
               {this.state.distanceFromLocation > 30.48
-                ? `Must be ${(this.state.distanceFromLocation - 30.48).toFixed(
-                    2
-                  )}m closer to test network`
+                              // Convert Meters to Miles
+                ? `Must be ${(
+                                (this.state.distanceFromLocation - 30.48)
+                                * 0.000621
+                              ) .toFixed(2)
+                            } miles closer to test network`
                 : null}
             </NetworkTextStyle>
           </StyleModal>
