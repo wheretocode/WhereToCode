@@ -272,9 +272,19 @@ class Map extends Component {
             marginTop: "29px"
           }}
         >
-          {this.state.locations.length > 0 ? (
-            <Button onClick={this.filterResults}>Highest Rated</Button>
-          ) : null}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "end",
+              justifyContent: "space-evenly",
+              fontSize: "20px"
+            }}
+          >
+            {this.state.locations.length > 0 ? (
+              <Button onClick={this.filterResults}>Highest Rated</Button>
+            ) : null}
+            <p>Results: {this.state.locations.length}</p>
+          </div>
 
           {!this.state.filterBool ? (
             <MapCards locations={this.state.locations} />
