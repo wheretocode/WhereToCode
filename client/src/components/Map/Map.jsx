@@ -283,7 +283,12 @@ class Map extends Component {
             {this.state.locations.length > 0 ? (
               <Button onClick={this.filterResults}>Highest Rated</Button>
             ) : null}
-            <p>Results: {this.state.locations.length}</p>
+
+            {!this.state.filterBool ? (
+              <p>Results: {this.state.locations.length}</p>
+            ) : (
+              <p>Results: {this.state.locationsFilter.length}</p>
+            )}
           </div>
 
           {!this.state.filterBool ? (
