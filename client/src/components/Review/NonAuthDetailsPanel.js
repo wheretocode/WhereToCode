@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { withFirebase } from "../../Firebase";
 import axiosWithAuth from "../../Helpers/axiosWithAuth";
+import StarRatings from "react-star-ratings";
 
 // STYLED COMPONENTS
 const StyleModal = styled.div`
@@ -96,144 +97,163 @@ const StyledFeatureReview = styled.div`
 
 // COMPONENT
 class DetailsPanel1 extends React.Component {
-    // STATE
-    state = {
-        review: [],
-        location_id: [],
-        location: this.props.locationId
-    };
+  // STATE
+  state = {
+    review: [],
+    location_id: [],
+    location: this.props.locationId
+  };
 
-    componentDidUpdate(prevProps, nextState) {
-        if (this.props.locationId !== prevProps.locationId) {
-
-
-            let locationReq = this.props.locationId;
-            return axiosWithAuth()
-                .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
-                .then(res => {
-                    if (res.data.length === 0) {
-                        let newLocation = [
-                            {
-                                locationName: this.props.details[0],
-                                locationGoogleId: this.props.locationId
-                            }
-                        ];
-                        return axios.post(
-                            "https://wheretocode-master.herokuapp.com/locations",
-                            newLocation
-                        );
-                    } else {
-                        console.log("location does not need to be posted");
-                    }
-                })
-                .then(res => {
-                    let locationReq = this.props.locationId;
-                    return axios.get(
-                        `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
-                    );
-                })
-                .then(res => {
-                    let locationId = res.data[0].id;
-                    return axios.get(
-                        `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
-                    );
-                })
-                .then(res => {
-                    let newReview1 = res.data.slice(-1);
-                    let newReview = newReview1[0];
-                    this.setState({
-                        review: newReview
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
+  componentDidUpdate(prevProps, nextState) {
+    if (this.props.locationId !== prevProps.locationId) {
+      let locationReq = this.props.locationId;
+      return axiosWithAuth()
+        .get(
+          `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+        )
+        .then(res => {
+          if (res.data.length === 0) {
+            let newLocation = [
+              {
+                locationName: this.props.details[0],
+                locationGoogleId: this.props.locationId
+              }
+            ];
+            return axios.post(
+              "https://wheretocode-master.herokuapp.com/locations",
+              newLocation
+            );
+          } else {
+            console.log("location does not need to be posted");
+          }
+        })
+        .then(res => {
+          let locationReq = this.props.locationId;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/locations/${locationReq}`
+          );
+        })
+        .then(res => {
+          let locationId = res.data[0].id;
+          return axios.get(
+            `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
+          );
+        })
+        .then(res => {
+          let newReview1 = res.data.slice(-1);
+          let newReview = newReview1[0];
+          this.setState({
+            review: newReview
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+  }
 
-    // METHODS
-    componentDidMount() {
-        let locationReq = this.props.locationId;
-        return axios
-            .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
-            .then(res => {
-                let locationId = res.data[0].id;
-                return axios.get(
-                    `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
-                );
-            })
-            .then(res => {
-                let newReview1 = res.data.slice(-1);
-                let newReview = newReview1[0];
-                this.setState({
-                    review: newReview
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    render() {
-        return (
-            <StyleModal>
-                <Header> Details </Header>
-                <Content>
-                    <ContentLeft>
-                        <p>
-                            <img src={this.props.icon} />
-                        </p>
-                        <StyledFeatureReview>
-                            <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
-                            {this.state.review ? (
-                                <div>
-                                    <ul>
-                                        <li>
-                                            <p>User: {this.state.review.userName},</p>
-                                        </li>
-                                        <li>
-                                            <p>Overall Rating: {this.state.review.rating},</p>
-                                        </li>
-                                        <li>
-                                            <p>Internet Rating: {this.state.review.internet_rating},</p>
-                                        </li>
-                                        <li>
-                                            <p>Comments: {this.state.review.comments}</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ) : (
-                                    <StyledFeaturedReview1>
-                                        <p>There Are No Reviews Currently</p>
-                                    </StyledFeaturedReview1>
-                                )}
-                        </StyledFeatureReview>
-                    </ContentLeft>
-                    <ContentRight>
-                        <h2 className="name">Name:</h2>
-                        <p>{this.props.details[0]}</p>
-                        <h2>Phone:</h2>
-                        <p>{this.props.details[1]}</p>
-                        <h2 className="hours">Hours:</h2>
-                        <ul>
-                            <p>
-                                {this.props.hours.map((data, index) => {
-                                    return (
-                                        <li key={index}>
-                                            <div>{data}</div>
-                                        </li>
-                                    );
-                                })}
-                            </p>
-                        </ul>
-                    </ContentRight>
-                </Content>
-                {/* // -- // */}
-            </StyleModal>
+  // METHODS
+  componentDidMount() {
+    let locationReq = this.props.locationId;
+    return axios
+      .get(`https://wheretocode-master.herokuapp.com/locations/${locationReq}`)
+      .then(res => {
+        let locationId = res.data[0].id;
+        return axios.get(
+          `https://wheretocode-master.herokuapp.com/reviews/${locationId}/location`
         );
-    }
+      })
+      .then(res => {
+        let newReview1 = res.data.slice(-1);
+        let newReview = newReview1[0];
+        this.setState({
+          review: newReview
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    return (
+      <StyleModal>
+        <Header> Details </Header>
+        <Content>
+          <ContentLeft>
+            <p>
+              <img style={{ marginLeft: 0 }} src={this.props.icon} />
+            </p>
+            <StyledFeatureReview>
+              <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
+              {this.state.review ? (
+                <div>
+                  <ul>
+                    <li>
+                      <p>User: {this.state.review.userName},</p>
+                    </li>
+                    <li>
+                      <p>
+                        Overall Rating:
+                        <StarRatings
+                          rating={this.state.review.rating}
+                          starRatedColor="gold"
+                          numberOfStars={3}
+                          name="rating"
+                          starDimension="15px"
+                          starSpacing="0px"
+                        />
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Internet Rating:
+                        <StarRatings
+                          rating={this.state.review.internet_rating}
+                          starRatedColor="gold"
+                          numberOfStars={3}
+                          name="rating"
+                          starDimension="15px"
+                          starSpacing="0px"
+                        />
+                      </p>
+                    </li>
+                    <li>
+                      <p>Comments: {this.state.review.comments}</p>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <StyledFeaturedReview1>
+                  <p>There Are No Reviews Currently</p>
+                </StyledFeaturedReview1>
+              )}
+            </StyledFeatureReview>
+          </ContentLeft>
+          <ContentRight>
+            <h2 className="name">Name:</h2>
+            <p style={{ fontSize: "20px" }}>{this.props.details[0]}</p>
+            <h2>Phone:</h2>
+            <p style={{ fontSize: "20px" }}>{this.props.details[1]}</p>
+            <h2 className="hours">Hours:</h2>
+            <ul>
+              <p>
+                {this.props.hours.map((data, index) => {
+                  return (
+                    <li key={index}>
+                      <div>{data}</div>
+                    </li>
+                  );
+                })}
+              </p>
+            </ul>
+          </ContentRight>
+        </Content>
+        {/* // -- // */}
+      </StyleModal>
+    );
+  }
 }
 // EXPORT
 const NonAuthDetailsPanel = withFirebase(DetailsPanel1);
 export default NonAuthDetailsPanel;
-

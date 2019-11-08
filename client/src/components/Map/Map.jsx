@@ -275,7 +275,7 @@ class Map extends Component {
           <div
             style={{
               display: "flex",
-              alignItems: "end",
+              alignItems: "flex-end",
               justifyContent: "space-evenly",
               fontSize: "20px"
             }}
@@ -309,7 +309,7 @@ class Map extends Component {
           <input
             id="locationType"
             style={{ width: "25%" }}
-            placeholder="What are you looking for..."
+            placeholder="What are you looking for...ex: cafe"
             style={{
               border: "none",
               borderBottom: "1px solid black",

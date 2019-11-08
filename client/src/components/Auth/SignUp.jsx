@@ -93,6 +93,10 @@ const SignUpButton = styled.button`
   align-items: center;
 `;
 
+const ExtendedSignUpButton = styled(SignUpButton)`
+  color: white;
+`;
+
 const SignUpFormBase = props => {
   //Hooks to update state
   const [username, setUsername] = useState("");
@@ -187,14 +191,14 @@ const SignUpFormBase = props => {
           placeholder="Confirm Password"
         />
       </StyledForm>
-      <SignUpButton
+      <ExtendedSignUpButton
         disabled={isInvalid}
         onClick={onSubmit}
-        primary
+        // primary
         label="Sign Up"
       >
         Sign Up
-      </SignUpButton>
+      </ExtendedSignUpButton>
     </FormContainer>
   );
 };
