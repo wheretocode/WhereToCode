@@ -7,9 +7,7 @@ class MapCards extends Component {
     super(props);
     this.state = {};
   }
-
   render() {
-    
     return (
       <MapCardsContainer>
         {this.props.locations.map(location => {
@@ -41,6 +39,8 @@ const MapCardsContainer = styled.div`
   height: 100%;
   justify-content: center;
   overflow: scroll;
+  margin-right: -50px;
+  padding-right: 50px;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     display: none;
