@@ -189,7 +189,7 @@ class DetailsPanel1 extends React.Component {
         <Content>
           <ContentLeft>
             <p>
-              <img src={this.props.icon} />
+              <img style={{ marginLeft: 0 }} src={this.props.icon} />
             </p>
             <StyledFeatureReview>
               <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
@@ -203,7 +203,9 @@ class DetailsPanel1 extends React.Component {
                       <p>Overall Rating: {this.state.review.rating},</p>
                     </li>
                     <li>
-                      <p>Internet Rating: {this.state.review.internet_rating},</p>
+                      <p>
+                        Internet Rating: {this.state.review.internet_rating},
+                      </p>
                     </li>
                     <li>
                       <p>Comments: {this.state.review.comments}</p>
