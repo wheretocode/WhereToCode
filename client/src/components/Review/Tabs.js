@@ -4,10 +4,10 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styled from "styled-components";
 
 // COMPONENTS
-import DetailsPanel from "./DetailsPanel";
-import { AllReviewsPanel } from "./AllReviewsPanel";
+
+import NonAuthDetailsPanel from './NonAuthDetailsPanel';
+import { NonAuthAllReviewsPanel } from "./NonAuthAllReviews";
 import { ReviewPanel } from "./ReviewPanel";
-import Landing from "../../views/Landing";
 import { AuthUserContext } from "../Session/index";
 
 // STYLED COMPONENTS
@@ -41,6 +41,14 @@ const StyledTab = styled(Tab)`
   outline: none;
 `;
 
+const Header = styled.div`
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fbd702;
+  width: 100%;
+  margin-bottom: 15px;
+`;
 // COMPONENT & EXPORT
 
 export default props => {
@@ -61,37 +69,18 @@ export default props => {
       </StyledTabList>
 
       <TabPanel>
-        <AuthUserContext.Consumer>
-          {authUser =>
-            authUser ? (
-              <DetailsPanel
-                details={props.details}
-                hours={props.hours}
-                locationId={props.locationId}
-                icon={props.icon}
-              />
-            ) : (
-              <h2>
-                You do not have access to the Details panel. Please login to
-                gain access.
-              </h2>
-            )
-          }
-        </AuthUserContext.Consumer>
+        <NonAuthDetailsPanel
+          details={props.details}
+          hours={props.hours}
+          locationId={props.locationId}
+          icon={props.icon}
+        />
+
       </TabPanel>
       <TabPanel>
-        <AuthUserContext.Consumer>
-          {authUser =>
-            authUser ? (
-              <AllReviewsPanel locationId={props.locationId} />
-            ) : (
-              <h2>
-                You do not have access to the All Reviews panel. Please login to
-                gain access.
-              </h2>
-            )
-          }
-        </AuthUserContext.Consumer>
+
+        <NonAuthAllReviewsPanel locationId={props.locationId} />
+
       </TabPanel>
       <TabPanel>
         <AuthUserContext.Consumer>
@@ -103,11 +92,9 @@ export default props => {
                 locationId={props.locationId}
               />
             ) : (
-              <h2>
-                You do not have access to Review panel. Please login to gain
-                access.
-              </h2>
-            )
+                <Header>You Must Be Registered To Leave A Review</Header>
+
+              )
           }
         </AuthUserContext.Consumer>
       </TabPanel>

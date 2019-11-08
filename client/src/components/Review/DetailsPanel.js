@@ -211,10 +211,10 @@ class DetailsPanel1 extends React.Component {
                   </ul>
                 </div>
               ) : (
-                <StyledFeaturedReview1>
-                  <p>There Are No Reviews Currently</p>
-                </StyledFeaturedReview1>
-              )}
+                  <StyledFeaturedReview1>
+                    <p>There Are No Reviews Currently</p>
+                  </StyledFeaturedReview1>
+                )}
             </StyledFeatureReview>
           </ContentLeft>
           <ContentRight>
@@ -245,68 +245,4 @@ class DetailsPanel1 extends React.Component {
 const DetailsPanel = withFirebase(DetailsPanel1);
 export default DetailsPanel;
 
-//   render() {
-//     return (
-//       <>
-//         {this.props.location !== "" ? (
-//           <StyleModal>
-//             <Header> Details </Header>
 
-//             <Content>
-//               <ContentLeft>
-//                 <p>
-//                   <img src={this.props.icon} />
-//                 </p>
-//                 <StyledFeatureReview>
-//                   <StyledFeaturedReview>Latest Review</StyledFeaturedReview>
-//                   {Object.keys(this.state.review).length > 0 ? (
-//                     <div>
-//                       <ul>
-//                         <li>
-//                           <p>User: {this.state.review.userName},</p>
-//                         </li>
-//                         <li>
-//                           <p>Rating: {this.state.review.rating},</p>
-//                         </li>
-//                         <li>
-//                           <p>Comments: {this.state.review.comments}</p>
-//                         </li>
-//                       </ul>
-//                     </div>
-//                   ) : (
-//                     <StyledFeaturedReview1>
-//                       <p>There Are No Reviews Currently</p>
-//                     </StyledFeaturedReview1>
-//                   )}
-//                 </StyledFeatureReview>
-//               </ContentLeft>
-//               <ContentRight>
-//                 <h2 className="name">Name:</h2>
-//                 <p>{this.props.details[0]}</p>
-//                 <h2>Phone:</h2>
-//                 <p>{this.props.details[1]}</p>
-//                 <h2 className="hours">Hours:</h2>
-//                 <ul>
-//                   <p>
-//                     {this.props.hours.map((data, index) => {
-//                       return (
-//                         <li key={index}>
-//                           <div>{data}</div>
-//                         </li>
-//                       );
-//                     })}
-//                   </p>
-//                 </ul>
-//               </ContentRight>
-//             </Content>
-//             {/* // -- // */}
-//           </StyleModal>
-//         ) : null}
-//       </>
-//     );
-//   }
-// }
-
-// // EXPORT
-// const DetailsPanel = withFirebase(DetailsPanel1);
-// export default DetailsPanel;
